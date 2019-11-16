@@ -4,7 +4,7 @@ import "./App.scss"
 import Upload from "./Upload.js"
 
 function App() {
-	return <Upload></Upload>
+	return <Upload />
 }
 
 export default App

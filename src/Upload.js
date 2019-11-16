@@ -6,7 +6,11 @@ const Upload = () => {
 	const canvasEl = useRef()
 
 	const onImageLoad = (e) => {
-		const ctx = canvasEl.current.getContext("2d")
+		const canvas = canvasEl.current
+		const ctx = canvas.getContext("2d")
+		ctx.clearRect(0, 0, canvas.width, canvas.height)
+		ctx.fillStyle = "#3a3a3a"
+		ctx.fillRect(0, 0, canvas.width, canvas.height)
 		ctx.drawImage(e.target, 100, 100, 200, 200)
 	}
 
@@ -21,7 +25,7 @@ const Upload = () => {
 		const file = files[0]
 
 		// when the file is loaded, initiate processing
-		reader.onload(() => {
+		reader.addEventListener("load", () => {
 			const img = new Image()
 			img.src = reader.result
 			img.onload = onImageLoad
