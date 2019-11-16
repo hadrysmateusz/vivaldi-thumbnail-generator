@@ -1,22 +1,58 @@
-import React, { useRef, useEffect } from "react"
+import React, { useRef, useEffect, useState } from "react"
 import "./Upload.scss"
+
+const gcd = (p, q) => {
+	return q === 0 ? p : gcd(q, p % q)
+}
+
+const ratio = (a, b) => {
+	const _gcd = gcd(a, b)
+	return { divident: a / _gcd, divisor: b / _gcd }
+}
 
 const Upload = () => {
 	const fileInputEl = useRef()
 	const canvasEl = useRef()
+	const bgColor = useState("#333")
+
+	const resetCanvas = () => {
+		const canvas = canvasEl.current
+		const ctx = canvas.getContext("2d")
+		ctx.save()
+		ctx.fillStyle = bgColor
+		ctx.fillRect(0, 0, canvas.width, canvas.height)
+		ctx.restore()
+	}
 
 	const onImageLoad = (e) => {
 		const canvas = canvasEl.current
 		const ctx = canvas.getContext("2d")
 		const image = e.target
 
-		ctx.clearRect(0, 0, canvas.width, canvas.height)
-		ctx.fillStyle = "#3a3a3a"
-		ctx.fillRect(0, 0, canvas.width, canvas.height)
+		resetCanvas()
+
+		const originalWidth = image.naturalWidth
+		const originalHeight = image.naturalHeight
+		const targetSize = canvas.height / 2
+
+		const { divisor, divident } = ratio(originalWidth, originalHeight)
+
+		console.log(`width: ${originalWidth} height: ${originalHeight}`)
+		console.log(`divident: ${divident} divisor: ${divisor}`)
+
+		let newHeight, newWidth
+
+		newHeight = Math.round(Math.sqrt((divisor * (targetSize * targetSize)) / divident))
+		newWidth = Math.round((targetSize * targetSize) / newHeight)
+
+		console.log(`newWidth: ${newWidth} newHeight: ${newHeight}`)
+
 		ctx.drawImage(
 			image,
-			canvas.width / 2 - image.naturalWidth / 2,
-			canvas.height / 2 - image.naturalHeight / 2
+			canvas.width / 2 - newWidth / 2,
+			canvas.height / 2 - newHeight / 2,
+			newWidth,
+			newHeight
 		)
 	}
 
@@ -69,7 +105,12 @@ const Upload = () => {
 	useEffect(() => {
 		canvasEl.current.width = canvasEl.current.scrollWidth
 		canvasEl.current.height = canvasEl.current.scrollHeight
-	})
+	}, [])
+
+	// // Set the fill color that will be used to create the background
+	// useEffect(() => {
+	// 	canvasEl.current.getContext("2d").fillStyle = bgColor
+	// }, [bgColor])
 
 	return (
 		<div className="Upload-outer-container">
