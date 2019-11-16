@@ -1,5 +1,5 @@
-import React, { useRef, useEffect, useState } from "react"
-import { HuePicker } from "react-color"
+import React, { useRef, useEffect, useState, useCallback } from "react"
+import { ChromePicker } from "react-color"
 import "./Upload.scss"
 
 const gcd = (p, q) => {
@@ -15,47 +15,51 @@ const Upload = () => {
 	const fileInputEl = useRef()
 	const canvasEl = useRef()
 	const [bgColor, setBgColor] = useState("#333")
-
-	const resetCanvas = () => {
-		const canvas = canvasEl.current
-		const ctx = canvas.getContext("2d")
-		ctx.save()
-		ctx.fillStyle = bgColor
-		ctx.fillRect(0, 0, canvas.width, canvas.height)
-		ctx.restore()
-	}
+	const [imageParams, setImageParams] = useState(null)
 
 	const onImageLoad = (e) => {
 		const canvas = canvasEl.current
-		const ctx = canvas.getContext("2d")
 		const image = e.target
-
-		resetCanvas()
-
 		const originalWidth = image.naturalWidth
 		const originalHeight = image.naturalHeight
 		const targetSize = canvas.height / 2
+		let newHeight, newWidth
 
 		const { divisor, divident } = ratio(originalWidth, originalHeight)
-
-		console.log(`width: ${originalWidth} height: ${originalHeight}`)
-		console.log(`divident: ${divident} divisor: ${divisor}`)
-
-		let newHeight, newWidth
 
 		newHeight = Math.round(Math.sqrt((divisor * (targetSize * targetSize)) / divident))
 		newWidth = Math.round((targetSize * targetSize) / newHeight)
 
-		console.log(`newWidth: ${newWidth} newHeight: ${newHeight}`)
-
-		ctx.drawImage(
-			image,
-			canvas.width / 2 - newWidth / 2,
-			canvas.height / 2 - newHeight / 2,
-			newWidth,
-			newHeight
-		)
+		setImageParams({
+			image: image,
+			dx: canvas.width / 2 - newWidth / 2,
+			dy: canvas.height / 2 - newHeight / 2,
+			dWidth: newWidth,
+			dHeight: newHeight
+		})
 	}
+
+	const redraw = useCallback(() => {
+		const canvas = canvasEl.current
+		const ctx = canvas.getContext("2d")
+
+		// clear canvas
+		ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+		if (!bgColor) return
+
+		// repaint background
+		ctx.save()
+		ctx.fillStyle = bgColor
+		ctx.fillRect(0, 0, canvas.width, canvas.height)
+		ctx.restore()
+
+		if (!imageParams) return
+
+		// redraw the image
+		const { image, dx, dy, dWidth, dHeight } = imageParams
+		ctx.drawImage(image, dx, dy, dWidth, dHeight)
+	}, [bgColor, imageParams])
 
 	const onFileChange = () => {
 		const reader = new FileReader()
@@ -107,6 +111,10 @@ const Upload = () => {
 		canvasEl.current.height = canvasEl.current.scrollHeight
 	}, [])
 
+	useEffect(() => {
+		redraw(imageParams)
+	}, [imageParams, redraw])
+
 	// // Set the fill color that will be used to create the background
 	// useEffect(() => {
 	// 	canvasEl.current.getContext("2d").fillStyle = bgColor
@@ -114,7 +122,7 @@ const Upload = () => {
 
 	return (
 		<div className="Upload-outer-container">
-			<HuePicker onChangeComplete={onColorChange} color={bgColor} />
+			<ChromePicker onChangeComplete={onColorChange} color={bgColor} disableAlpha />
 			<div>
 				<input type="file" ref={fileInputEl} onChange={onFileChange} />
 			</div>
