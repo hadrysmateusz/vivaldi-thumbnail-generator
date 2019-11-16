@@ -33,8 +33,8 @@ const Upload = () => {
 		})
 
 		// verify the file exists and is an image
-		if (!file) onImageError("no file")
-		if (!file.type.match("image.*")) onImageError("file is not an image")
+		if (!file) return onImageError("no file")
+		if (!file.type.match("image.*")) return onImageError("file is not an image")
 
 		reader.readAsDataURL(file)
 	}
