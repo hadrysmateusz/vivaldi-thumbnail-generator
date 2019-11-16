@@ -1,66 +1,13 @@
 import React, { useRef, useEffect, useState, useCallback } from "react"
 import { ChromePicker } from "react-color"
+
+import { getRatio, getImageBounds } from "./utils"
 import "./Upload.scss"
-
-const getImageBounds = (canvas) => {
-	const ctx = canvas.getContext("2d")
-	const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height)
-	let x, y
-
-	let bounds = {
-		top: null,
-		left: null,
-		right: null,
-		bottom: null
-	}
-
-	// Iterate over every pixel to find the highest
-	// and where it ends on every axis ()
-	for (let i = 0; i < pixels.data.length; i += 4) {
-		if (pixels.data[i + 3] !== 0) {
-			x = (i / 4) % canvas.width
-			y = ~~(i / 4 / canvas.width)
-
-			if (bounds.top === null) {
-				bounds.top = y
-			}
-
-			if (bounds.left === null) {
-				bounds.left = x
-			} else if (x < bounds.left) {
-				bounds.left = x
-			}
-
-			if (bounds.right === null) {
-				bounds.right = x
-			} else if (bounds.right < x) {
-				bounds.right = x
-			}
-
-			if (bounds.bottom === null) {
-				bounds.bottom = y
-			} else if (bounds.bottom < y) {
-				bounds.bottom = y
-			}
-		}
-	}
-
-	return bounds
-}
-
-const gcd = (p, q) => {
-	return q === 0 ? p : gcd(q, p % q)
-}
-
-const ratio = (a, b) => {
-	const _gcd = gcd(a, b)
-	return { divident: a / _gcd, divisor: b / _gcd }
-}
 
 const Upload = () => {
 	const fileInputEl = useRef()
 	const canvasEl = useRef()
-	const [bgColor, setBgColor] = useState("#333")
+	const [bgColor, setBgColor] = useState("#111")
 	const [targetSize, setTargetSize] = useState(300)
 	const [image, setImage] = useState(null)
 
@@ -91,7 +38,7 @@ const Upload = () => {
 		const trimWidth = bounds.right - bounds.left
 
 		// Get rescaled dimensions
-		const { divisor, divident } = ratio(trimWidth, trimHeight)
+		const { divisor, divident } = getRatio(trimWidth, trimHeight)
 		const { round, sqrt } = Math
 		const newHeight = round(sqrt((divisor * (targetSize * targetSize)) / divident))
 		const newWidth = round((targetSize * targetSize) / newHeight)
