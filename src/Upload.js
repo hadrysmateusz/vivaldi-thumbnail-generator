@@ -8,10 +8,16 @@ const Upload = () => {
 	const onImageLoad = (e) => {
 		const canvas = canvasEl.current
 		const ctx = canvas.getContext("2d")
+		const image = e.target
+
 		ctx.clearRect(0, 0, canvas.width, canvas.height)
 		ctx.fillStyle = "#3a3a3a"
 		ctx.fillRect(0, 0, canvas.width, canvas.height)
-		ctx.drawImage(e.target, 100, 100, 200, 200)
+		ctx.drawImage(
+			image,
+			canvas.width / 2 - image.naturalWidth / 2,
+			canvas.height / 2 - image.naturalHeight / 2
+		)
 	}
 
 	const onImageError = (msg) => {
