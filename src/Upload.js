@@ -56,11 +56,6 @@ const Upload = () => {
 		)
 	}
 
-	const onImageError = (msg) => {
-		alert("Couldn't load image")
-		if (msg) console.error(`Couldn't load image: ${msg}`)
-	}
-
 	const onFileChange = () => {
 		const reader = new FileReader()
 		const files = fileInputEl.current.files
@@ -71,12 +66,12 @@ const Upload = () => {
 			const img = new Image()
 			img.src = reader.result
 			img.onload = onImageLoad
-			img.onerror = onImageError
+			img.onerror = () => alert("couldn't load image")
 		})
 
 		// verify the file exists and is an image
-		if (!file) return onImageError("no file")
-		if (!file.type.match("image.*")) return onImageError("file is not an image")
+		if (!file) return
+		if (!file.type.match("image.*")) return alert("not an image")
 
 		reader.readAsDataURL(file)
 	}
