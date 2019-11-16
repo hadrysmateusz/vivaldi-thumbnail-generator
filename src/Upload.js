@@ -2,6 +2,52 @@ import React, { useRef, useEffect, useState, useCallback } from "react"
 import { ChromePicker } from "react-color"
 import "./Upload.scss"
 
+const getImageBounds = (canvas) => {
+	const ctx = canvas.getContext("2d")
+	const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height)
+	let x, y
+
+	let bounds = {
+		top: null,
+		left: null,
+		right: null,
+		bottom: null
+	}
+
+	// Iterate over every pixel to find the highest
+	// and where it ends on every axis ()
+	for (let i = 0; i < pixels.data.length; i += 4) {
+		if (pixels.data[i + 3] !== 0) {
+			x = (i / 4) % canvas.width
+			y = ~~(i / 4 / canvas.width)
+
+			if (bounds.top === null) {
+				bounds.top = y
+			}
+
+			if (bounds.left === null) {
+				bounds.left = x
+			} else if (x < bounds.left) {
+				bounds.left = x
+			}
+
+			if (bounds.right === null) {
+				bounds.right = x
+			} else if (bounds.right < x) {
+				bounds.right = x
+			}
+
+			if (bounds.bottom === null) {
+				bounds.bottom = y
+			} else if (bounds.bottom < y) {
+				bounds.bottom = y
+			}
+		}
+	}
+
+	return bounds
+}
+
 const gcd = (p, q) => {
 	return q === 0 ? p : gcd(q, p % q)
 }
@@ -15,51 +61,61 @@ const Upload = () => {
 	const fileInputEl = useRef()
 	const canvasEl = useRef()
 	const [bgColor, setBgColor] = useState("#333")
-	const [imageParams, setImageParams] = useState(null)
+	const [targetSize, setTargetSize] = useState(300)
+	const [image, setImage] = useState(null)
+
+	// Set the drawing surface dimensions to match the canvas
+	useEffect(() => {
+		canvasEl.current.width = canvasEl.current.scrollWidth
+		canvasEl.current.height = canvasEl.current.scrollHeight
+	}, [])
 
 	const onImageLoad = (e) => {
-		const canvas = canvasEl.current
+		// Get loaded image
 		const image = e.target
-		const originalWidth = image.naturalWidth
-		const originalHeight = image.naturalHeight
-		const targetSize = canvas.height / 2
-		let newHeight, newWidth
 
-		const { divisor, divident } = ratio(originalWidth, originalHeight)
+		// Create temporary canvas
+		const tempCanvas = document.createElement("canvas")
+		const tempCtx = tempCanvas.getContext("2d")
 
-		newHeight = Math.round(Math.sqrt((divisor * (targetSize * targetSize)) / divident))
-		newWidth = Math.round((targetSize * targetSize) / newHeight)
+		// Draw the original image to the temporary canvas
+		tempCanvas.width = image.width
+		tempCanvas.height = image.height
+		tempCtx.drawImage(image, 0, 0)
 
-		setImageParams({
-			image: image,
-			dx: canvas.width / 2 - newWidth / 2,
-			dy: canvas.height / 2 - newHeight / 2,
-			dWidth: newWidth,
-			dHeight: newHeight
-		})
+		// Get bounds of the image (without white-space)
+		const bounds = getImageBounds(tempCanvas)
+
+		// Get trimmed dimensions
+		const trimHeight = bounds.bottom - bounds.top
+		const trimWidth = bounds.right - bounds.left
+
+		// Get rescaled dimensions
+		const { divisor, divident } = ratio(trimWidth, trimHeight)
+		const { round, sqrt } = Math
+		const newHeight = round(sqrt((divisor * (targetSize * targetSize)) / divident))
+		const newWidth = round((targetSize * targetSize) / newHeight)
+
+		// TODO: consider clamping the dimensions of transformed image
+
+		// Apply transformations
+		tempCanvas.height = newHeight
+		tempCanvas.width = newWidth
+		tempCtx.drawImage(
+			image,
+			bounds.left,
+			bounds.top,
+			trimWidth,
+			trimHeight,
+			0,
+			0,
+			newWidth,
+			newHeight
+		)
+
+		// Save transformed image in state
+		setImage(tempCanvas)
 	}
-
-	const redraw = useCallback(() => {
-		const canvas = canvasEl.current
-		const ctx = canvas.getContext("2d")
-
-		// clear canvas
-		ctx.clearRect(0, 0, canvas.width, canvas.height)
-
-		if (!bgColor) return
-
-		// repaint background
-		ctx.save()
-		ctx.fillStyle = bgColor
-		ctx.fillRect(0, 0, canvas.width, canvas.height)
-		ctx.restore()
-
-		if (!imageParams) return
-
-		// redraw the image
-		const { image, dx, dy, dWidth, dHeight } = imageParams
-		ctx.drawImage(image, dx, dy, dWidth, dHeight)
-	}, [bgColor, imageParams])
 
 	const onFileChange = () => {
 		const reader = new FileReader()
@@ -105,20 +161,31 @@ const Upload = () => {
 		xhr.send()
 	}
 
-	// Set the drawing surface dimensions to match the canvas
-	useEffect(() => {
-		canvasEl.current.width = canvasEl.current.scrollWidth
-		canvasEl.current.height = canvasEl.current.scrollHeight
-	}, [])
+	const redraw = useCallback(() => {
+		const canvas = canvasEl.current
+		const ctx = canvas.getContext("2d")
 
-	useEffect(() => {
-		redraw(imageParams)
-	}, [imageParams, redraw])
+		// clear canvas
+		ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-	// // Set the fill color that will be used to create the background
-	// useEffect(() => {
-	// 	canvasEl.current.getContext("2d").fillStyle = bgColor
-	// }, [bgColor])
+		// paint background
+		if (!bgColor) return
+		ctx.save()
+		ctx.fillStyle = bgColor
+		ctx.fillRect(0, 0, canvas.width, canvas.height)
+		ctx.restore()
+
+		// draw the image
+		if (!image) return
+
+		ctx.drawImage(
+			image,
+			canvas.width / 2 - image.width / 2,
+			canvas.height / 2 - image.height / 2
+		)
+	}, [bgColor, image])
+
+	useEffect(redraw)
 
 	return (
 		<div className="Upload-outer-container">
