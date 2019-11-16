@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from "react"
+import { HuePicker } from "react-color"
 import "./Upload.scss"
 
 const gcd = (p, q) => {
@@ -13,7 +14,7 @@ const ratio = (a, b) => {
 const Upload = () => {
 	const fileInputEl = useRef()
 	const canvasEl = useRef()
-	const bgColor = useState("#333")
+	const [bgColor, setBgColor] = useState("#333")
 
 	const resetCanvas = () => {
 		const canvas = canvasEl.current
@@ -76,6 +77,10 @@ const Upload = () => {
 		reader.readAsDataURL(file)
 	}
 
+	const onColorChange = (color) => {
+		setBgColor(color.hex)
+	}
+
 	// TODO: improve this
 	const onDownload = () => {
 		const canvasImage = canvasEl.current.toDataURL("image/png")
@@ -109,6 +114,7 @@ const Upload = () => {
 
 	return (
 		<div className="Upload-outer-container">
+			<HuePicker onChangeComplete={onColorChange} color={bgColor} />
 			<div>
 				<input type="file" ref={fileInputEl} onChange={onFileChange} />
 			</div>
