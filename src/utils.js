@@ -104,6 +104,7 @@ export const rescaleImage = (imageCanvas, targetSize) => {
 	const newCanvas = document.createElement("canvas")
 	const newCtx = newCanvas.getContext("2d")
 
+	// TODO: the formula may need some tweaking, as images get larger the farther the aspect ratio gets from 1
 	// Get rescaled dimensions
 	const { round, sqrt } = Math
 	const { divisor, divident } = getRatio(imageCanvas.width, imageCanvas.height)
