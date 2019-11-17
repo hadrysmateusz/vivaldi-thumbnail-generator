@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react"
+import debounce from "lodash.debounce"
 
 import Canvas from "./Canvas"
 import Uploader from "./Uploader"
@@ -45,16 +46,22 @@ function ImageProcessor({ bgColor, targetSize }) {
 		})
 	}, [originalImageUrls])
 
-	// rescale
-	useEffect(() => {
-		if (trimmedImages.length === 0) return
+	const debouncedRescale = useRef(
+		debounce((trimmedImages, targetSize) => {
+			if (trimmedImages.length === 0) return
 
-		const rescaledImages = trimmedImages.map((trimmedImage) => {
-			return rescaleImage(trimmedImage, targetSize)
-		})
+			const rescaledImages = trimmedImages.map((trimmedImage) => {
+				return rescaleImage(trimmedImage, targetSize)
+			})
 
-		setRescaledImages(rescaledImages)
-	}, [trimmedImages, targetSize])
+			setRescaledImages(rescaledImages)
+		}, 150)
+	)
+
+	useEffect(() => debouncedRescale.current(trimmedImages, targetSize), [
+		trimmedImages,
+		targetSize
+	])
 
 	return (
 		<div>
