@@ -9,8 +9,19 @@ function ImageProcessor({ bgColor, targetSize }) {
 	const [originalImageUrls, setOriginalImageUrls] = useState([])
 	const [trimmedImages, setTrimmedImages] = useState([])
 	const [rescaledImages, setRescaledImages] = useState([])
+	const [currentImage, setCurrentImage] = useState(0)
 	const canvasRef = useRef()
 
+	const cycleImages = () => {
+		setCurrentImage((prevState) => {
+			const nextIndex = prevState + 1
+			const numImages = rescaledImages.length
+			console.log(nextIndex, numImages, nextIndex % numImages)
+			return nextIndex % numImages
+		})
+	}
+
+	// trim whitespace
 	useEffect(() => {
 		if (originalImageUrls.length === 0) return
 
@@ -34,19 +45,26 @@ function ImageProcessor({ bgColor, targetSize }) {
 		})
 	}, [originalImageUrls])
 
+	// rescale
 	useEffect(() => {
 		if (trimmedImages.length === 0) return
 
-		trimmedImages.forEach((trimmedImage) => {
-			const rescaledImage = rescaleImage(trimmedImage, targetSize)
-			setRescaledImages((prevState) => [...prevState, rescaledImage])
+		const rescaledImages = trimmedImages.map((trimmedImage) => {
+			return rescaleImage(trimmedImage, targetSize)
 		})
+
+		setRescaledImages(rescaledImages)
 	}, [trimmedImages, targetSize])
 
 	return (
 		<div>
 			<Uploader setImageUrls={setOriginalImageUrls} />
-			<Canvas canvasRef={canvasRef} bgColor={bgColor} image={rescaledImages[0]} />
+			<Canvas
+				canvasRef={canvasRef}
+				bgColor={bgColor}
+				image={rescaledImages[currentImage]}
+				onClick={cycleImages}
+			/>
 		</div>
 	)
 }
