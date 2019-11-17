@@ -7,7 +7,7 @@ import ImageProcessor from "./ImageProcessor"
 
 function Generator() {
 	const [bgColor, setBgColor] = useState("#111")
-	const [targetSize, setTargetSize] = useState(300)
+	const [targetSize, setTargetSize] = useState(250)
 	const canvasRef = useRef()
 
 	return (
