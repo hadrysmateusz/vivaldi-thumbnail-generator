@@ -6,12 +6,11 @@ import Uploader from "./Uploader"
 
 import { trimImageWhitespace, rescaleImage } from "./utils"
 
-function ImageProcessor({ bgColor, targetSize }) {
+function ImageProcessor({ canvasRef, bgColor, targetSize }) {
 	const [originalImageUrls, setOriginalImageUrls] = useState([])
 	const [trimmedImages, setTrimmedImages] = useState([])
 	const [rescaledImages, setRescaledImages] = useState([])
 	const [currentImage, setCurrentImage] = useState(0)
-	const canvasRef = useRef()
 
 	const cycleImages = () => {
 		setCurrentImage((prevState) => {

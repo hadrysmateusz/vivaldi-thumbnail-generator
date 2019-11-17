@@ -14,7 +14,7 @@ function Generator() {
 		<div>
 			<ColorPicker bgColor={bgColor} setBgColor={setBgColor} />
 			<SizePicker targetSize={targetSize} setTargetSize={setTargetSize} />
-			<ImageProcessor bgColor={bgColor} targetSize={targetSize} />
+			<ImageProcessor canvasRef={canvasRef} bgColor={bgColor} targetSize={targetSize} />
 			<Downloader canvasRef={canvasRef} />
 		</div>
 	)
