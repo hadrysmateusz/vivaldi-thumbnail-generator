@@ -1,0 +1,1 @@
+export const VIVALDI_THUMBNAIL_RATIO = 1.22
