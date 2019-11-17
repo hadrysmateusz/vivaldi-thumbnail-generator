@@ -4,7 +4,7 @@ import "react-input-range/lib/css/index.css"
 import throttle from "lodash.throttle"
 
 const SizePicker = ({ targetSize, setTargetSize }) => {
-	const throttledUpdate = throttle(setTargetSize, 200, { leading: true })
+	const throttledUpdate = throttle(setTargetSize, 500, { leading: true })
 
 	const onChange = (value) => {
 		throttledUpdate(value)

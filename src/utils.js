@@ -54,12 +54,11 @@ export const getRatio = (a, b) => {
 }
 
 /**
- * Trims the whitespace from an image and rescales it to be of the target size visually
- * @param {Image} image - Image to be transformed
- * @param {number} targetSize - target size to rescale to
- * @returns A canvas element containing the transformed image
+ * Trims the whitespace from an image
+ * @param {Image} image - Image to be remove whitespace from
+ * @returns A canvas element containing the trimmed image
  */
-export const trimAndRescaleImage = (image, targetSize) => {
+export const trimImageWhitespace = (image) => {
 	// Create temporary canvas
 	const tempCanvas = document.createElement("canvas")
 	const tempCtx = tempCanvas.getContext("2d")
@@ -73,20 +72,12 @@ export const trimAndRescaleImage = (image, targetSize) => {
 	const bounds = getImageBounds(tempCanvas)
 
 	// Get trimmed dimensions
-	const trimHeight = bounds.bottom - bounds.top
 	const trimWidth = bounds.right - bounds.left
-
-	// Get rescaled dimensions
-	const { divisor, divident } = getRatio(trimWidth, trimHeight)
-	const { round, sqrt } = Math
-	const newHeight = round(sqrt((divisor * (targetSize * targetSize)) / divident))
-	const newWidth = round((targetSize * targetSize) / newHeight)
-
-	// TODO: consider clamping the dimensions of transformed image
+	const trimHeight = bounds.bottom - bounds.top
 
 	// Apply transformations
-	tempCanvas.height = newHeight
-	tempCanvas.width = newWidth
+	tempCanvas.width = trimWidth
+	tempCanvas.height = trimHeight
 	tempCtx.drawImage(
 		image,
 		bounds.left,
@@ -95,9 +86,36 @@ export const trimAndRescaleImage = (image, targetSize) => {
 		trimHeight,
 		0,
 		0,
-		newWidth,
-		newHeight
+		trimWidth,
+		trimHeight
 	)
 
 	return tempCanvas
+}
+
+/**
+ * Rescales an image to visually match the target size regardless of its aspect ratio
+ * @param {Image} image - Image to be rescaled
+ * @param {number} targetSize - target size to rescale to
+ * @returns A canvas element containing the rescaled image
+ */
+export const rescaleImage = (imageCanvas, targetSize) => {
+	// Clone the image canvas
+	const newCanvas = document.createElement("canvas")
+	const newCtx = newCanvas.getContext("2d")
+
+	// Get rescaled dimensions
+	const { round, sqrt } = Math
+	const { divisor, divident } = getRatio(imageCanvas.width, imageCanvas.height)
+	const newHeight = round(sqrt((divisor * (targetSize * targetSize)) / divident))
+	const newWidth = round((targetSize * targetSize) / newHeight)
+
+	// TODO: consider clamping the dimensions of transformed image
+
+	// Apply transformations
+	newCanvas.width = newWidth
+	newCanvas.height = newHeight
+	newCtx.drawImage(imageCanvas, 0, 0, newWidth, newHeight)
+
+	return newCanvas
 }

@@ -2,58 +2,37 @@ import React, { useRef } from "react"
 import PropTypes from "prop-types"
 import styles from "./Uploader.module.scss"
 
-import { trimAndRescaleImage } from "./utils"
-
-const Uploader = ({ targetSize, setImage }) => {
-	const fileInputEl = useRef()
-
-	const onImageLoad = (e) => {
-		const editedImage = trimAndRescaleImage(e.target, targetSize)
-		setImage(editedImage)
-	}
-
-	const onImageError = () => {
-		alert("couldn't load image")
-	}
-
-	const onFileLoad = (e) => {
-		const img = new Image()
-		img.src = e.target.result
-		img.onload = onImageLoad
-		img.onerror = onImageError
-	}
-
-	const onFileError = () => {
-		alert("couldn't load file")
-	}
+const Uploader = ({ setImageUrls }) => {
+	const fileInputRef = useRef()
 
 	const onFileChange = () => {
-		const reader = new FileReader()
-		const files = fileInputEl.current.files
-		const file = files[0]
+		const files = fileInputRef.current.files
+		let imageUrls = []
 
-		// verify the file exists and is an image
-		if (!file) return
-		if (!file.type.match("image.*")) return alert("not an image")
+		// if no new files are uploaded, exit silently
+		if (!files || files.length === 0) return
 
-		// set up file reader event handlers
-		reader.onload = onFileLoad
-		reader.onerror = onFileError
+		// for every valid file add an object url to the list
+		for (let file of files) {
+			// if file isn't an image, skip it
+			if (!file.type.match("image.*")) continue
 
-		// read file
-		reader.readAsDataURL(file)
+			imageUrls.push(window.URL.createObjectURL(file))
+		}
+
+		// update the external state
+		setImageUrls(imageUrls)
 	}
 
 	return (
 		<div className={styles.container}>
-			<input type="file" ref={fileInputEl} onChange={onFileChange} />
+			<input type="file" ref={fileInputRef} onChange={onFileChange} multiple />
 		</div>
 	)
 }
 
 Uploader.propTypes = {
-	targetSize: PropTypes.number.isRequired,
-	setImage: PropTypes.func.isRequired
+	setImageUrls: PropTypes.func.isRequired
 }
 
 export default Uploader
