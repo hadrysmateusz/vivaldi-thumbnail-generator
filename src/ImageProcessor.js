@@ -38,6 +38,9 @@ function ImageProcessor({ bgColor, targetSize }) {
 			alert("couldn't load image")
 		}
 
+		// clear previous images
+		setTrimmedImages([])
+
 		originalImageUrls.forEach((imageUrl) => {
 			const img = new Image()
 			img.src = imageUrl
