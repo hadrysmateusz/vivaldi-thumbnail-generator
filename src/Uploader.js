@@ -2,8 +2,30 @@ import React, { useRef } from "react"
 import PropTypes from "prop-types"
 import styles from "./Uploader.module.scss"
 
-const Uploader = ({ onImageLoad }) => {
+import { trimAndRescaleImage } from "./utils"
+
+const Uploader = ({ targetSize, setImage }) => {
 	const fileInputEl = useRef()
+
+	const onImageLoad = (e) => {
+		const editedImage = trimAndRescaleImage(e.target, targetSize)
+		setImage(editedImage)
+	}
+
+	const onImageError = () => {
+		alert("couldn't load image")
+	}
+
+	const onFileLoad = (e) => {
+		const img = new Image()
+		img.src = e.target.result
+		img.onload = onImageLoad
+		img.onerror = onImageError
+	}
+
+	const onFileError = () => {
+		alert("couldn't load file")
+	}
 
 	const onFileChange = () => {
 		const reader = new FileReader()
@@ -14,14 +36,11 @@ const Uploader = ({ onImageLoad }) => {
 		if (!file) return
 		if (!file.type.match("image.*")) return alert("not an image")
 
-		// when the file is loaded, initiate processing
-		reader.addEventListener("load", () => {
-			const img = new Image()
-			img.src = reader.result
-			img.onload = onImageLoad
-			img.onerror = () => alert("couldn't load image")
-		})
+		// set up file reader event handlers
+		reader.onload = onFileLoad
+		reader.onerror = onFileError
 
+		// read file
 		reader.readAsDataURL(file)
 	}
 
@@ -33,7 +52,8 @@ const Uploader = ({ onImageLoad }) => {
 }
 
 Uploader.propTypes = {
-	onImageLoad: PropTypes.func.isRequired
+	targetSize: PropTypes.number.isRequired,
+	setImage: PropTypes.func.isRequired
 }
 
 export default Uploader
