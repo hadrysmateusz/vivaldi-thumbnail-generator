@@ -1,10 +1,14 @@
 import React from "react"
-import "./App.scss"
+import styles from "./App.module.scss"
 
-import Upload from "./Upload.js"
+import Generator from "./Generator"
 
 function App() {
-	return <Upload />
+	return (
+		<div className={styles.container}>
+			<Generator />
+		</div>
+	)
 }
 
 export default App
