@@ -13,7 +13,7 @@ const SizePicker = ({ targetSize, setTargetSize }) => {
 	return (
 		<div style={{ margin: "30px 0" }}>
 			{/* TODO: base the min and max values on the canvas size */}
-			<InputRange maxValue={400} minValue={20} value={targetSize} onChange={onChange} />
+			<InputRange maxValue={450} minValue={50} value={targetSize} onChange={onChange} />
 		</div>
 	)
 }
