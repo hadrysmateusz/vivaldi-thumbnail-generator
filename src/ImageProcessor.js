@@ -3,7 +3,6 @@ import debounce from "lodash.debounce"
 
 import Canvas from "./Canvas"
 import Uploader from "./Uploader"
-import Thumbnails from "./Thumbnails"
 
 import { trimImageWhitespace, rescaleImage } from "./utils"
 
@@ -68,8 +67,7 @@ function ImageProcessor({ canvasRef, bgColor, targetSize }) {
 
 	return (
 		<div>
-			<Uploader setImageUrls={setOriginalImageUrls} />
-			<Thumbnails imageUrls={originalImageUrls} />
+			<Uploader setImageUrls={setOriginalImageUrls} imageUrls={originalImageUrls} />
 			<Canvas
 				canvasRef={canvasRef}
 				bgColor={bgColor}
