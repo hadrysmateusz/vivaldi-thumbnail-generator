@@ -21,7 +21,7 @@ const Uploader = ({ setImageUrls }) => {
 		}
 
 		// update the external state
-		setImageUrls(imageUrls)
+		setImageUrls((prevState) => [...prevState, ...imageUrls])
 	}
 
 	return (
