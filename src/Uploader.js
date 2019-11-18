@@ -26,6 +26,10 @@ const Uploader = ({ setImageUrls, imageUrls }) => {
 		setImageUrls((prevState) => [...prevState, ...imageUrls])
 	}
 
+	const onClear = () => {
+		setImageUrls([])
+	}
+
 	const { getRootProps, getInputProps, isDragActive, rootRef, open } = useDropzone({
 		onDrop,
 		accept: ""
@@ -33,10 +37,11 @@ const Uploader = ({ setImageUrls, imageUrls }) => {
 
 	return (
 		<div className={styles.container}>
+			<button onClick={open}>Add</button>
+			<button onClick={onClear}>Clear</button>
 			<div {...getRootProps({ style: { height: "200px", border: "1px dashed" } })}>
-				<Thumbnails imageUrls={imageUrls} />
-
 				<input {...getInputProps()} />
+				<Thumbnails imageUrls={imageUrls} />
 			</div>
 		</div>
 	)
