@@ -1,12 +1,12 @@
 import React from "react"
 import styles from "./App.module.scss"
 
-import Generator from "./Generator"
+import ThumbnailGenerator from "./ThumbnailGenerator"
 
 function App() {
 	return (
 		<div className={styles.container}>
-			<Generator />
+			<ThumbnailGenerator />
 		</div>
 	)
 }
