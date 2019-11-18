@@ -6,7 +6,7 @@ import SizePicker from "./SizePicker"
 import ImageProcessor from "./ImageProcessor"
 
 function ThumbnailGenerator() {
-	const [bgColor, setBgColor] = useState("#111")
+	const [bgColor, setBgColor] = useState("white")
 	const [targetSize, setTargetSize] = useState(300)
 	const canvasRef = useRef()
 
