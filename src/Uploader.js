@@ -32,7 +32,8 @@ const Uploader = ({ setImageUrls, imageUrls }) => {
 
 	const { getRootProps, getInputProps, isDragActive, rootRef, open } = useDropzone({
 		onDrop,
-		accept: ""
+		accept: "",
+		noClick: true
 	})
 
 	return (

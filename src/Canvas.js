@@ -2,7 +2,7 @@ import React, { useEffect, useCallback } from "react"
 
 import styles from "./Canvas.module.scss"
 
-const Canvas = ({ canvasRef, bgColor, image, onClick }) => {
+const Canvas = ({ canvasRef, bgColor, image }) => {
 	// Set the drawing surface dimensions to match the canvas
 	useEffect(() => {
 		canvasRef.current.width = canvasRef.current.scrollWidth
@@ -36,7 +36,7 @@ const Canvas = ({ canvasRef, bgColor, image, onClick }) => {
 	useEffect(redraw)
 
 	return (
-		<div onClick={onClick}>
+		<div>
 			<canvas className={styles.canvas} ref={canvasRef} />
 		</div>
 	)

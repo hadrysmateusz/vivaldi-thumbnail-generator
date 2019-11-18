@@ -12,12 +12,19 @@ function ImageProcessor({ canvasRef, bgColor, targetSize }) {
 	const [rescaledImages, setRescaledImages] = useState([])
 	const [currentImage, setCurrentImage] = useState(0)
 
-	const cycleImages = () => {
+	const next = () => {
 		setCurrentImage((prevState) => {
-			const nextIndex = prevState + 1
+			const newIndex = prevState + 1
 			const numImages = rescaledImages.length
-			console.log(nextIndex, numImages, nextIndex % numImages)
-			return nextIndex % numImages
+			return newIndex % numImages
+		})
+	}
+
+	const prev = () => {
+		setCurrentImage((prevState) => {
+			const newIndex = prevState - 1
+			const numImages = rescaledImages.length
+			return newIndex >= 0 ? newIndex : numImages - 1
 		})
 	}
 
@@ -72,8 +79,9 @@ function ImageProcessor({ canvasRef, bgColor, targetSize }) {
 				canvasRef={canvasRef}
 				bgColor={bgColor}
 				image={rescaledImages[currentImage]}
-				onClick={cycleImages}
 			/>
+			<button onClick={prev}>Previous</button>
+			<button onClick={next}>Next</button>
 		</div>
 	)
 }
