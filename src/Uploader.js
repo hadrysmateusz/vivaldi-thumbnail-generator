@@ -1,19 +1,20 @@
-import React, { useRef } from "react"
+import React from "react"
 import PropTypes from "prop-types"
 import styles from "./Uploader.module.scss"
+import { useDropzone } from "react-dropzone"
 
 const Uploader = ({ setImageUrls }) => {
-	const fileInputRef = useRef()
-
-	const onFileChange = () => {
-		const files = fileInputRef.current.files
+	const onDrop = (acceptedFiles) => {
 		let imageUrls = []
 
 		// if no new files are uploaded, exit silently
-		if (!files || files.length === 0) return
+		if (!acceptedFiles || acceptedFiles.length === 0) {
+			// TODO: let the user know what happened
+			return
+		}
 
 		// for every valid file add an object url to the list
-		for (let file of files) {
+		for (let file of acceptedFiles) {
 			// if file isn't an image, skip it
 			if (!file.type.match("image.*")) continue
 
@@ -24,9 +25,16 @@ const Uploader = ({ setImageUrls }) => {
 		setImageUrls((prevState) => [...prevState, ...imageUrls])
 	}
 
+	const { getRootProps, getInputProps, isDragActive, rootRef, open } = useDropzone({
+		onDrop,
+		accept: ""
+	})
+
 	return (
 		<div className={styles.container}>
-			<input type="file" ref={fileInputRef} onChange={onFileChange} multiple />
+			<div {...getRootProps({ style: { height: "200px", border: "1px dashed" } })}>
+				<input {...getInputProps()} />
+			</div>
 		</div>
 	)
 }
