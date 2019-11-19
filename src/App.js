@@ -1,13 +1,18 @@
 import React from "react"
-import styles from "./App.module.scss"
+import styled from "styled-components"
 
 import ThumbnailGenerator from "./ThumbnailGenerator"
 
+const Container = styled.div`
+	max-width: 793px;
+	margin: 100px auto;
+`
+
 function App() {
 	return (
-		<div className={styles.container}>
+		<Container>
 			<ThumbnailGenerator />
-		</div>
+		</Container>
 	)
 }
 

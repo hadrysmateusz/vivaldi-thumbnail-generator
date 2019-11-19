@@ -1,6 +1,5 @@
 import React from "react"
 import PropTypes from "prop-types"
-import styles from "./Uploader.module.scss"
 import { useDropzone } from "react-dropzone"
 import Thumbnails from "./Thumbnails"
 
@@ -37,7 +36,7 @@ const Uploader = ({ setImageUrls, imageUrls }) => {
 	})
 
 	return (
-		<div className={styles.container}>
+		<div>
 			<button onClick={open}>Add</button>
 			<button onClick={onClear}>Clear</button>
 			<div {...getRootProps({ style: { height: "200px", border: "1px dashed" } })}>

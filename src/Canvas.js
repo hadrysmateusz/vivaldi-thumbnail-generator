@@ -1,6 +1,13 @@
 import React, { useEffect, useCallback } from "react"
+import styled from "styled-components"
 
-import styles from "./Canvas.module.scss"
+const StyledCanvas = styled.canvas`
+	width: 793px;
+	height: 650px;
+
+	border-radius: 5px;
+	box-shadow: 0 3px 16px rgba(0, 0, 0, 0.1);
+`
 
 const Canvas = ({ canvasRef, bgColor, image }) => {
 	// Set the drawing surface dimensions to match the canvas
@@ -37,7 +44,7 @@ const Canvas = ({ canvasRef, bgColor, image }) => {
 
 	return (
 		<div>
-			<canvas className={styles.canvas} ref={canvasRef} />
+			<StyledCanvas ref={canvasRef} />
 		</div>
 	)
 }
