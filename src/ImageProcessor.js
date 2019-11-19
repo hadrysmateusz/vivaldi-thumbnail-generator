@@ -74,14 +74,14 @@ function ImageProcessor({ canvasRef, bgColor, targetSize }) {
 
 	return (
 		<div>
-			<Uploader setImageUrls={setOriginalImageUrls} imageUrls={originalImageUrls} />
+			<button onClick={prev}>Previous</button>
+			<button onClick={next}>Next</button>
 			<Canvas
 				canvasRef={canvasRef}
 				bgColor={bgColor}
 				image={rescaledImages[currentImage]}
 			/>
-			<button onClick={prev}>Previous</button>
-			<button onClick={next}>Next</button>
+			<Uploader setImageUrls={setOriginalImageUrls} imageUrls={originalImageUrls} />
 		</div>
 	)
 }
