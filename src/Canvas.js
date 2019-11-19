@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback } from "react"
-import styled from "styled-components"
+import styled from "styled-components/macro"
 
 const StyledCanvas = styled.canvas`
 	width: 793px;
