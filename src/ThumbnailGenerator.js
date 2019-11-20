@@ -16,8 +16,8 @@ function ThumbnailGenerator() {
 			<InnerContainer>
 				<Headline>Vivaldi Thumbnail Generator</Headline>
 				<Description>
-					Quickly and painlessly generate thumbnails for use in Vivaldi Browser’s Speed
-					Dials
+					Quickly and effortlessly generate thumbnails for use in{" "}
+					<a href="https://vivaldi.com/">Vivaldi Browser’s</a> Speed Dials
 				</Description>
 				<ImageProcessor canvasRef={canvasRef} bgColor={bgColor} targetSize={targetSize} />
 				<SizePicker targetSize={targetSize} setTargetSize={setTargetSize} />
@@ -63,6 +63,11 @@ const Description = styled.p`
 	text-align: center;
 	color: white;
 	text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
+
+	a,
+	a:visited {
+		color: inherit;
+	}
 `
 
 export default ThumbnailGenerator
