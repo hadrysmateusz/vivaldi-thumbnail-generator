@@ -4,7 +4,7 @@ import { useDropzone } from "react-dropzone"
 import styled from "styled-components"
 import { overlay, center } from "./styleUtils"
 import Button from "./Button"
-import Thumbnails from "./Thumbnails"
+import FileDrawer from "./FileDrawer"
 
 const FileManager = ({ setImageUrls, imageUrls }) => {
 	const [modalIsOpen, setModalIsOpen] = useState(false)
@@ -42,11 +42,13 @@ const FileManager = ({ setImageUrls, imageUrls }) => {
 		setModalIsOpen(false)
 	}
 
-	const { getRootProps, getInputProps, open, isDragActive } = useDropzone({
-		onDrop,
-		accept: "",
-		noClick: true
-	})
+	const { getRootProps, getInputProps, open: openFileDialog, isDragActive } = useDropzone(
+		{
+			onDrop,
+			accept: "",
+			noClick: true
+		}
+	)
 
 	const hasFiles = imageUrls && imageUrls.length > 0
 
@@ -56,7 +58,7 @@ const FileManager = ({ setImageUrls, imageUrls }) => {
 			<input {...getInputProps()} />
 			{/* buttons */}
 			<ButtonsContainer>
-				<Button onClick={open} variant="primary">
+				<Button onClick={openFileDialog} variant="primary">
 					Add Files
 				</Button>
 				<DropText>or drop files here</DropText>
@@ -71,19 +73,12 @@ const FileManager = ({ setImageUrls, imageUrls }) => {
 			</ButtonsContainer>
 			{/* modal */}
 			{modalIsOpen && (
-				<ModalContainer>
-					<Thumbnails imageUrls={imageUrls} />
-					<ButtonsContainer>
-						<Button onClick={open} variant="primary">
-							Add Files
-						</Button>
-						<DropText>or drop files here</DropText>
-						<Button onClick={closeModal}>Close</Button>
-						<Button onClick={onClear} variant="danger">
-							Clear
-						</Button>
-					</ButtonsContainer>
-				</ModalContainer>
+				<FileDrawer
+					closeModal={closeModal}
+					imageUrls={imageUrls}
+					setImageUrls={setImageUrls}
+					openFileDialog={openFileDialog}
+				/>
 			)}
 			{/* drag overlay */}
 			{isDragActive && <Overlay>Drop here to add</Overlay>}
@@ -94,11 +89,6 @@ const FileManager = ({ setImageUrls, imageUrls }) => {
 FileManager.propTypes = {
 	setImageUrls: PropTypes.func.isRequired
 }
-
-const ModalContainer = styled.div`
-	${overlay}
-	background: white;
-`
 
 const DropText = styled.div`
 	font-size: 14px;
