@@ -17,7 +17,7 @@ const directions = {
 const StyledButton = styled.button`
 	top: calc(50% - ${(p) => p.size});
 	position: absolute;
-	${(p) => p.direction}: 32px;
+	${(p) => p.direction}: 24px;
 	display: flex;
 	justify-content: center;
 	align-items: center;

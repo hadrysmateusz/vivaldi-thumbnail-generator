@@ -1,10 +1,5 @@
 import React, { useEffect, useCallback } from "react"
 import styled from "styled-components/macro"
-import ArrowButton from "./ArrowButton"
-
-const Container = styled.div`
-	position: relative;
-`
 
 const StyledCanvas = styled.canvas`
 	width: 793px;
@@ -47,13 +42,7 @@ const Canvas = ({ canvasRef, bgColor, image }) => {
 
 	useEffect(redraw)
 
-	return (
-		<Container>
-			<ArrowButton direction="left" />
-			<ArrowButton direction="right" />
-			<StyledCanvas ref={canvasRef} />
-		</Container>
-	)
+	return <StyledCanvas ref={canvasRef} />
 }
 
 export default Canvas

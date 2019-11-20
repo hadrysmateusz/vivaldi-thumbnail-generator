@@ -1,10 +1,16 @@
 import React, { useState, useRef, useEffect } from "react"
 import debounce from "lodash.debounce"
+import styled from "styled-components"
 
 import Canvas from "./Canvas"
 import Uploader from "./Uploader"
+import ArrowButton from "./ArrowButton"
 
 import { trimImageWhitespace, rescaleImage } from "./utils"
+
+const InnerContainer = styled.div`
+	position: relative;
+`
 
 function ImageProcessor({ canvasRef, bgColor, targetSize }) {
 	const [originalImageUrls, setOriginalImageUrls] = useState([])
@@ -74,13 +80,15 @@ function ImageProcessor({ canvasRef, bgColor, targetSize }) {
 
 	return (
 		<div>
-			<button onClick={prev}>Previous</button>
-			<button onClick={next}>Next</button>
-			<Canvas
-				canvasRef={canvasRef}
-				bgColor={bgColor}
-				image={rescaledImages[currentImage]}
-			/>
+			<InnerContainer>
+				<ArrowButton direction="right" onClick={next} />
+				<ArrowButton direction="left" onClick={prev} />
+				<Canvas
+					canvasRef={canvasRef}
+					bgColor={bgColor}
+					image={rescaledImages[currentImage]}
+				/>
+			</InnerContainer>
 			<Uploader setImageUrls={setOriginalImageUrls} imageUrls={originalImageUrls} />
 		</div>
 	)
