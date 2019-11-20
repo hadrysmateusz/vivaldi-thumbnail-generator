@@ -12,9 +12,9 @@ function ThumbnailGenerator() {
 
 	return (
 		<div>
-			<ColorPicker bgColor={bgColor} setBgColor={setBgColor} />
-			<SizePicker targetSize={targetSize} setTargetSize={setTargetSize} />
 			<ImageProcessor canvasRef={canvasRef} bgColor={bgColor} targetSize={targetSize} />
+			<SizePicker targetSize={targetSize} setTargetSize={setTargetSize} />
+			<ColorPicker bgColor={bgColor} setBgColor={setBgColor} />
 			<Downloader canvasRef={canvasRef} />
 		</div>
 	)
