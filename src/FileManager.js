@@ -3,7 +3,7 @@ import PropTypes from "prop-types"
 import { useDropzone } from "react-dropzone"
 import styled from "styled-components"
 import { overlay, center } from "./styleUtils"
-import Button from "./Buttons"
+import Button from "./Button"
 
 const Uploader = ({ setImageUrls }) => {
 	const onDrop = (acceptedFiles) => {

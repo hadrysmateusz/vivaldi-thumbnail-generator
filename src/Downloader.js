@@ -1,4 +1,5 @@
 import React from "react"
+import Button from "./Button"
 
 const Downloader = ({ canvasRef }) => {
 	// TODO: improve this
@@ -22,8 +23,8 @@ const Downloader = ({ canvasRef }) => {
 	}
 
 	return (
-		<div>
-			<button onClick={onDownload}>Download</button>
+		<div style={{ margin: "32px 0" }}>
+			<Button onClick={onDownload}>Download</Button>
 		</div>
 	)
 }
