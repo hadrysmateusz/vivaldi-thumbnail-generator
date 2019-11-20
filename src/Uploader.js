@@ -20,7 +20,7 @@ const Overlay = styled.div`
 	text-transform: uppercase;
 `
 
-const Uploader = ({ setImageUrls, imageUrls }) => {
+const Uploader = ({ setImageUrls }) => {
 	const onDrop = (acceptedFiles) => {
 		let imageUrls = []
 

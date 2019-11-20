@@ -11,7 +11,7 @@ const StyledCanvas = styled.canvas`
 	box-shadow: 0 3px 16px rgba(0, 0, 0, 0.1);
 `
 
-const Canvas = ({ canvasRef, bgColor, image }) => {
+const Preview = ({ canvasRef, bgColor, image }) => {
 	// Set the drawing surface dimensions to match the canvas
 	useEffect(() => {
 		canvasRef.current.width = canvasRef.current.scrollWidth
@@ -47,4 +47,4 @@ const Canvas = ({ canvasRef, bgColor, image }) => {
 	return <StyledCanvas ref={canvasRef} />
 }
 
-export default Canvas
+export default Preview
