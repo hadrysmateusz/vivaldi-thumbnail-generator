@@ -48,6 +48,8 @@ const FileManager = ({ setImageUrls, imageUrls }) => {
 		noClick: true
 	})
 
+	const hasFiles = imageUrls && imageUrls.length > 0
+
 	return (
 		<DropzoneContainer {...getRootProps()}>
 			{/* input */}
@@ -58,16 +60,29 @@ const FileManager = ({ setImageUrls, imageUrls }) => {
 					Add Files
 				</Button>
 				<DropText>or drop files here</DropText>
-				<Button onClick={openModal}>Manage Files</Button>
-				<Button onClick={onClear} variant="danger">
-					Clear
-				</Button>
+				{hasFiles && (
+					<>
+						<Button onClick={openModal}>Manage Files</Button>
+						<Button onClick={onClear} variant="danger">
+							Clear
+						</Button>
+					</>
+				)}
 			</ButtonsContainer>
 			{/* modal */}
 			{modalIsOpen && (
 				<ModalContainer>
 					<Thumbnails imageUrls={imageUrls} />
-					<button onClick={closeModal}>Close</button>
+					<ButtonsContainer>
+						<Button onClick={open} variant="primary">
+							Add Files
+						</Button>
+						<DropText>or drop files here</DropText>
+						<Button onClick={closeModal}>Close</Button>
+						<Button onClick={onClear} variant="danger">
+							Clear
+						</Button>
+					</ButtonsContainer>
 				</ModalContainer>
 			)}
 			{/* drag overlay */}
