@@ -19,7 +19,7 @@ export const SettingsEditor = () => {
 
 export const SettingsProvider = ({ children }) => {
 	const [bgColor, setBgColor] = useState("white")
-	const [targetSize, setTargetSize] = useState(300)
+	const [targetSize, setTargetSize] = useState(260)
 
 	return (
 		<SettingsContext.Provider
