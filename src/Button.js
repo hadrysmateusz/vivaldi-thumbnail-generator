@@ -20,6 +20,7 @@ const buttonVariants = {
 		background: white;
 		color: #e14f4f;
 		:hover {
+			background: #fcfcfc;
 			color: #e01818;
 		}
 	`
