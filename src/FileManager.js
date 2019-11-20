@@ -1,13 +1,16 @@
-import React from "react"
+import React, { useState } from "react"
 import PropTypes from "prop-types"
 import { useDropzone } from "react-dropzone"
 import styled from "styled-components"
 import { overlay, center } from "./styleUtils"
 import Button from "./Button"
+import Thumbnails from "./Thumbnails"
 
-const Uploader = ({ setImageUrls }) => {
+const FileManager = ({ setImageUrls, imageUrls }) => {
+	const [modalIsOpen, setModalIsOpen] = useState(false)
+
 	const onDrop = (acceptedFiles) => {
-		let imageUrls = []
+		let newImageUrls = []
 
 		// if no new files are uploaded, exit silently
 		if (!acceptedFiles || acceptedFiles.length === 0) {
@@ -20,18 +23,24 @@ const Uploader = ({ setImageUrls }) => {
 			// if file isn't an image, skip it
 			if (!file.type.match("image.*")) continue
 
-			imageUrls.push(window.URL.createObjectURL(file))
+			newImageUrls.push(window.URL.createObjectURL(file))
 		}
 
 		// update the external state
-		setImageUrls((prevState) => [...prevState, ...imageUrls])
+		setImageUrls((prevState) => [...prevState, ...newImageUrls])
 	}
 
 	const onClear = () => {
 		setImageUrls([])
 	}
 
-	const openManager = () => {}
+	const openModal = () => {
+		setModalIsOpen(true)
+	}
+
+	const closeModal = () => {
+		setModalIsOpen(false)
+	}
 
 	const { getRootProps, getInputProps, open, isDragActive } = useDropzone({
 		onDrop,
@@ -49,20 +58,32 @@ const Uploader = ({ setImageUrls }) => {
 					Add Files
 				</Button>
 				<DropText>or drop files here</DropText>
-				<Button onClick={openManager}>Manage Files</Button>
+				<Button onClick={openModal}>Manage Files</Button>
 				<Button onClick={onClear} variant="danger">
 					Clear
 				</Button>
 			</ButtonsContainer>
+			{/* modal */}
+			{modalIsOpen && (
+				<ModalContainer>
+					<Thumbnails imageUrls={imageUrls} />
+					<button onClick={closeModal}>Close</button>
+				</ModalContainer>
+			)}
 			{/* drag overlay */}
 			{isDragActive && <Overlay>Drop here to add</Overlay>}
 		</DropzoneContainer>
 	)
 }
 
-Uploader.propTypes = {
+FileManager.propTypes = {
 	setImageUrls: PropTypes.func.isRequired
 }
+
+const ModalContainer = styled.div`
+	${overlay}
+	background: white;
+`
 
 const DropText = styled.div`
 	font-size: 14px;
@@ -101,4 +122,4 @@ const ButtonsContainer = styled.div`
 	gap: 20px;
 `
 
-export default Uploader
+export default FileManager

@@ -10,6 +10,9 @@ import { trimImageWhitespace, rescaleImage } from "./utils"
 
 const Container = styled.div`
 	position: relative;
+	border-radius: 5px;
+	overflow: hidden;
+	box-shadow: 0 3px 16px rgba(0, 0, 0, 0.1);
 `
 
 function ImageProcessor({ canvasRef, bgColor, targetSize }) {
@@ -67,7 +70,7 @@ function ImageProcessor({ canvasRef, bgColor, targetSize }) {
 				bgColor={bgColor}
 				image={rescaledImages[currentImage]}
 			/>
-			<FileManager setImageUrls={setOriginalImageUrls} />
+			<FileManager setImageUrls={setOriginalImageUrls} imageUrls={originalImageUrls} />
 			<NavigationButtons images={rescaledImages} setCurrentImage={setCurrentImage} />
 		</Container>
 	)

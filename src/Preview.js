@@ -6,9 +6,6 @@ const StyledCanvas = styled.canvas`
 
 	width: 793px;
 	height: 650px;
-
-	border-radius: 5px;
-	box-shadow: 0 3px 16px rgba(0, 0, 0, 0.1);
 `
 
 const Preview = ({ canvasRef, bgColor, image }) => {
