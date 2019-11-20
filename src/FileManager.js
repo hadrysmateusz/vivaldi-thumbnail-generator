@@ -3,22 +3,7 @@ import PropTypes from "prop-types"
 import { useDropzone } from "react-dropzone"
 import styled from "styled-components"
 import { overlay, center } from "./styleUtils"
-
-const DropzoneContainer = styled.div`
-	${overlay}
-`
-
-const Overlay = styled.div`
-	${overlay}
-	${center}
-	z-index: 80;
-	background: rgba(0, 0, 0, 0.36);
-	color: white;
-	font-size: 1.6em;
-	font-weight: bold;
-	letter-spacing: 0.05em;
-	text-transform: uppercase;
-`
+import Button from "./Buttons"
 
 const Uploader = ({ setImageUrls }) => {
 	const onDrop = (acceptedFiles) => {
@@ -46,6 +31,8 @@ const Uploader = ({ setImageUrls }) => {
 		setImageUrls([])
 	}
 
+	const openManager = () => {}
+
 	const { getRootProps, getInputProps, open, isDragActive } = useDropzone({
 		onDrop,
 		accept: "",
@@ -54,9 +41,20 @@ const Uploader = ({ setImageUrls }) => {
 
 	return (
 		<DropzoneContainer {...getRootProps()}>
+			{/* input */}
 			<input {...getInputProps()} />
-			<button onClick={open}>Add</button>
-			<button onClick={onClear}>Clear</button>
+			{/* buttons */}
+			<ButtonsContainer>
+				<Button onClick={open} variant="primary">
+					Add Files
+				</Button>
+				<DropText>or drop files here</DropText>
+				<Button onClick={openManager}>Manage Files</Button>
+				<Button onClick={onClear} variant="danger">
+					Clear
+				</Button>
+			</ButtonsContainer>
+			{/* drag overlay */}
 			{isDragActive && <Overlay>Drop here to add</Overlay>}
 		</DropzoneContainer>
 	)
@@ -65,5 +63,42 @@ const Uploader = ({ setImageUrls }) => {
 Uploader.propTypes = {
 	setImageUrls: PropTypes.func.isRequired
 }
+
+const DropText = styled.div`
+	font-size: 14px;
+	line-height: 18px;
+	letter-spacing: 0.015em;
+	color: #888888;
+	cursor: default;
+`
+
+const DropzoneContainer = styled.div`
+	${overlay}
+`
+
+const Overlay = styled.div`
+	${overlay}
+	${center}
+	z-index: 80;
+	background: rgba(0, 0, 0, 0.36);
+	color: white;
+	font-size: 1.6em;
+	font-weight: bold;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+`
+
+const ButtonsContainer = styled.div`
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	padding: 0 20px 20px 20px;
+	display: grid;
+	width: 100%;
+	grid-auto-flow: column;
+	grid-template-columns: auto 1fr auto auto;
+	align-items: center;
+	gap: 20px;
+`
 
 export default Uploader

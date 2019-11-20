@@ -3,7 +3,7 @@ import debounce from "lodash.debounce"
 import styled from "styled-components"
 
 import Preview from "./Preview"
-import Uploader from "./Uploader"
+import FileManager from "./FileManager"
 import NavigationButtons from "./NavigationButtons"
 
 import { trimImageWhitespace, rescaleImage } from "./utils"
@@ -67,7 +67,7 @@ function ImageProcessor({ canvasRef, bgColor, targetSize }) {
 				bgColor={bgColor}
 				image={rescaledImages[currentImage]}
 			/>
-			<Uploader setImageUrls={setOriginalImageUrls} />
+			<FileManager setImageUrls={setOriginalImageUrls} />
 			<NavigationButtons images={rescaledImages} setCurrentImage={setCurrentImage} />
 		</Container>
 	)
