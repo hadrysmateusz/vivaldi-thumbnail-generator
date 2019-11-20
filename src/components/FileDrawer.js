@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { overlay } from "./styleUtils"
+import { overlay } from "../styleUtils"
 import Button from "./Button"
 import FileItem from "./FileItem"
 

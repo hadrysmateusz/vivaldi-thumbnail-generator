@@ -2,7 +2,7 @@ import React, { useState } from "react"
 import PropTypes from "prop-types"
 import { useDropzone } from "react-dropzone"
 import styled from "styled-components"
-import { overlay, center } from "./styleUtils"
+import { overlay, center } from "../styleUtils"
 import Button from "./Button"
 import FileDrawer from "./FileDrawer"
 

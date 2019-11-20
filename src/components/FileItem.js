@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components"
-import { overlay, center } from "./styleUtils"
+import { overlay, center } from "../styleUtils"
 
 const FileItem = ({ imageUrl, removeItem }) => {
 	return (

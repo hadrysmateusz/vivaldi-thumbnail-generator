@@ -6,7 +6,7 @@ import Preview from "./Preview"
 import FileManager from "./FileManager"
 import NavigationButtons from "./NavigationButtons"
 import { SettingsContext } from "./Settings"
-import { trimImageWhitespace, rescaleImage } from "./utils"
+import { trimImageWhitespace, rescaleImage } from "../utils"
 
 const Container = styled.div`
 	position: relative;
