@@ -1,11 +1,14 @@
 import React from "react"
 import styled from "styled-components"
-import { overlay, center } from "../styleUtils"
+import { center } from "../styleUtils"
+import { ReactComponent as TrashIcon } from "../assets/trash.svg"
 
 const FileItem = ({ imageUrl, removeItem }) => {
 	return (
 		<Container imageUrl={imageUrl}>
-			<Overlay onClick={() => removeItem(imageUrl)}>X</Overlay>
+			<RemoveContainer onClick={() => removeItem(imageUrl)}>
+				<TrashIcon width="24px" height="24px" title="Remove" />
+			</RemoveContainer>
 		</Container>
 	)
 }
@@ -25,12 +28,27 @@ const Container = styled.div`
 	overflow: hidden;
 `
 
-const Overlay = styled.div`
-	${overlay}
+const RemoveContainer = styled.div`
 	${center}
-	background: rgba(0, 0, 0, 0.08);
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	width: 48px;
+	height: 48px;
+	border-top-left-radius: 5px;
+	background: white;
 	font-size: 30px;
 	font-weight: bold;
+	cursor: pointer;
+	transition: opacity 200ms ease;
+	opacity: 0.7;
+
+	&:hover {
+		opacity: 1;
+		path {
+			fill: #101010;
+		}
+	}
 `
 
 export default FileItem
