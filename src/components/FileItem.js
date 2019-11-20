@@ -41,7 +41,7 @@ const RemoveContainer = styled.div`
 	font-weight: bold;
 	cursor: pointer;
 	transition: opacity 200ms ease;
-	opacity: 0.7;
+	opacity: 0.76;
 
 	&:hover {
 		opacity: 1;
