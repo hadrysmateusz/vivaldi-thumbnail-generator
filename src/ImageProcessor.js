@@ -8,7 +8,7 @@ import ArrowButton from "./ArrowButton"
 
 import { trimImageWhitespace, rescaleImage } from "./utils"
 
-const InnerContainer = styled.div`
+const Container = styled.div`
 	position: relative;
 `
 
@@ -36,8 +36,6 @@ function ImageProcessor({ canvasRef, bgColor, targetSize }) {
 
 	// trim whitespace
 	useEffect(() => {
-		if (originalImageUrls.length === 0) return
-
 		// trim the image whitespace
 		const onImageLoad = (e) => {
 			const image = e.target
@@ -63,8 +61,6 @@ function ImageProcessor({ canvasRef, bgColor, targetSize }) {
 
 	const debouncedRescale = useRef(
 		debounce((trimmedImages, targetSize) => {
-			if (trimmedImages.length === 0) return
-
 			const rescaledImages = trimmedImages.map((trimmedImage) => {
 				return rescaleImage(trimmedImage, targetSize)
 			})
@@ -78,19 +74,23 @@ function ImageProcessor({ canvasRef, bgColor, targetSize }) {
 		targetSize
 	])
 
+	const hasMultipleImages = rescaledImages && rescaledImages.length > 1
+
 	return (
-		<div>
-			<InnerContainer>
-				<ArrowButton direction="right" onClick={next} />
-				<ArrowButton direction="left" onClick={prev} />
-				<Canvas
-					canvasRef={canvasRef}
-					bgColor={bgColor}
-					image={rescaledImages[currentImage]}
-				/>
-			</InnerContainer>
+		<Container>
+			<Canvas
+				canvasRef={canvasRef}
+				bgColor={bgColor}
+				image={rescaledImages[currentImage]}
+			/>
 			<Uploader setImageUrls={setOriginalImageUrls} imageUrls={originalImageUrls} />
-		</div>
+			{hasMultipleImages && (
+				<>
+					<ArrowButton direction="right" onClick={next} />
+					<ArrowButton direction="left" onClick={prev} />
+				</>
+			)}
+		</Container>
 	)
 }
 

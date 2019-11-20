@@ -2,6 +2,8 @@ import React, { useEffect, useCallback } from "react"
 import styled from "styled-components/macro"
 
 const StyledCanvas = styled.canvas`
+	display: block;
+
 	width: 793px;
 	height: 650px;
 

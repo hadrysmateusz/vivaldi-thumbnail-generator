@@ -2,13 +2,10 @@ import React from "react"
 import PropTypes from "prop-types"
 import { useDropzone } from "react-dropzone"
 import styled from "styled-components"
-import Thumbnails from "./Thumbnails"
 import { overlay, center } from "./styleUtils"
 
 const DropzoneContainer = styled.div`
-	position: relative;
-	height: 200px;
-	border: 1px dashed #333;
+	${overlay}
 `
 
 const Overlay = styled.div`
@@ -56,16 +53,12 @@ const Uploader = ({ setImageUrls, imageUrls }) => {
 	})
 
 	return (
-		<div>
+		<DropzoneContainer {...getRootProps()}>
+			<input {...getInputProps()} />
 			<button onClick={open}>Add</button>
 			<button onClick={onClear}>Clear</button>
-			<DropzoneContainer {...getRootProps()}>
-				<input {...getInputProps()} />
-				{isDragActive && <Overlay>Drop here to add</Overlay>}
-
-				<Thumbnails imageUrls={imageUrls} />
-			</DropzoneContainer>
-		</div>
+			{isDragActive && <Overlay>Drop here to add</Overlay>}
+		</DropzoneContainer>
 	)
 }
 
