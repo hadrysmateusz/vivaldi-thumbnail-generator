@@ -1,11 +1,11 @@
-import React, { useState, useRef, useEffect } from "react"
+import React, { useState, useRef, useEffect, useContext } from "react"
 import debounce from "lodash.debounce"
 import styled from "styled-components"
 
 import Preview from "./Preview"
 import FileManager from "./FileManager"
 import NavigationButtons from "./NavigationButtons"
-
+import { SettingsContext } from "./Settings"
 import { trimImageWhitespace, rescaleImage } from "./utils"
 
 const Container = styled.div`
@@ -15,7 +15,8 @@ const Container = styled.div`
 	box-shadow: 0 3px 16px rgba(0, 0, 0, 0.1);
 `
 
-function ImageProcessor({ canvasRef, bgColor, targetSize }) {
+function ImageProcessor({ canvasRef }) {
+	const { targetSize, bgColor } = useContext(SettingsContext)
 	const [originalImageUrls, setOriginalImageUrls] = useState([])
 	const [trimmedImages, setTrimmedImages] = useState([])
 	const [rescaledImages, setRescaledImages] = useState([])

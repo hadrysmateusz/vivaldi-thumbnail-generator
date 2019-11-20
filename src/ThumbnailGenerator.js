@@ -1,28 +1,32 @@
-import React, { useState, useRef } from "react"
+import React, { useRef, useContext } from "react"
 import styled from "styled-components"
 
 import Downloader from "./Downloader"
-import ColorPicker from "./ColorPicker"
-import SizePicker from "./SizePicker"
+import { SettingsEditor, SettingsProvider } from "./Settings"
 import ImageProcessor from "./ImageProcessor"
+import { SettingsContext } from "./Settings"
 
 function ThumbnailGenerator() {
-	const [bgColor, setBgColor] = useState("white")
-	const [targetSize, setTargetSize] = useState(300)
 	const canvasRef = useRef()
+	const { bgColor, targetSize } = useContext(SettingsContext)
 
 	return (
 		<OuterContainer>
 			<InnerContainer>
-				<Headline>Vivaldi Thumbnail Generator</Headline>
-				<Description>
-					Quickly and effortlessly generate thumbnails for use in{" "}
-					<a href="https://vivaldi.com/">Vivaldi Browser’s</a> Speed Dials
-				</Description>
-				<ImageProcessor canvasRef={canvasRef} bgColor={bgColor} targetSize={targetSize} />
-				<SizePicker targetSize={targetSize} setTargetSize={setTargetSize} />
-				<ColorPicker bgColor={bgColor} setBgColor={setBgColor} />
-				<Downloader canvasRef={canvasRef} />
+				<SettingsProvider>
+					<Headline>Vivaldi Thumbnail Generator</Headline>
+					<Description>
+						Quickly and effortlessly generate thumbnails for use in{" "}
+						<a href="https://vivaldi.com/">Vivaldi Browser’s</a> Speed Dials
+					</Description>
+					<ImageProcessor
+						canvasRef={canvasRef}
+						bgColor={bgColor}
+						targetSize={targetSize}
+					/>
+					<SettingsEditor />
+					<Downloader canvasRef={canvasRef} />
+				</SettingsProvider>
 			</InnerContainer>
 		</OuterContainer>
 	)
