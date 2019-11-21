@@ -5,32 +5,26 @@ import styled from "styled-components"
 import { overlay, center } from "../styleUtils"
 import Button from "./Button"
 // import FileDrawer from "./FileDrawer"
-import { trimImageWhitespace, loadImage } from "../utils"
+import { loadImage } from "../utils"
 
-const FileManager = ({ setImages, images }) => {
+const FileManager = ({ setImages, setIsLoading, images }) => {
 	// const [modalIsOpen, setModalIsOpen] = useState(false)
 
-	const onFileLoad = (e) => {
-		const dataUrl = e.target.result
-		loadImage(dataUrl).then((img) => setImages((prevState) => [...prevState, img]))
-	}
-
-	const onDrop = (acceptedFiles) => {
+	const onDrop = async (acceptedFiles) => {
+		// TODO: let the user know what happened
 		// if no new files are uploaded, exit silently
-		if (!acceptedFiles || acceptedFiles.length === 0) {
-			// TODO: let the user know what happened
-			return
-		}
+		if (!acceptedFiles || acceptedFiles.length === 0) return
 
-		// TODO: consider wrapping all of this in promises and using Promise.all to wait for all of them to finish. Set a loading state during this process to prevent interaction with other parts of the system and show a loader to let the user know what is going on
-		acceptedFiles.forEach((file) => {
-			// if file isn't an image, skip it
-			if (!file.type.match("image.*")) return
+		setIsLoading(true)
 
-			const reader = new FileReader()
-			reader.onload = onFileLoad
-			reader.readAsDataURL(file)
+		const imagePromises = acceptedFiles.map((file) => {
+			const objectUrl = URL.createObjectURL(file)
+			return loadImage(objectUrl)
 		})
+
+		const images = await Promise.all(imagePromises)
+		setImages((prevState) => [...prevState, ...images])
+		setIsLoading(false)
 	}
 
 	// const onClear = () => {
@@ -45,10 +39,11 @@ const FileManager = ({ setImages, images }) => {
 	// 	setModalIsOpen(false)
 	// }
 
+	// TODO: verify that it only accepts images
 	const { getRootProps, getInputProps, open: openFileDialog, isDragActive } = useDropzone(
 		{
 			onDrop,
-			accept: "",
+			accept: "image/*",
 			noClick: true
 		}
 	)

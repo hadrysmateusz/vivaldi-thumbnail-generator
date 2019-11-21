@@ -10,7 +10,7 @@ const Container = styled.div`
 	height: 650px;
 `
 
-const Preview = ({ image }) => {
+const Preview = ({ image, isLoading }) => {
 	return (
 		<Container>
 			<BackgroundCanvas />

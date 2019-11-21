@@ -14,14 +14,13 @@ const Container = styled.div`
 
 function ImageProcessor() {
 	const [images, setImages] = useState([])
+	const [isLoading, setIsLoading] = useState([])
 	const [currentImage, setCurrentImage] = useState(0)
-
-	console.log("images", images)
 
 	return (
 		<Container>
-			<Preview image={images[currentImage]} />
-			<FileManager images={images} setImages={setImages} />
+			<Preview image={images[currentImage]} isLoading={isLoading} />
+			<FileManager images={images} setImages={setImages} setIsLoading={setIsLoading} />
 			<NavigationButtons images={images} setCurrentImage={setCurrentImage} />
 		</Container>
 	)

@@ -4,8 +4,6 @@ import { useSizeCanvasToCssDimensions, StyledCanvas } from "./CanvasCommon"
 import { getRatio } from "../utils"
 
 const IconCanvas = ({ image }) => {
-	console.log("image", image)
-
 	const { targetSize } = useContext(SettingsContext)
 	const ref = useRef()
 	useSizeCanvasToCssDimensions(ref)
