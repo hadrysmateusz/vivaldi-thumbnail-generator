@@ -4,20 +4,21 @@ import { overlay } from "../styleUtils"
 import Button from "./Button"
 import FileItem from "./FileItem"
 
-const FileDrawer = ({ closeModal, imageUrls, setImageUrls, openFileDialog }) => {
+const FileDrawer = ({ closeModal, images, setImages, openFileDialog }) => {
 	const clear = () => {
-		setImageUrls([])
+		setImages([])
 	}
 
 	const removeItem = (urlToRemove) => {
-		setImageUrls((prevState) => prevState.filter((url) => url !== urlToRemove))
+		URL.revokeObjectURL(urlToRemove)
+		setImages((prevState) => prevState.filter((image) => image.src !== urlToRemove))
 	}
 
 	return (
 		<Container>
 			<InnerContainer>
-				{imageUrls.map((url) => (
-					<FileItem imageUrl={url} removeItem={removeItem} />
+				{images.map((image) => (
+					<FileItem imageUrl={image.src} removeItem={removeItem} />
 				))}
 			</InnerContainer>
 

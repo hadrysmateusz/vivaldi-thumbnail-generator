@@ -1,14 +1,14 @@
 import React, { useState } from "react"
-// import PropTypes from "prop-types"
+import PropTypes from "prop-types"
 import { useDropzone } from "react-dropzone"
 import styled from "styled-components"
 import { overlay, center } from "../styleUtils"
 import Button from "./Button"
-// import FileDrawer from "./FileDrawer"
+import FileDrawer from "./FileDrawer"
 import { loadImage } from "../utils"
 
 const FileManager = ({ setImages, setIsLoading, images }) => {
-	// const [modalIsOpen, setModalIsOpen] = useState(false)
+	const [modalIsOpen, setModalIsOpen] = useState(false)
 
 	const onDrop = async (acceptedFiles) => {
 		// TODO: let the user know what happened
@@ -27,19 +27,18 @@ const FileManager = ({ setImages, setIsLoading, images }) => {
 		setIsLoading(false)
 	}
 
-	// const onClear = () => {
-	// 	setImages([])
-	// }
+	const onClear = () => {
+		setImages([])
+	}
 
-	// const openModal = () => {
-	// 	setModalIsOpen(true)
-	// }
+	const openModal = () => {
+		setModalIsOpen(true)
+	}
 
-	// const closeModal = () => {
-	// 	setModalIsOpen(false)
-	// }
+	const closeModal = () => {
+		setModalIsOpen(false)
+	}
 
-	// TODO: verify that it only accepts images
 	const { getRootProps, getInputProps, open: openFileDialog, isDragActive } = useDropzone(
 		{
 			onDrop,
@@ -48,7 +47,7 @@ const FileManager = ({ setImages, setIsLoading, images }) => {
 		}
 	)
 
-	// const hasFiles = imageUrls && imageUrls.length > 0
+	const hasFiles = images && images.length > 0
 
 	return (
 		<DropzoneContainer {...getRootProps()}>
@@ -60,33 +59,35 @@ const FileManager = ({ setImages, setIsLoading, images }) => {
 					Upload Icons
 				</Button>
 				<DropText>or drop files here</DropText>
-				{/* {hasFiles && (
+				{hasFiles && (
 					<>
 						<Button onClick={openModal}>Manage Files</Button>
 						<Button onClick={onClear} variant="danger">
 							Clear
 						</Button>
 					</>
-				)} */}
+				)}
 			</ButtonsContainer>
 			{/* modal */}
-			{/* {modalIsOpen && (
+			{modalIsOpen && (
 				<FileDrawer
+					images={images}
+					setImages={setImages}
 					closeModal={closeModal}
-					imageUrls={imageUrls}
-					setImageUrls={setImageUrls}
 					openFileDialog={openFileDialog}
 				/>
-			)} */}
+			)}
 			{/* drag overlay */}
 			{isDragActive && <Overlay>Drop here to add</Overlay>}
 		</DropzoneContainer>
 	)
 }
 
-// FileManager.propTypes = {
-// 	setImageUrls: PropTypes.func.isRequired
-// }
+FileManager.propTypes = {
+	setImages: PropTypes.func.isRequired,
+	setIsLoading: PropTypes.func.isRequired,
+	images: PropTypes.array.isRequired
+}
 
 const DropText = styled.div`
 	font-size: 14px;
