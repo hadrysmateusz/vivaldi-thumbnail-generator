@@ -1,46 +1,49 @@
 import React, { useState } from "react"
-import PropTypes from "prop-types"
+// import PropTypes from "prop-types"
 import { useDropzone } from "react-dropzone"
 import styled from "styled-components"
 import { overlay, center } from "../styleUtils"
 import Button from "./Button"
-import FileDrawer from "./FileDrawer"
+// import FileDrawer from "./FileDrawer"
+import { trimImageWhitespace, loadImage } from "../utils"
 
-const FileManager = ({ setImageUrls, imageUrls }) => {
-	const [modalIsOpen, setModalIsOpen] = useState(false)
+const FileManager = ({ setImages, images }) => {
+	// const [modalIsOpen, setModalIsOpen] = useState(false)
+
+	const onFileLoad = (e) => {
+		const dataUrl = e.target.result
+		loadImage(dataUrl).then((img) => setImages((prevState) => [...prevState, img]))
+	}
 
 	const onDrop = (acceptedFiles) => {
-		let newImageUrls = []
-
 		// if no new files are uploaded, exit silently
 		if (!acceptedFiles || acceptedFiles.length === 0) {
 			// TODO: let the user know what happened
 			return
 		}
 
-		// for every valid file add an object url to the list
-		for (let file of acceptedFiles) {
+		// TODO: consider wrapping all of this in promises and using Promise.all to wait for all of them to finish. Set a loading state during this process to prevent interaction with other parts of the system and show a loader to let the user know what is going on
+		acceptedFiles.forEach((file) => {
 			// if file isn't an image, skip it
-			if (!file.type.match("image.*")) continue
+			if (!file.type.match("image.*")) return
 
-			newImageUrls.push(window.URL.createObjectURL(file))
-		}
-
-		// update the external state
-		setImageUrls((prevState) => [...prevState, ...newImageUrls])
+			const reader = new FileReader()
+			reader.onload = onFileLoad
+			reader.readAsDataURL(file)
+		})
 	}
 
-	const onClear = () => {
-		setImageUrls([])
-	}
+	// const onClear = () => {
+	// 	setImages([])
+	// }
 
-	const openModal = () => {
-		setModalIsOpen(true)
-	}
+	// const openModal = () => {
+	// 	setModalIsOpen(true)
+	// }
 
-	const closeModal = () => {
-		setModalIsOpen(false)
-	}
+	// const closeModal = () => {
+	// 	setModalIsOpen(false)
+	// }
 
 	const { getRootProps, getInputProps, open: openFileDialog, isDragActive } = useDropzone(
 		{
@@ -50,7 +53,7 @@ const FileManager = ({ setImageUrls, imageUrls }) => {
 		}
 	)
 
-	const hasFiles = imageUrls && imageUrls.length > 0
+	// const hasFiles = imageUrls && imageUrls.length > 0
 
 	return (
 		<DropzoneContainer {...getRootProps()}>
@@ -59,36 +62,36 @@ const FileManager = ({ setImageUrls, imageUrls }) => {
 			{/* buttons */}
 			<ButtonsContainer>
 				<Button onClick={openFileDialog} variant="primary">
-					Add Files
+					Upload Icons
 				</Button>
 				<DropText>or drop files here</DropText>
-				{hasFiles && (
+				{/* {hasFiles && (
 					<>
 						<Button onClick={openModal}>Manage Files</Button>
 						<Button onClick={onClear} variant="danger">
 							Clear
 						</Button>
 					</>
-				)}
+				)} */}
 			</ButtonsContainer>
 			{/* modal */}
-			{modalIsOpen && (
+			{/* {modalIsOpen && (
 				<FileDrawer
 					closeModal={closeModal}
 					imageUrls={imageUrls}
 					setImageUrls={setImageUrls}
 					openFileDialog={openFileDialog}
 				/>
-			)}
+			)} */}
 			{/* drag overlay */}
 			{isDragActive && <Overlay>Drop here to add</Overlay>}
 		</DropzoneContainer>
 	)
 }
 
-FileManager.propTypes = {
-	setImageUrls: PropTypes.func.isRequired
-}
+// FileManager.propTypes = {
+// 	setImageUrls: PropTypes.func.isRequired
+// }
 
 const DropText = styled.div`
 	font-size: 14px;

@@ -1,4 +1,5 @@
 import getImageBounds from "./getImageBounds"
-import rescaleImage from "./rescaleImage"
+import getRatio from "./getRatio"
 import trimImageWhitespace from "./trimImageWhitespace"
-export { getImageBounds, rescaleImage, trimImageWhitespace }
+import loadImage from "./loadImage"
+export { getImageBounds, getRatio, trimImageWhitespace, loadImage }
