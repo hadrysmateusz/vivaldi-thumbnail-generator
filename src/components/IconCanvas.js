@@ -41,7 +41,15 @@ const clearCanvas = (canvas) => {
 }
 
 const drawIcon = (canvas, image, width, height) => {
-	canvas.getContext("2d").drawImage(image, 0, 0, width, height)
+	canvas
+		.getContext("2d")
+		.drawImage(
+			image,
+			canvas.width / 2 - width / 2,
+			canvas.height / 2 - height / 2,
+			width,
+			height
+		)
 }
 
 export default IconCanvas
