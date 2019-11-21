@@ -22,7 +22,7 @@ function ImageProcessor({ canvasRef }) {
 	const [rescaledImages, setRescaledImages] = useState([])
 	const [currentImage, setCurrentImage] = useState(0)
 
-	const trimWhitespace = () => {
+	const onFilesChange = () => {
 		const onImageLoad = (e) => {
 			const image = e.target
 			const trimmedImage = trimImageWhitespace(image)
@@ -56,7 +56,7 @@ function ImageProcessor({ canvasRef }) {
 	)
 
 	// trim whitespace
-	useEffect(trimWhitespace, [originalImageUrls])
+	useEffect(onFilesChange, [originalImageUrls])
 
 	// rescale
 	useEffect(() => debouncedRescale.current(trimmedImages, targetSize), [
