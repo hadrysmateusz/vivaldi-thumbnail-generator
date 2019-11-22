@@ -7,6 +7,7 @@ import FileDrawer from "./FileDrawer"
 import { useFileContext } from "./FileManager"
 import BackgroundCanvas from "./BackgroundCanvas"
 import IconCanvas from "./IconCanvas"
+import { overlay, center } from "../styleUtils"
 
 function ImageProcessor() {
 	const [currentImage, setCurrentImage] = useState(0)
@@ -16,12 +17,21 @@ function ImageProcessor() {
 		<Container>
 			<BackgroundCanvas />
 			<IconCanvas image={images[currentImage]} />
+			{isLoading && <LoadingOverlay>Loading...</LoadingOverlay>}
 			<Uploader />
 			<NavigationButtons images={images} setCurrentImage={setCurrentImage} />
 			{isDrawerOpen && <FileDrawer />}
 		</Container>
 	)
 }
+
+const LoadingOverlay = styled.div`
+	${overlay}
+	${center}
+	background: white;
+	font-size: 32px;
+	font-weight: bold;
+`
 
 const Container = styled.div`
 	position: relative;
