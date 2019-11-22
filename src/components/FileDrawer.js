@@ -11,9 +11,11 @@ const FileDrawer = () => {
 	return (
 		<Container>
 			<InnerContainer>
-				{images.map((image) => (
-					<FileItem imageUrl={image.src} removeItem={removeImage} />
-				))}
+				<GridContainer>
+					{images.map((image) => (
+						<FileItem imageUrl={image.src} removeItem={removeImage} />
+					))}
+				</GridContainer>
 			</InnerContainer>
 
 			<ButtonsContainer>
@@ -23,37 +25,39 @@ const FileDrawer = () => {
 	)
 }
 
-const InnerContainer = styled.div`
+const GridContainer = styled.div`
 	padding: 32px;
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(150px, auto));
+	grid-auto-rows: 150px;
+	gap: 20px;
+`
+
+const InnerContainer = styled.div`
+	height: 100%;
 	flex: 1;
-	display: flex;
-	align-content: flex-start;
-	flex-wrap: wrap;
-	margin-left: -16px;
-	margin-bottom: -16px;
-	> * {
-		margin-left: 16px;
-		margin-bottom: 16px;
-	}
+	overflow: auto;
 `
 
 const Container = styled.div`
 	${overlay}
 	background: white;
 	height: 100%;
-	display: flex;
-	flex-direction: column;
+	position: relative;
 `
 
 const ButtonsContainer = styled.div`
+	position: absolute;
+	bottom: 0;
+	right: 0;
 	padding: 20px 20px 20px 20px;
-	display: grid;
 	width: 100%;
-	grid-auto-flow: column;
-	grid-auto-columns: auto;
-	justify-content: right;
+	display: flex;
+	justify-content: flex-end;
 	align-items: center;
-	gap: 20px;
+	> * + * {
+		margin-left: 20px;
+	}
 `
 
 export default FileDrawer

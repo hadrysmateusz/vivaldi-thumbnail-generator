@@ -37,7 +37,7 @@ const Uploader = () => {
 						Clear
 					</Button>
 				)}
-				<Button onClick={openFileDrawer}>Manage Files</Button>
+				<Button onClick={openFileDrawer}>Manage Icons</Button>
 			</ButtonsContainer>
 
 			{/* drag overlay */}

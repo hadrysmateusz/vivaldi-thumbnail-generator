@@ -15,9 +15,6 @@ const FileItem = ({ imageUrl, removeItem }) => {
 
 const Container = styled.div`
 	position: relative;
-	flex: 0 150px;
-	width: 150px;
-	height: 150px;
 	background-image: url(${(p) => p.imageUrl});
 	background-position: center;
 	background-size: contain;
