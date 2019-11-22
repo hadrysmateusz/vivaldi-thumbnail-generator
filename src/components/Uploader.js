@@ -1,5 +1,4 @@
 import React from "react"
-import PropTypes from "prop-types"
 import { useDropzone } from "react-dropzone"
 import styled from "styled-components/macro"
 import { overlay, center } from "../styleUtils"
@@ -42,12 +41,6 @@ const Uploader = () => {
 			{isDragActive && <Overlay>Drop here to add</Overlay>}
 		</DropzoneContainer>
 	)
-}
-
-Uploader.propTypes = {
-	setImages: PropTypes.func.isRequired,
-	setIsLoading: PropTypes.func.isRequired,
-	images: PropTypes.array.isRequired
 }
 
 const DropText = styled.div`
