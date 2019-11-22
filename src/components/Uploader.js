@@ -25,6 +25,7 @@ const Uploader = () => {
 		<DropzoneContainer {...getRootProps()}>
 			{/* input */}
 			<input {...getInputProps()} />
+
 			{/* buttons */}
 			<ButtonsContainer>
 				<Button onClick={open} variant="primary" disabled={isLoading}>
