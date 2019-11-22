@@ -11,8 +11,8 @@ const trimImageWhitespace = (image) => {
 	const ctx = canvas.getContext("2d")
 
 	// Set the canvas' dimensions to those of the image
-	canvas.width = image.width
-	canvas.height = image.height
+	canvas.width = image.naturalWidth
+	canvas.height = image.naturalHeight
 
 	// Draw the image to the temporary canvas
 	ctx.drawImage(image, 0, 0)

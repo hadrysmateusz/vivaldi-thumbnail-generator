@@ -29,7 +29,7 @@ const useDimensions = (image, targetSize) => {
 		if (!image) return {} // if there is no image return an empty object to prevent errors
 
 		const { round, sqrt } = Math
-		const { divisor, divident } = getRatio(image.width, image.height)
+		const { divisor, divident } = getRatio(image.naturalWidth, image.naturalHeighty)
 		const height = round(sqrt((divisor * (targetSize * targetSize)) / divident))
 		const width = round((targetSize * targetSize) / height)
 		return { width, height }
