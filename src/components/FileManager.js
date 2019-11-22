@@ -1,28 +1,24 @@
-import React, { useState } from "react"
-import PropTypes from "prop-types"
-import { useDropzone } from "react-dropzone"
-import styled from "styled-components"
-import { overlay, center } from "../styleUtils"
-import Button from "./Button"
-import FileDrawer from "./FileDrawer"
+import React, { useState, createContext, useContext } from "react"
 import { loadImage } from "../utils"
 
-const FileManager = ({ setImages, setIsLoading, images, isLoading }) => {
-	const [modalIsOpen, setModalIsOpen] = useState(false)
+export const FileContext = createContext()
 
-	const onDrop = async (acceptedFiles) => {
+export const useFileContext = () => useContext(FileContext)
+
+const FileManager = ({ children }) => {
+	const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+	const [images, setImages] = useState([])
+	const [isLoading, setIsLoading] = useState(false)
+
+	const addFiles = async (files) => {
 		if (isLoading) {
 			alert("Wait for the previous action to finish")
 			return
 		}
 
-		// TODO: let the user know what happened
-		// if no new files are uploaded, exit silently
-		if (!acceptedFiles || acceptedFiles.length === 0) return
-
 		setIsLoading(true)
 
-		const imagePromises = acceptedFiles.map((file) => {
+		const imagePromises = files.map((file) => {
 			const objectUrl = URL.createObjectURL(file)
 			return loadImage(objectUrl)
 		})
@@ -32,103 +28,40 @@ const FileManager = ({ setImages, setIsLoading, images, isLoading }) => {
 		setIsLoading(false)
 	}
 
-	const onClear = () => {
+	const clearImages = () => {
 		setImages([])
 	}
 
-	const openModal = () => {
-		setModalIsOpen(true)
+	const openFileDrawer = () => {
+		setIsDrawerOpen(true)
 	}
 
-	const closeModal = () => {
-		setModalIsOpen(false)
+	const closeFileDrawer = () => {
+		setIsDrawerOpen(false)
 	}
 
-	const { getRootProps, getInputProps, open: openFileDialog, isDragActive } = useDropzone(
-		{
-			onDrop,
-			accept: "image/*",
-			noClick: true
-		}
-	)
+	const removeImage = (urlToRemove) => {
+		URL.revokeObjectURL(urlToRemove)
+		setImages((prevState) => prevState.filter((image) => image.src !== urlToRemove))
+	}
 
 	const hasFiles = images && images.length > 0
 
-	return (
-		<DropzoneContainer {...getRootProps()}>
-			{/* input */}
-			<input {...getInputProps()} />
-			{/* buttons */}
-			<ButtonsContainer>
-				<Button onClick={openFileDialog} variant="primary" disabled={isLoading}>
-					{isLoading ? "Loading" : "Upload Icons"}
-				</Button>
-				<DropText>or drop files here</DropText>
-				{hasFiles && (
-					<>
-						<Button onClick={openModal}>Manage Files</Button>
-						<Button onClick={onClear} variant="danger">
-							Clear
-						</Button>
-					</>
-				)}
-			</ButtonsContainer>
-			{/* modal */}
-			{modalIsOpen && (
-				<FileDrawer
-					images={images}
-					setImages={setImages}
-					closeModal={closeModal}
-					openFileDialog={openFileDialog}
-				/>
-			)}
-			{/* drag overlay */}
-			{isDragActive && <Overlay>Drop here to add</Overlay>}
-		</DropzoneContainer>
-	)
+	const contextValue = {
+		addFiles,
+		hasFiles,
+		images,
+		setImages,
+		clearImages,
+		removeImage,
+		isLoading,
+		setIsLoading,
+		openFileDrawer,
+		closeFileDrawer,
+		isDrawerOpen
+	}
+
+	return <FileContext.Provider value={contextValue}>{children}</FileContext.Provider>
 }
-
-FileManager.propTypes = {
-	setImages: PropTypes.func.isRequired,
-	setIsLoading: PropTypes.func.isRequired,
-	images: PropTypes.array.isRequired
-}
-
-const DropText = styled.div`
-	font-size: 14px;
-	line-height: 18px;
-	letter-spacing: 0.015em;
-	color: #888888;
-	cursor: default;
-`
-
-const DropzoneContainer = styled.div`
-	${overlay}
-`
-
-const Overlay = styled.div`
-	${overlay}
-	${center}
-	z-index: 80;
-	background: rgba(0, 0, 0, 0.36);
-	color: white;
-	font-size: 1.6em;
-	font-weight: bold;
-	letter-spacing: 0.05em;
-	text-transform: uppercase;
-`
-
-const ButtonsContainer = styled.div`
-	position: absolute;
-	left: 0;
-	bottom: 0;
-	padding: 0 20px 20px 20px;
-	display: grid;
-	width: 100%;
-	grid-auto-flow: column;
-	grid-template-columns: auto 1fr auto auto;
-	align-items: center;
-	gap: 20px;
-`
 
 export default FileManager

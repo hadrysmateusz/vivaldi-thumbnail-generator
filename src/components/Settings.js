@@ -17,7 +17,7 @@ export const SettingsEditor = () => {
 	)
 }
 
-export const SettingsProvider = ({ children }) => {
+export const SettingsManager = ({ children }) => {
 	const [bgColor, setBgColor] = useState("white")
 	const [targetSize, setTargetSize] = useState(260)
 

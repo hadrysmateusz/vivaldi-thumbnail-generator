@@ -3,34 +3,21 @@ import styled from "styled-components"
 import { overlay } from "../styleUtils"
 import Button from "./Button"
 import FileItem from "./FileItem"
+import { useFileContext } from "./FileManager"
 
-const FileDrawer = ({ closeModal, images, setImages, openFileDialog }) => {
-	const clear = () => {
-		setImages([])
-	}
-
-	const removeItem = (urlToRemove) => {
-		URL.revokeObjectURL(urlToRemove)
-		setImages((prevState) => prevState.filter((image) => image.src !== urlToRemove))
-	}
+const FileDrawer = () => {
+	const { closeFileDrawer, images, removeImage } = useFileContext()
 
 	return (
 		<Container>
 			<InnerContainer>
 				{images.map((image) => (
-					<FileItem imageUrl={image.src} removeItem={removeItem} />
+					<FileItem imageUrl={image.src} removeItem={removeImage} />
 				))}
 			</InnerContainer>
 
 			<ButtonsContainer>
-				<Button onClick={openFileDialog} variant="primary">
-					Add Files
-				</Button>
-				<DropText>or drop files here</DropText>
-				<Button onClick={closeModal}>Close</Button>
-				<Button onClick={clear} variant="danger">
-					Clear
-				</Button>
+				<Button onClick={closeFileDrawer}>Close</Button>
 			</ButtonsContainer>
 		</Container>
 	)
@@ -39,7 +26,6 @@ const FileDrawer = ({ closeModal, images, setImages, openFileDialog }) => {
 const InnerContainer = styled.div`
 	padding: 32px;
 	flex: 1;
-
 	display: flex;
 	align-content: flex-start;
 	flex-wrap: wrap;
@@ -59,20 +45,12 @@ const Container = styled.div`
 	flex-direction: column;
 `
 
-const DropText = styled.div`
-	font-size: 14px;
-	line-height: 18px;
-	letter-spacing: 0.015em;
-	color: #888888;
-	cursor: default;
-`
-
 const ButtonsContainer = styled.div`
 	padding: 20px 20px 20px 20px;
 	display: grid;
 	width: 100%;
 	grid-auto-flow: column;
-	grid-template-columns: auto 1fr auto auto;
+	grid-auto-columns: auto;
 	justify-content: right;
 	align-items: center;
 	gap: 20px;
