@@ -28,11 +28,16 @@ const useDimensions = (image, targetSize) => {
 	return useMemo(() => {
 		if (!image) return {} // if there is no image return an empty object to prevent errors
 
-		const { round, sqrt } = Math
-		const { divisor, divident } = getRatio(image.naturalWidth, image.naturalHeighty)
-		const height = round(sqrt((divisor * (targetSize * targetSize)) / divident))
-		const width = round((targetSize * targetSize) / height)
-		return { width, height }
+		try {
+			const { round, sqrt } = Math
+			const { divisor, divident } = getRatio(image.naturalWidth, image.naturalHeight)
+			const height = round(sqrt((divisor * (targetSize * targetSize)) / divident))
+			const width = round((targetSize * targetSize) / height)
+			return { width, height }
+		} catch (err) {
+			// if the calculations fail for any reason, just use the image's original dimensions
+			return { width: image.naturalWidth, height: image.naturalHeight }
+		}
 	}, [image, targetSize])
 }
 
