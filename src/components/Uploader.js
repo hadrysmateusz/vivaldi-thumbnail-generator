@@ -1,7 +1,7 @@
 import React from "react"
 import PropTypes from "prop-types"
 import { useDropzone } from "react-dropzone"
-import styled from "styled-components"
+import styled from "styled-components/macro"
 import { overlay, center } from "../styleUtils"
 import Button from "./Button"
 import { useFileContext } from "./FileManager"

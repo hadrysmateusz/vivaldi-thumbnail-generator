@@ -1,5 +1,5 @@
 import React, { useState, createContext, useContext } from "react"
-import styled from "styled-components"
+import styled from "styled-components/macro"
 
 import SizePicker from "./SizePicker"
 import ColorPicker from "./ColorPicker"
