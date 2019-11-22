@@ -26,10 +26,20 @@ const buttonVariants = {
 	`
 }
 
+const disabledStyles = css`
+	background: #ccc;
+	color: white;
+	:hover {
+		background: #ccc;
+	}
+`
+
 const Button = styled.button`
 	display: block;
 	border-radius: 5px;
 	${(p) => buttonVariants[p.variant]}
+	${(p) =>
+		p.disabled && disabledStyles}
 	transition-property: background, color, box-shadow;
 	transition-duration: 200ms;
 	transition-timing-function: ease;

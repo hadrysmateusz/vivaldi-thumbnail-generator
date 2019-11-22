@@ -7,10 +7,15 @@ import Button from "./Button"
 import FileDrawer from "./FileDrawer"
 import { loadImage } from "../utils"
 
-const FileManager = ({ setImages, setIsLoading, images }) => {
+const FileManager = ({ setImages, setIsLoading, images, isLoading }) => {
 	const [modalIsOpen, setModalIsOpen] = useState(false)
 
 	const onDrop = async (acceptedFiles) => {
+		if (isLoading) {
+			alert("Wait for the previous action to finish")
+			return
+		}
+
 		// TODO: let the user know what happened
 		// if no new files are uploaded, exit silently
 		if (!acceptedFiles || acceptedFiles.length === 0) return
@@ -55,8 +60,8 @@ const FileManager = ({ setImages, setIsLoading, images }) => {
 			<input {...getInputProps()} />
 			{/* buttons */}
 			<ButtonsContainer>
-				<Button onClick={openFileDialog} variant="primary">
-					Upload Icons
+				<Button onClick={openFileDialog} variant="primary" disabled={isLoading}>
+					{isLoading ? "Loading" : "Upload Icons"}
 				</Button>
 				<DropText>or drop files here</DropText>
 				{hasFiles && (
