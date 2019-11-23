@@ -1,5 +1,5 @@
 import React, { useState, createContext, useContext } from "react"
-import { loadImage } from "../utils"
+import { loadImage, trimImageWhitespace } from "../utils"
 
 export const FileContext = createContext()
 
@@ -18,12 +18,13 @@ const FileManager = ({ children }) => {
 
 		setIsLoading(true)
 
-		const imagePromises = files.map((file) => {
-			const objectUrl = URL.createObjectURL(file)
-			return loadImage(objectUrl)
-		})
+		const images = await Promise.all(
+			files.map((file) => {
+				const objectUrl = URL.createObjectURL(file)
+				return loadImage(objectUrl).then((image) => trimImageWhitespace(image))
+			})
+		)
 
-		const images = await Promise.all(imagePromises)
 		setImages((prevState) => [...prevState, ...images])
 		setIsLoading(false)
 	}
