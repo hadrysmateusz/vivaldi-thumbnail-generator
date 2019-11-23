@@ -6,7 +6,7 @@ import Button from "./Button"
 import { useFileContext } from "./FileManager"
 
 const Uploader = () => {
-	const { addFiles, isLoading, openFileDrawer, clearImages, hasFiles } = useFileContext()
+	const { addFiles, isLoading, openFileDrawer } = useFileContext()
 
 	const onDrop = (acceptedFiles) => {
 		// TODO: let the user know what happened
@@ -32,11 +32,6 @@ const Uploader = () => {
 					{isLoading ? "Loading" : "Upload Icons"}
 				</Button>
 				<DropText>or drop files here</DropText>
-				{hasFiles && (
-					<Button onClick={clearImages} variant="danger">
-						Clear
-					</Button>
-				)}
 				<Button onClick={openFileDrawer}>Manage Icons</Button>
 			</ButtonsContainer>
 

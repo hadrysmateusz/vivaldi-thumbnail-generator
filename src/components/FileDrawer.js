@@ -6,19 +6,24 @@ import FileItem from "./FileItem"
 import { useFileContext } from "./FileManager"
 
 const FileDrawer = () => {
-	const { closeFileDrawer, images, removeImage } = useFileContext()
+	const { closeFileDrawer, images, removeImage, hasFiles, clearImages } = useFileContext()
 
 	return (
 		<Container>
 			<InnerContainer>
 				<GridContainer>
 					{images.map((image) => (
-						<FileItem imageUrl={image.src} removeItem={removeImage} />
+						<FileItem key={image.src} imageUrl={image.src} removeItem={removeImage} />
 					))}
 				</GridContainer>
 			</InnerContainer>
 
 			<ButtonsContainer>
+				{hasFiles && (
+					<Button onClick={clearImages} variant="danger">
+						Remove All
+					</Button>
+				)}
 				<Button onClick={closeFileDrawer}>Close</Button>
 			</ButtonsContainer>
 		</Container>
