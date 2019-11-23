@@ -15,7 +15,6 @@ import { ReactComponent as SettingsIcon } from "../assets/cog.svg"
 function ImageProcessor() {
 	const [currentImage, setCurrentImage] = useState(0)
 	const { isLoading, images, isDrawerOpen } = useFileContext()
-	const { toggleSettings } = useSettingsContext()
 
 	return (
 		<Container>
@@ -24,13 +23,21 @@ function ImageProcessor() {
 			{isLoading && <LoadingOverlay>Loading...</LoadingOverlay>}
 			<Uploader />
 			<NavigationButtons images={images} setCurrentImage={setCurrentImage} />
-			{isDrawerOpen && <FileDrawer />}
 			<SettingsButtonContainer>
-				<IconButton onClick={toggleSettings}>
-					<SettingsIcon title="Settings" width="24px" height="24px" />
-				</IconButton>
+				<SettingsButton />
 			</SettingsButtonContainer>
+			{isDrawerOpen && <FileDrawer />}
 		</Container>
+	)
+}
+
+const SettingsButton = () => {
+	const { toggleSettings } = useSettingsContext()
+
+	return (
+		<IconButton onClick={toggleSettings}>
+			<SettingsIcon title="Settings" width="24px" height="24px" />
+		</IconButton>
 	)
 }
 
