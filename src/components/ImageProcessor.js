@@ -60,9 +60,6 @@ const LoadingOverlay = styled.div`
 const Container = styled.div`
 	width: 732px;
 	height: 600px;
-
-	/* width: 100%;
-	height: 100%; */
 	position: relative;
 	border-radius: 5px;
 	overflow: hidden;

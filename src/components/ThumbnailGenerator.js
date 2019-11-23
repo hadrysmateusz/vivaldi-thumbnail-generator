@@ -22,7 +22,7 @@ const ThumbnailGenerator = () => {
 
 const Container = styled.div`
 	margin: 0 auto;
-	width: 1024px;
+	max-width: 1024px;
 	display: flex;
 	justify-content: center;
 `

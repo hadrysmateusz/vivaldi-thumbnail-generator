@@ -1,5 +1,5 @@
 import React, { useState, createContext, useContext } from "react"
-import styled from "styled-components/macro"
+import styled, { css } from "styled-components/macro"
 
 import SizePicker from "./SizePicker"
 import ColorPicker from "./ColorPicker"
@@ -53,12 +53,23 @@ export const SettingsEditor = () => {
 }
 
 const Container = styled.div`
-	${(p) => (p.visible ? "flex: 1;opacity: 1;margin-left: 20px;" : "opacity: 0;width: 0;")}
+	${(p) =>
+		p.visible
+			? css`
+					flex: 1;
+					opacity: 1;
+					margin-left: 20px;
+					padding: 20px;
+			  `
+			: css`
+					opacity: 0;
+					width: 0;
+			  `}
 
 	height: 100%;
 	border-radius: 5px;
 	box-shadow: 0 3px 16px rgba(0, 0, 0, 0.1);
-	padding: 20px;
+
 	background: white;
 	text-align: center;
 `
