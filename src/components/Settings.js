@@ -32,7 +32,7 @@ export const SettingsEditor = () => {
 			<Label>Icon Size</Label>
 			<SizePicker targetSize={targetSize} setTargetSize={setTargetSize} />
 			<Label>Background Color</Label>
-			<ColorPicker bgColor={bgColor} setBgColor={setBgColor} />
+			<ColorPicker value={bgColor} onChange={setBgColor} />
 		</Container>
 	)
 }
@@ -44,14 +44,10 @@ const Container = styled.div`
 	box-shadow: 0 3px 16px rgba(0, 0, 0, 0.1);
 	padding: 20px;
 	background: white;
-	display: grid;
-	justify-content: center;
-	align-items: flex-start;
-	align-content: flex-start;
+	text-align: center;
 `
 
 const Label = styled.div`
-	text-align: center;
 	font-weight: bold;
 	font-size: 18px;
 	color: #222;
