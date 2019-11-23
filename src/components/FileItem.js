@@ -5,7 +5,8 @@ import { ReactComponent as TrashIcon } from "../assets/trash.svg"
 
 const FileItem = ({ imageUrl, removeItem }) => {
 	return (
-		<Container imageUrl={imageUrl}>
+		<Container>
+			<Image url={imageUrl} />
 			<RemoveContainer onClick={() => removeItem(imageUrl)}>
 				<TrashIcon width="24px" height="24px" title="Remove" />
 			</RemoveContainer>
@@ -15,14 +16,19 @@ const FileItem = ({ imageUrl, removeItem }) => {
 
 const Container = styled.div`
 	position: relative;
-	background-image: url(${(p) => p.imageUrl});
-	background-position: center;
-	background-size: contain;
-	background-repeat: no-repeat;
-	padding: 8px;
+	padding: 16px;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 	border-radius: 5px;
 	overflow: hidden;
+`
+
+const Image = styled.div`
+	width: 100%;
+	height: 100%;
+	background-image: url(${(p) => p.url});
+	background-position: center;
+	background-size: contain;
+	background-repeat: no-repeat;
 `
 
 const RemoveContainer = styled.div`
