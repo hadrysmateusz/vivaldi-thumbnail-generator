@@ -6,9 +6,16 @@ import ColorPicker from "./ColorPicker"
 
 export const SettingsContext = createContext({})
 
+export const useSettingsContext = () => useContext(SettingsContext)
+
 export const SettingsManager = ({ children }) => {
-	const [bgColor, setBgColor] = useState("white")
+	const [bgColor, setBgColor] = useState("#fff")
 	const [targetSize, setTargetSize] = useState(260)
+	const [isSettingsDisplayed, setIsSettingsDisplayed] = useState(false)
+
+	const toggleSettings = () => {
+		setIsSettingsDisplayed((prevValue) => !prevValue)
+	}
 
 	return (
 		<SettingsContext.Provider
@@ -16,7 +23,9 @@ export const SettingsManager = ({ children }) => {
 				bgColor,
 				setBgColor,
 				targetSize,
-				setTargetSize
+				setTargetSize,
+				isSettingsDisplayed,
+				toggleSettings
 			}}
 		>
 			{children}
@@ -25,10 +34,16 @@ export const SettingsManager = ({ children }) => {
 }
 
 export const SettingsEditor = () => {
-	const { targetSize, setTargetSize, bgColor, setBgColor } = useContext(SettingsContext)
+	const {
+		targetSize,
+		setTargetSize,
+		bgColor,
+		setBgColor,
+		isSettingsDisplayed
+	} = useContext(SettingsContext)
 
 	return (
-		<Container>
+		<Container visible={isSettingsDisplayed}>
 			<Label>Icon Size</Label>
 			<SizePicker targetSize={targetSize} setTargetSize={setTargetSize} />
 			<Label>Background Color</Label>
@@ -38,7 +53,8 @@ export const SettingsEditor = () => {
 }
 
 const Container = styled.div`
-	width: 100%;
+	${(p) => (p.visible ? "flex: 1;opacity: 1;margin-left: 20px;" : "opacity: 0;width: 0;")}
+
 	height: 100%;
 	border-radius: 5px;
 	box-shadow: 0 3px 16px rgba(0, 0, 0, 0.1);
@@ -50,5 +66,5 @@ const Container = styled.div`
 const Label = styled.div`
 	font-weight: bold;
 	font-size: 18px;
-	color: #222;
+	color: #383838;
 `

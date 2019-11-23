@@ -23,11 +23,8 @@ const ThumbnailGenerator = () => {
 const Container = styled.div`
 	margin: 0 auto;
 	width: 1024px;
-	display: grid;
-	grid-template-columns: 732px 1fr;
-	grid-template-rows: 600px;
-	grid-auto-flow: column;
-	gap: 20px;
+	display: flex;
+	justify-content: center;
 `
 
 export default ThumbnailGenerator

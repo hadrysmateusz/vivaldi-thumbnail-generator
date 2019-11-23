@@ -5,13 +5,17 @@ import NavigationButtons from "./NavigationButtons"
 import Uploader from "./Uploader"
 import FileDrawer from "./FileDrawer"
 import { useFileContext } from "./FileManager"
+import { useSettingsContext } from "./Settings"
 import BackgroundCanvas from "./BackgroundCanvas"
 import IconCanvas from "./IconCanvas"
 import { overlay, center } from "../styleUtils"
+import IconButton from "./IconButton"
+import { ReactComponent as SettingsIcon } from "../assets/cog.svg"
 
 function ImageProcessor() {
 	const [currentImage, setCurrentImage] = useState(0)
 	const { isLoading, images, isDrawerOpen } = useFileContext()
+	const { toggleSettings } = useSettingsContext()
 
 	return (
 		<Container>
@@ -21,9 +25,22 @@ function ImageProcessor() {
 			<Uploader />
 			<NavigationButtons images={images} setCurrentImage={setCurrentImage} />
 			{isDrawerOpen && <FileDrawer />}
+			<SettingsButtonContainer>
+				<IconButton onClick={toggleSettings}>
+					<SettingsIcon title="Settings" width="24px" height="24px" />
+				</IconButton>
+			</SettingsButtonContainer>
 		</Container>
 	)
 }
+
+const SettingsButtonContainer = styled.div`
+	position: absolute;
+	top: 20px;
+	right: 20px;
+	display: flex;
+	align-items: center;
+`
 
 const LoadingOverlay = styled.div`
 	${overlay}
@@ -34,8 +51,11 @@ const LoadingOverlay = styled.div`
 `
 
 const Container = styled.div`
-	width: 100%;
-	height: 100%;
+	width: 732px;
+	height: 600px;
+
+	/* width: 100%;
+	height: 100%; */
 	position: relative;
 	border-radius: 5px;
 	overflow: hidden;

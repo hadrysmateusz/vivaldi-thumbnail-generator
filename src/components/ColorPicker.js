@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 import { ChromePicker } from "react-color"
 import styled from "styled-components/macro"
-import { triangle } from "polished"
 
 const ColorPicker = ({ value, onChange }) => {
 	const [isPickerDisplayed, setIsPickerDisplayed] = useState(false)
@@ -54,7 +53,7 @@ const Swatch = styled.div`
 	margin: 0 auto;
 	background: white;
 	border-radius: 3px;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 	cursor: pointer;
 `
 
@@ -65,14 +64,6 @@ const Popover = styled.div`
 	position: absolute;
 	top: calc(16px + 100%);
 	z-index: 2;
-	&::before {
-		${triangle({
-			pointingDirection: "right",
-			width: "100px",
-			height: "100px",
-			foregroundColor: "red"
-		})}
-	}
 `
 
 const Cover = styled.div`
