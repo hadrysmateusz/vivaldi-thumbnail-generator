@@ -34,9 +34,9 @@ const LoadingOverlay = styled.div`
 `
 
 const Container = styled.div`
+	width: 100%;
+	height: 100%;
 	position: relative;
-	width: 793px;
-	height: 650px;
 	border-radius: 5px;
 	overflow: hidden;
 	box-shadow: 0 3px 16px rgba(0, 0, 0, 0.1);

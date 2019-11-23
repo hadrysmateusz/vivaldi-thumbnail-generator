@@ -1,6 +1,7 @@
 import React from "react"
 import InputRange from "react-input-range"
 import "react-input-range/lib/css/index.css"
+import styled from "styled-components/macro"
 
 const EXT_MIN = 100
 const EXT_MAX = 500
@@ -21,7 +22,7 @@ const SizePicker = ({ targetSize, setTargetSize }) => {
 	}
 
 	return (
-		<div style={{ margin: "30px 0" }}>
+		<Container>
 			{/* TODO: base the min and max values on the canvas size */}
 			<InputRange
 				minValue={LOC_MIN}
@@ -29,8 +30,12 @@ const SizePicker = ({ targetSize, setTargetSize }) => {
 				value={toLocal(targetSize)}
 				onChange={onChange}
 			/>
-		</div>
+		</Container>
 	)
 }
+
+const Container = styled.div`
+	margin: 32px 0;
+`
 
 export default SizePicker

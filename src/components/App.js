@@ -36,7 +36,6 @@ const OuterContainer = styled.div`
 `
 
 const InnerContainer = styled.div`
-	max-width: 793px;
 	margin: 0 auto;
 `
 
