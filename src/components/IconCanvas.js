@@ -29,11 +29,30 @@ const useDimensions = (image, targetSize) => {
 		if (!image) return {} // if there is no image return an empty object to prevent errors
 
 		try {
-			const { round, sqrt } = Math
-			const { divisor, divident } = getRatio(image.naturalWidth, image.naturalHeight)
-			const height = round(sqrt((divisor * (targetSize * targetSize)) / divident))
-			const width = round((targetSize * targetSize) / height)
-			return { width, height }
+			const { abs, log2, round } = Math
+
+			const imageWidth = image.naturalWidth
+			const imageHeight = image.naturalHeight
+			const ratio = imageWidth / imageHeight
+
+			// deviance increases logarithmicaly as the difference between width and height grows
+			const deviance = abs(log2(ratio))
+			const extension = deviance * (targetSize / 10)
+
+			let height, width
+
+			if (ratio > 1) {
+				width = targetSize + extension
+				height = width / ratio
+			} else if (ratio < 1) {
+				height = targetSize + extension
+				width = height * ratio
+			} else {
+				width = targetSize
+				height = targetSize
+			}
+
+			return { width: round(width), height: round(height) }
 		} catch (err) {
 			// if the calculations fail for any reason, just use the image's original dimensions
 			return { width: image.naturalWidth, height: image.naturalHeight }
