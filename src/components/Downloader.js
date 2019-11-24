@@ -32,7 +32,7 @@ const Downloader = () => {
 	return (
 		<Container>
 			<Button onClick={onDownload} disabled={isLoading || !hasImages}>
-				Download
+				Download All {images && images.length > 0 && `(${images.length})`}
 			</Button>
 		</Container>
 	)
