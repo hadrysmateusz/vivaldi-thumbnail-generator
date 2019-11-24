@@ -2,6 +2,7 @@ import React from "react"
 import styled from "styled-components/macro"
 
 import ThumbnailGenerator from "./ThumbnailGenerator"
+import Explainer from "./Explainer"
 
 const App = () => (
 	<Container>
@@ -11,9 +12,10 @@ const App = () => (
 				<Headline>Vivaldi Thumbnail Generator</Headline>
 				<Description>
 					Quickly and effortlessly generate thumbnails for use in{" "}
-					<a href="https://vivaldi.com/">Vivaldi Browser’s</a> Speed Dials
+					<a href="https://vivaldi.com/">Vivaldi Browser’s</a> Speed Dials.
 				</Description>
 				<ThumbnailGenerator />
+				<Explainer />
 			</InnerContainer>
 		</OuterContainer>
 	</Container>

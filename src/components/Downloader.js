@@ -56,7 +56,7 @@ const downloadImageFromCanvas = (canvas, fileName) => {
 }
 
 const Container = styled.div`
-	margin: 48px auto;
+	margin: 60px auto;
 	width: 732px;
 	display: flex;
 	justify-content: center;

@@ -47,11 +47,11 @@ const FileManager = ({ children }) => {
 		setImages((prevState) => prevState.filter((image) => image.src !== urlToRemove))
 	}
 
-	const hasFiles = images && images.length > 0
+	const hasImages = images && images.length > 0
 
 	const contextValue = {
 		addFiles,
-		hasFiles,
+		hasImages,
 		images,
 		setImages,
 		clearImages,
