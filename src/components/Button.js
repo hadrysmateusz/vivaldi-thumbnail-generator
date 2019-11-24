@@ -27,10 +27,18 @@ const buttonVariants = {
 }
 
 const disabledStyles = css`
-	background: #ccc;
-	color: white;
+	background: #d8d8d8;
+	color: #fcfcfc;
 	:hover {
-		background: #ccc;
+		color: #fcfcfc;
+		background: #d8d8d8;
+	}
+`
+
+const enabledOnlyStyles = css`
+	:hover {
+		cursor: pointer;
+		box-shadow: 0 6px 13px rgba(0, 0, 0, 0.1);
 	}
 `
 
@@ -39,14 +47,13 @@ const Button = styled.button`
 	border-radius: 5px;
 	${(p) => buttonVariants[p.variant]}
 	${(p) =>
-		p.disabled && disabledStyles}
+		p.disabled
+			? disabledStyles
+			: enabledOnlyStyles}
 	transition-property: background, color, box-shadow;
 	transition-duration: 200ms;
 	transition-timing-function: ease;
-	:hover {
-		cursor: pointer;
-		box-shadow: 0 6px 13px rgba(0, 0, 0, 0.1);
-	}
+
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 	display: flex;
 	justify-content: center;
