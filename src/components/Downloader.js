@@ -11,7 +11,7 @@ import {
 
 const Downloader = () => {
 	const { isLoading, setIsLoading, images } = useFileContext()
-	const { bgColor, targetSize } = useSettingsContext()
+	const { bgColor, scale } = useSettingsContext()
 	const [exportDimensions, setExportDimensions] = useState([1320, 1098])
 
 	const onDownload = () => {
@@ -19,10 +19,10 @@ const Downloader = () => {
 
 		images.forEach((image, i) => {
 			const [canvas] = createVirtualCanvas(...exportDimensions)
-			const { width, height } = calculateDimensions(image, targetSize)
+			const { width, height } = calculateDimensions(image, scale, canvas)
 			drawBackground(canvas, bgColor)
 			drawIcon(canvas, image, width, height)
-			downloadImageFromCanvas(canvas, `thumbnail-${i}.png`)
+			downloadImageFromCanvas(canvas, `thumbnail-${i + 1}.png`)
 		})
 
 		setIsLoading(false)

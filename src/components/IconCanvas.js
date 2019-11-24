@@ -9,12 +9,12 @@ import {
 } from "./CanvasCommon"
 
 const IconCanvas = ({ image }) => {
-	const { targetSize } = useContext(SettingsContext)
+	const { scale } = useContext(SettingsContext)
 	const ref = useRef()
 	useSizeCanvasToCssDimensions(ref)
 
 	// get the correct dimensions based on image's dimensions and the target size
-	const { width, height } = useDimensions(image, targetSize)
+	const { width, height } = useDimensions(image, scale, ref.current)
 
 	useEffect(() => {
 		const canvas = ref.current
@@ -30,8 +30,8 @@ const IconCanvas = ({ image }) => {
 }
 
 // hook that returns memoized value of the rescaled dimensions
-export const useDimensions = (image, targetSize) => {
-	return useMemo(() => calculateDimensions(image, targetSize), [image, targetSize])
+export const useDimensions = (image, scale, canvas) => {
+	return useMemo(() => calculateDimensions(image, scale, canvas), [canvas, image, scale])
 }
 
 export default IconCanvas

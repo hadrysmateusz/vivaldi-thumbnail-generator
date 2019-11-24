@@ -60,14 +60,16 @@ export const drawIcon = (canvas, image, width, height) => {
 /**
  * Calculates the correct dimensions that should make images of any ratio look uniform in size
  * @param {Image} image The Image to calculate dimensions from
- * @param {Number} targetSize The ideal size that the image should have if it was a square
+ * @param {Number} scale The ideal size that the image should have if it was a square
+ * @param {*} canvas The canvas on which the image will be drawn, needed to calculate the targetSize
  */
-export const calculateDimensions = (image, targetSize) => {
+export const calculateDimensions = (image, scale, canvas) => {
 	if (!image) return {} // if there is no image return an empty object to prevent errors
 
 	try {
 		const { abs, log2, round } = Math
 
+		const targetSize = (canvas.height / 100) * scale
 		const imageWidth = image.naturalWidth
 		const imageHeight = image.naturalHeight
 		const ratio = imageWidth / imageHeight

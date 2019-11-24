@@ -10,7 +10,7 @@ export const useSettingsContext = () => useContext(SettingsContext)
 
 export const SettingsManager = ({ children }) => {
 	const [bgColor, setBgColor] = useState("#fff")
-	const [targetSize, setTargetSize] = useState(260)
+	const [scale, setScale] = useState(40)
 	const [isSettingsDisplayed, setIsSettingsDisplayed] = useState(false)
 
 	const toggleSettings = () => {
@@ -22,8 +22,8 @@ export const SettingsManager = ({ children }) => {
 			value={{
 				bgColor,
 				setBgColor,
-				targetSize,
-				setTargetSize,
+				scale,
+				setScale,
 				isSettingsDisplayed,
 				toggleSettings
 			}}
@@ -34,18 +34,14 @@ export const SettingsManager = ({ children }) => {
 }
 
 export const SettingsEditor = () => {
-	const {
-		targetSize,
-		setTargetSize,
-		bgColor,
-		setBgColor,
-		isSettingsDisplayed
-	} = useContext(SettingsContext)
+	const { scale, setScale, bgColor, setBgColor, isSettingsDisplayed } = useContext(
+		SettingsContext
+	)
 
 	return (
 		<Container visible={isSettingsDisplayed}>
 			<Label>Icon Size</Label>
-			<SizePicker targetSize={targetSize} setTargetSize={setTargetSize} />
+			<SizePicker scale={scale} setScale={setScale} />
 			<Label>Background Color</Label>
 			<ColorPicker value={bgColor} onChange={setBgColor} />
 		</Container>
