@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components/macro"
 
 import ThumbnailGenerator from "./ThumbnailGenerator"
-import Explainer from "./Explainer"
+import { Explainer, Roadmap } from "./Copy"
 
 const App = () => (
 	<Container>
@@ -16,6 +16,7 @@ const App = () => (
 				</Description>
 				<ThumbnailGenerator />
 				<Explainer />
+				<Roadmap />
 			</InnerContainer>
 		</OuterContainer>
 	</Container>
