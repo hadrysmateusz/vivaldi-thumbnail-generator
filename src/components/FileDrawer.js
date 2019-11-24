@@ -6,7 +6,13 @@ import FileItem from "./FileItem"
 import { useFileContext } from "./FileManager"
 
 const FileDrawer = () => {
-	const { closeFileDrawer, images, removeImage, hasFiles, clearImages } = useFileContext()
+	const {
+		closeFileDrawer,
+		images,
+		removeImage,
+		hasImages,
+		clearImages
+	} = useFileContext()
 
 	return (
 		<Container>
@@ -19,7 +25,7 @@ const FileDrawer = () => {
 			</InnerContainer>
 
 			<ButtonsContainer>
-				{hasFiles && (
+				{hasImages && (
 					<Button onClick={clearImages} variant="danger">
 						Remove All
 					</Button>
