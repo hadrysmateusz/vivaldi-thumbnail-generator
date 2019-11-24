@@ -1,5 +1,6 @@
 import React, { useState, createContext, useContext } from "react"
-import { loadImage, trimImageWhitespace } from "../utils"
+import { loadImage } from "../utils"
+import { trimImageWhitespace } from "./CanvasCommon"
 
 export const FileContext = createContext()
 

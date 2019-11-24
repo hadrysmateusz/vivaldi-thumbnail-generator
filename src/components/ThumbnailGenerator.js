@@ -4,7 +4,7 @@ import styled from "styled-components/macro"
 import { SettingsEditor, SettingsManager } from "./Settings"
 import FileManager from "./FileManager"
 import ImageProcessor from "./ImageProcessor"
-// import Downloader from "./Downloader"
+import Downloader from "./Downloader"
 
 const ThumbnailGenerator = () => {
 	return (
@@ -14,7 +14,7 @@ const ThumbnailGenerator = () => {
 					<ImageProcessor />
 					<SettingsEditor />
 				</Container>
-				{/* <Downloader canvasRef={canvasRef} /> */}
+				<Downloader />
 			</FileManager>
 		</SettingsManager>
 	)
