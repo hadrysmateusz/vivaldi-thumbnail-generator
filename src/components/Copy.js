@@ -53,7 +53,7 @@ const Heading = styled.h1`
 	color: #383838;
 `
 
-const Body = styled.p`
+const Body = styled.div`
 	max-width: 600px;
 	margin: 24px auto 32px;
 	font-size: 18px;
