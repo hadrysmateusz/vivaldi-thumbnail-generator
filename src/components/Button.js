@@ -45,15 +45,10 @@ const enabledOnlyStyles = css`
 const Button = styled.button`
 	display: block;
 	border-radius: 5px;
-	${(p) => buttonVariants[p.variant]}
-	${(p) =>
-		p.disabled
-			? disabledStyles
-			: enabledOnlyStyles}
+	border: none;
 	transition-property: background, color, box-shadow;
 	transition-duration: 200ms;
 	transition-timing-function: ease;
-
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 	display: flex;
 	justify-content: center;
@@ -64,7 +59,8 @@ const Button = styled.button`
 	line-height: 18px;
 	letter-spacing: 0.02em;
 	padding: 0 32px;
-	border: none;
+	${(p) => buttonVariants[p.variant]}
+	${(p) => (p.disabled ? disabledStyles : enabledOnlyStyles)}
 `
 
 Button.defaultProps = {
