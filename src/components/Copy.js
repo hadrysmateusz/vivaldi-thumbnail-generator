@@ -44,13 +44,15 @@ const Heading = styled.h1`
 	margin: 48px auto 24px;
 
 	font-weight: 900;
-	font-size: 43px;
-	line-height: 48px;
+	font-size: 32px;
+	line-height: 40px;
 
 	text-align: center;
 	justify-content: center;
 	letter-spacing: 0.05em;
 	color: #383838;
+
+	text-decoration: underline #ddd;
 `
 
 const Body = styled.div`

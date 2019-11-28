@@ -10,7 +10,9 @@ const App = () => (
 		<OuterContainer>
 			<InnerContainer>
 				<MainCopy>
-					<Headline>Vivaldi Thumbnail Generator</Headline>
+					<Headline>
+						<em>Vivaldi</em> Thumbnail Generator
+					</Headline>
 					<Description>
 						Quickly and effortlessly generate thumbnails for use in{" "}
 						<a href="https://vivaldi.com/">Vivaldi Browser’s</a> Speed Dials.
@@ -31,10 +33,15 @@ const MainCopy = styled.div`
 `
 
 const Background = styled.div`
-	height: 600px;
+	height: 560px;
 	position: relative;
-	background-color: #4fd6d6;
-	background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='white' fill-opacity='0.15'%3E%3Cpath d='M50 50c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10s-10-4.477-10-10 4.477-10 10-10zM10 10c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10c0 5.523-4.477 10-10 10S0 25.523 0 20s4.477-10 10-10zm10 8c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8zm40 40c4.418 0 8-3.582 8-8s-3.582-8-8-8-8 3.582-8 8 3.582 8 8 8z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+	border-top: 6px solid var(--accent-color);
+	background: linear-gradient(
+		180deg,
+		rgba(250, 250, 250, 0) 0%,
+		rgba(250, 250, 250, 0) 5.73%,
+		#f9f9f9 100%
+	);
 `
 
 const OuterContainer = styled.div`
@@ -51,6 +58,13 @@ const InnerContainer = styled.div`
 const Headline = styled.h1`
 	margin: 40px auto 24px;
 
+	font-style: oblique;
+
+	em {
+		font-style: inherit;
+		color: var(--accent-color);
+	}
+
 	font-weight: 900;
 	font-size: 43px;
 	line-height: 48px;
@@ -58,18 +72,17 @@ const Headline = styled.h1`
 	text-align: center;
 	justify-content: center;
 	letter-spacing: 0.05em;
-	color: #ffffff;
-	text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.06);
+	color: #383838;
+	/* text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.06); */
 `
 
 const Description = styled.p`
-	max-width: 440px;
+	max-width: 420px;
 	margin: 24px auto 32px;
-	font-weight: 600;
 	font-size: 18px;
 	line-height: 24px;
 	text-align: center;
-	color: white;
+	color: #444;
 	text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
 
 	a,

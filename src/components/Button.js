@@ -10,10 +10,10 @@ const buttonVariants = {
 		}
 	`,
 	primary: css`
-		background: #4fd6d6;
+		background: var(--accent-color);
 		color: white;
 		:hover {
-			background: #24d7d7;
+			background: var(--accent-color-darker);
 		}
 	`,
 	danger: css`
