@@ -6,13 +6,13 @@ import Button from "./Button"
 import { useFileContext } from "./FileManager"
 
 const Uploader = () => {
-	const { addFiles, isLoading, openFileDrawer } = useFileContext()
+	const { addFromFiles, isLoading, openFileDrawer } = useFileContext()
 
 	const onDrop = (acceptedFiles) => {
 		// TODO: let the user know what happened
 		// if no new files are uploaded, exit silently
 		if (!acceptedFiles || acceptedFiles.length === 0) return
-		addFiles(acceptedFiles)
+		addFromFiles(acceptedFiles)
 	}
 
 	const { getRootProps, getInputProps, open, isDragActive } = useDropzone({

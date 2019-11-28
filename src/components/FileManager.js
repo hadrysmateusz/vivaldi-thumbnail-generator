@@ -11,7 +11,7 @@ const FileManager = ({ children }) => {
 	const [images, setImages] = useState([])
 	const [isLoading, setIsLoading] = useState(false)
 
-	const addFiles = async (files) => {
+	const addFromFiles = async (files) => {
 		if (isLoading) {
 			alert("Wait for the previous action to finish")
 			return
@@ -50,7 +50,7 @@ const FileManager = ({ children }) => {
 	const hasImages = images && images.length > 0
 
 	const contextValue = {
-		addFiles,
+		addFromFiles,
 		hasImages,
 		images,
 		setImages,
