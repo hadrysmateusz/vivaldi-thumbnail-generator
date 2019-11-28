@@ -14,12 +14,23 @@ const FileDrawer = () => {
 		clearImages
 	} = useFileContext()
 
+	const closeOnEsc = (e) => {
+		if (e.key === "Escape") {
+			closeFileDrawer()
+		}
+	}
+
 	return (
-		<Container>
+		<Container onKeyDown={closeOnEsc}>
 			<InnerContainer>
 				<GridContainer>
-					{images.map((image) => (
-						<FileItem key={image.src} imageUrl={image.src} removeItem={removeImage} />
+					{images.map((image, i) => (
+						<FileItem
+							key={image.src}
+							imageUrl={image.src}
+							removeItem={removeImage}
+							/* autoFocus={i === 0 ? true : undefined} */
+						/>
 					))}
 				</GridContainer>
 			</InnerContainer>
@@ -30,7 +41,9 @@ const FileDrawer = () => {
 						Remove All
 					</Button>
 				)}
-				<Button onClick={closeFileDrawer}>Close</Button>
+				<Button onClick={closeFileDrawer} autoFocus={!hasImages ? true : undefined}>
+					Close
+				</Button>
 			</ButtonsContainer>
 		</Container>
 	)
