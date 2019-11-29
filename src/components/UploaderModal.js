@@ -2,10 +2,9 @@ import React from "react"
 import styled from "styled-components/macro"
 import { center } from "../styleUtils"
 import { ReactComponent as UploadIcon } from "../assets/file-upload.svg"
-import { ReactComponent as PasteIcon } from "../assets/paste.svg"
 import { ReactComponent as LinkIcon } from "../assets/link.svg"
 
-const UploaderModal = ({ onRequestClose, onUpload, onLink, onPaste }) => {
+const UploaderModal = ({ onRequestClose, onUpload, onLink }) => {
 	const closeOnEsc = (e) => {
 		if (e.key === "Escape") {
 			onRequestClose()
@@ -33,11 +32,11 @@ const UploaderModal = ({ onRequestClose, onUpload, onLink, onPaste }) => {
 			>
 				<ModalButton onClick={onUpload} autoFocus>
 					<UploadIcon width={iconSize} height={iconSize} title="Upload File" />
-					<ButtonLabel>Upload File</ButtonLabel>
+					<ButtonLabel>From file</ButtonLabel>
 				</ModalButton>
 				<ModalButton onClick={onLink}>
 					<LinkIcon width={iconSize} height={iconSize} title="Paste Image URL" />
-					<ButtonLabel>Paste Image URL</ButtonLabel>
+					<ButtonLabel>From bookmark</ButtonLabel>
 				</ModalButton>
 				{/* <ModalButton onClick={onPaste}>
 					<PasteIcon width={iconSize} height={iconSize} title="Paste Image" />

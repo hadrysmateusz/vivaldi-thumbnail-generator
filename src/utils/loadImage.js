@@ -7,6 +7,7 @@
 const loadImage = (src, revokeUrl = false) => {
 	return new Promise((resolve, reject) => {
 		const img = new Image()
+		img.crossOrigin = "Anonymous"
 		img.onload = (e) => {
 			if (revokeUrl) {
 				URL.revokeObjectURL(e.target.src)

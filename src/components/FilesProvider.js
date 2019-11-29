@@ -30,7 +30,7 @@ const FilesProvider = ({ children }) => {
 		setIsLoading(false)
 	}
 
-	const addFromLink = async (url) => {
+	const addFromBookmarkUrl = async (url) => {
 		if (isLoading) {
 			alert("Wait for the previous action to finish")
 			return
@@ -38,7 +38,13 @@ const FilesProvider = ({ children }) => {
 
 		setIsLoading(true)
 
-		const image = await loadImage(url).then((image) => trimImageWhitespace(image))
+		const hostname = getHostname(url)
+
+		const clearbitApiUrl = `//logo.clearbit.com/${hostname}`
+
+		const image = await loadImage(clearbitApiUrl).then((image) =>
+			trimImageWhitespace(image)
+		)
 
 		setImages((prevState) => [...prevState, image])
 		setIsLoading(false)
@@ -65,7 +71,7 @@ const FilesProvider = ({ children }) => {
 
 	const contextValue = {
 		addFromFiles,
-		addFromLink,
+		addFromBookmarkUrl,
 		hasImages,
 		images,
 		setImages,
@@ -79,6 +85,10 @@ const FilesProvider = ({ children }) => {
 	}
 
 	return <FileContext.Provider value={contextValue}>{children}</FileContext.Provider>
+}
+
+const getHostname = (url) => {
+	return new URL(url).hostname
 }
 
 export default FilesProvider

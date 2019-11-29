@@ -12,7 +12,7 @@ const Uploader = () => {
 		isLoading,
 		openFileDrawer,
 		hasFiles,
-		addFromLink
+		addFromBookmarkUrl
 	} = useFileContext()
 	const [isModalOpen, setIsModalOpen] = useState()
 
@@ -22,8 +22,10 @@ const Uploader = () => {
 	}
 
 	const onLink = async () => {
-		const url = prompt("Paste image URL here")
-		await addFromLink(url)
+		const url = prompt("Paste bookmark URL here")
+		if (url) {
+			await addFromBookmarkUrl(url)
+		}
 		closeModal()
 	}
 
