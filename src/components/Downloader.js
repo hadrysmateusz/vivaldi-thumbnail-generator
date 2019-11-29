@@ -1,8 +1,8 @@
 import React, { useState } from "react"
 import styled from "styled-components/macro"
 import Button from "./Button"
-import { useFileContext } from "./FileManager"
-import { useSettingsContext } from "./Settings"
+import { useFileContext } from "./FilesProvider"
+import { useSettingsContext } from "./SettingsProvider"
 import {
 	drawIcon,
 	calculateDimensions,

@@ -3,10 +3,10 @@ import { useDropzone } from "react-dropzone"
 import styled from "styled-components/macro"
 import { overlay, center } from "../styleUtils"
 import Button from "./Button"
-import { useFileContext } from "./FileManager"
+import { useFileContext } from "./FilesProvider"
 
 const Uploader = () => {
-	const { addFromFiles, isLoading, openFileDrawer } = useFileContext()
+	const { addFromFiles, isLoading, openFileDrawer, hasFiles } = useFileContext()
 
 	const onDrop = (acceptedFiles) => {
 		// TODO: let the user know what happened
@@ -32,7 +32,7 @@ const Uploader = () => {
 					{isLoading ? "Loading" : "Upload Icons"}
 				</Button>
 				<DropText>or drop files here</DropText>
-				<Button onClick={openFileDrawer}>Manage Icons</Button>
+				{hasFiles && <Button onClick={openFileDrawer}>Manage Icons</Button>}
 			</ButtonsContainer>
 
 			{/* drag overlay */}
