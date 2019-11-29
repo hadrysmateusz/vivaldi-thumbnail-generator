@@ -1,6 +1,7 @@
 import React from "react"
 import InputRange from "react-input-range"
 import "react-input-range/lib/css/index.css"
+import "./react-input-range-style-overrides.css"
 import styled from "styled-components/macro"
 
 const MIN = 1
