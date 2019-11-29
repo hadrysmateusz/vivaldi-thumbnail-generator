@@ -6,7 +6,7 @@ export const FileContext = createContext()
 
 export const useFileContext = () => useContext(FileContext)
 
-const FileManager = ({ children }) => {
+const FilesProvider = ({ children }) => {
 	const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 	const [images, setImages] = useState([])
 	const [isLoading, setIsLoading] = useState(false)
@@ -66,4 +66,4 @@ const FileManager = ({ children }) => {
 	return <FileContext.Provider value={contextValue}>{children}</FileContext.Provider>
 }
 
-export default FileManager
+export default FilesProvider

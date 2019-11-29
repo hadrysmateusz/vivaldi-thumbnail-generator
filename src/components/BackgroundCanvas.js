@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useRef } from "react"
-import { SettingsContext } from "./Settings"
+import { SettingsContext } from "./SettingsProvider"
 import {
 	useSizeCanvasToCssDimensions,
 	StyledCanvas,

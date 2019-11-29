@@ -3,7 +3,7 @@ import styled from "styled-components/macro"
 import { overlay } from "../styleUtils"
 import Button from "./Button"
 import FileItem from "./FileItem"
-import { useFileContext } from "./FileManager"
+import { useFileContext } from "./FilesProvider"
 
 const FileDrawer = () => {
 	const {

@@ -3,7 +3,7 @@ import { useDropzone } from "react-dropzone"
 import styled from "styled-components/macro"
 import { overlay, center } from "../styleUtils"
 import Button from "./Button"
-import { useFileContext } from "./FileManager"
+import { useFileContext } from "./FilesProvider"
 
 const Uploader = () => {
 	const { addFromFiles, isLoading, openFileDrawer } = useFileContext()

@@ -1,22 +1,23 @@
 import React from "react"
 import styled from "styled-components/macro"
 
-import { SettingsEditor, SettingsManager } from "./Settings"
-import FileManager from "./FileManager"
+import SettingsProvider from "./SettingsProvider"
+import SettingsEditor from "./SettingsEditor"
+import FilesProvider from "./FilesProvider"
 import ImageProcessor from "./ImageProcessor"
 import Downloader from "./Downloader"
 
 const ThumbnailGenerator = () => {
 	return (
-		<SettingsManager>
-			<FileManager>
+		<SettingsProvider>
+			<FilesProvider>
 				<Container>
 					<ImageProcessor />
 					<SettingsEditor />
 				</Container>
 				<Downloader />
-			</FileManager>
-		</SettingsManager>
+			</FilesProvider>
+		</SettingsProvider>
 	)
 }
 
