@@ -3,8 +3,16 @@ import styled from "styled-components/macro"
 import { center } from "../styleUtils"
 import { ReactComponent as UploadIcon } from "../assets/file-upload.svg"
 import { ReactComponent as LinkIcon } from "../assets/link.svg"
+import { ReactComponent as PasteIcon } from "../assets/paste.svg"
 
-const UploaderModal = ({ onRequestClose, onUpload, onLink }) => {
+const UploaderModal = ({
+	onRequestClose,
+	onFileUpload,
+	onBookmarkUrl,
+	onPasteImage,
+	onImageUrl,
+	availableMethods
+}) => {
 	const closeOnEsc = (e) => {
 		if (e.key === "Escape") {
 			onRequestClose()
@@ -30,18 +38,34 @@ const UploaderModal = ({ onRequestClose, onUpload, onLink }) => {
 					e.stopPropagation()
 				}}
 			>
-				<ModalButton onClick={onUpload} autoFocus>
-					<UploadIcon width={iconSize} height={iconSize} title="Upload File" />
-					<ButtonLabel>From file</ButtonLabel>
-				</ModalButton>
-				<ModalButton onClick={onLink}>
-					<LinkIcon width={iconSize} height={iconSize} title="Paste Image URL" />
-					<ButtonLabel>From bookmark</ButtonLabel>
-				</ModalButton>
-				{/* <ModalButton onClick={onPaste}>
-					<PasteIcon width={iconSize} height={iconSize} title="Paste Image" />
-					<ButtonLabel>Paste Image</ButtonLabel>
-				</ModalButton> */}
+				{availableMethods.fileUpload && (
+					<ModalButton onClick={onFileUpload} autoFocus>
+						<UploadIcon width={iconSize} height={iconSize} title="Upload File" />
+						<ButtonLabel>From file</ButtonLabel>
+					</ModalButton>
+				)}
+				{availableMethods.bookmarkUrl && (
+					<ModalButton onClick={onBookmarkUrl}>
+						<LinkIcon
+							width={iconSize}
+							height={iconSize}
+							title="Get Image From Bookmark URL"
+						/>
+						<ButtonLabel>From bookmark</ButtonLabel>
+					</ModalButton>
+				)}
+				{availableMethods.pasteImage && (
+					<ModalButton onClick={onPasteImage}>
+						<PasteIcon width={iconSize} height={iconSize} title="Paste Image" />
+						<ButtonLabel>Paste Image</ButtonLabel>
+					</ModalButton>
+				)}
+				{availableMethods.imageUrl && (
+					<ModalButton onClick={onImageUrl}>
+						<PasteIcon width={iconSize} height={iconSize} title="Get Image From URL" />
+						<ButtonLabel>Image URL</ButtonLabel>
+					</ModalButton>
+				)}
 			</ModalBox>
 		</ModalContainer>
 	)

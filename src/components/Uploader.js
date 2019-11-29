@@ -6,22 +6,36 @@ import Button from "./Button"
 import { useFileContext } from "./FilesProvider"
 import UploaderModal from "./UploaderModal"
 
+// bookmark url works, but produces very low quality images
+const availableMethods = {
+	fileUpload: true,
+	imageUrl: false,
+	pasteImage: false,
+	bookmarkUrl: false
+}
+
+const numAvailableMethods = Object.values(availableMethods).reduce(
+	(acc, val) => (val === true ? acc + 1 : acc),
+	0
+)
+
 const Uploader = () => {
 	const {
 		addFromFiles,
 		isLoading,
 		openFileDrawer,
-		hasFiles,
-		addFromBookmarkUrl
+		hasImages,
+		addFromBookmarkUrl,
+		addFromImageUrl
 	} = useFileContext()
 	const [isModalOpen, setIsModalOpen] = useState()
 
-	const onPaste = () => {
-		// TODO: get image from clipboard
+	const onPasteImage = () => {
+		// PLACEHOLDER
 		closeModal()
 	}
 
-	const onLink = async () => {
+	const onBookmarkUrl = async () => {
 		const url = prompt("Paste bookmark URL here")
 		if (url) {
 			await addFromBookmarkUrl(url)
@@ -29,7 +43,14 @@ const Uploader = () => {
 		closeModal()
 	}
 
-	const onUpload = async () => {
+	const onImageUrl = async () => {
+		const url = prompt("Paste image URL here")
+		if (url) {
+			await addFromImageUrl(url)
+		}
+	}
+
+	const onFileUpload = async () => {
 		open()
 		// modal gets closed in onDrop after selecting file
 	}
@@ -40,6 +61,15 @@ const Uploader = () => {
 		// transform the files and add to file manager state
 		await addFromFiles(acceptedFiles)
 		closeModal()
+	}
+
+	const onAdd = () => {
+		// if there are multiple methods available, open modal, otherwise open file
+		if (numAvailableMethods > 1) {
+			openModal()
+		} else {
+			onFileUpload()
+		}
 	}
 
 	const closeModal = () => {
@@ -63,11 +93,11 @@ const Uploader = () => {
 
 			{/* buttons */}
 			<ButtonsContainer>
-				<Button onClick={openModal} variant="primary" disabled={isLoading}>
+				<Button onClick={onAdd} variant="primary" disabled={isLoading}>
 					{isLoading ? "Loading" : "Add Icons"}
 				</Button>
 				<DropText>or drop files here</DropText>
-				{hasFiles && <Button onClick={openFileDrawer}>Manage Icons</Button>}
+				{hasImages && <Button onClick={openFileDrawer}>Manage Icons</Button>}
 			</ButtonsContainer>
 
 			{/* drag overlay */}
@@ -76,10 +106,12 @@ const Uploader = () => {
 			{/* icon-add modal */}
 			{isModalOpen && (
 				<UploaderModal
-					onRequestClose={() => setIsModalOpen(false)}
-					onUpload={onUpload}
-					onLink={onLink}
-					onPaste={onPaste}
+					availableMethods={availableMethods}
+					onFileUpload={onFileUpload}
+					onBookmarkUrl={onBookmarkUrl}
+					onImageUrl={onImageUrl}
+					onPasteImage={onPasteImage}
+					onRequestClose={closeModal}
 				/>
 			)}
 		</DropzoneContainer>
