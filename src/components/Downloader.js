@@ -13,6 +13,7 @@ import {
 const Downloader = () => {
 	const { isLoading, setIsLoading, images, hasImages } = useFileContext()
 	const { bgColor, scale } = useSettingsContext()
+	// eslint-disable-next-line
 	const [exportDimensions, setExportDimensions] = useState([1320, 1098])
 
 	const onDownload = () => {
