@@ -1,18 +1,51 @@
-import React from "react"
+import React, { useState } from "react"
 import { useDropzone } from "react-dropzone"
 import styled from "styled-components/macro"
 import { overlay, center } from "../styleUtils"
 import Button from "./Button"
 import { useFileContext } from "./FilesProvider"
+import UploaderModal from "./UploaderModal"
 
 const Uploader = () => {
-	const { addFromFiles, isLoading, openFileDrawer, hasFiles } = useFileContext()
+	const {
+		addFromFiles,
+		isLoading,
+		openFileDrawer,
+		hasFiles,
+		addFromLink
+	} = useFileContext()
+	const [isModalOpen, setIsModalOpen] = useState()
 
-	const onDrop = (acceptedFiles) => {
-		// TODO: let the user know what happened
+	const onPaste = () => {
+		// TODO: get image from clipboard
+		closeModal()
+	}
+
+	const onLink = async () => {
+		const url = prompt("Paste image URL here")
+		await addFromLink(url)
+		closeModal()
+	}
+
+	const onUpload = async () => {
+		open()
+		// modal gets closed in onDrop after selecting file
+	}
+
+	const onDrop = async (acceptedFiles) => {
 		// if no new files are uploaded, exit silently
 		if (!acceptedFiles || acceptedFiles.length === 0) return
-		addFromFiles(acceptedFiles)
+		// transform the files and add to file manager state
+		await addFromFiles(acceptedFiles)
+		closeModal()
+	}
+
+	const closeModal = () => {
+		setIsModalOpen(false)
+	}
+
+	const openModal = () => {
+		setIsModalOpen(true)
 	}
 
 	const { getRootProps, getInputProps, open, isDragActive } = useDropzone({
@@ -28,8 +61,8 @@ const Uploader = () => {
 
 			{/* buttons */}
 			<ButtonsContainer>
-				<Button onClick={open} variant="primary" disabled={isLoading}>
-					{isLoading ? "Loading" : "Upload Icons"}
+				<Button onClick={openModal} variant="primary" disabled={isLoading}>
+					{isLoading ? "Loading" : "Add Icons"}
 				</Button>
 				<DropText>or drop files here</DropText>
 				{hasFiles && <Button onClick={openFileDrawer}>Manage Icons</Button>}
@@ -37,6 +70,16 @@ const Uploader = () => {
 
 			{/* drag overlay */}
 			{isDragActive && <Overlay>Drop here to add</Overlay>}
+
+			{/* icon-add modal */}
+			{isModalOpen && (
+				<UploaderModal
+					onRequestClose={() => setIsModalOpen(false)}
+					onUpload={onUpload}
+					onLink={onLink}
+					onPaste={onPaste}
+				/>
+			)}
 		</DropzoneContainer>
 	)
 }

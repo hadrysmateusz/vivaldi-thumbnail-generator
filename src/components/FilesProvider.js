@@ -30,6 +30,20 @@ const FilesProvider = ({ children }) => {
 		setIsLoading(false)
 	}
 
+	const addFromLink = async (url) => {
+		if (isLoading) {
+			alert("Wait for the previous action to finish")
+			return
+		}
+
+		setIsLoading(true)
+
+		const image = await loadImage(url).then((image) => trimImageWhitespace(image))
+
+		setImages((prevState) => [...prevState, image])
+		setIsLoading(false)
+	}
+
 	const clearImages = () => {
 		setImages([])
 	}
@@ -51,6 +65,7 @@ const FilesProvider = ({ children }) => {
 
 	const contextValue = {
 		addFromFiles,
+		addFromLink,
 		hasImages,
 		images,
 		setImages,
