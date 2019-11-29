@@ -58,7 +58,7 @@ const InnerContainer = styled.div`
 const Headline = styled.h1`
 	margin: 40px auto 24px;
 
-	font-style: oblique;
+	/* font-style: oblique; */
 
 	em {
 		font-style: inherit;
