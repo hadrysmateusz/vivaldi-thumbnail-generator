@@ -40,7 +40,7 @@ const Downloader = () => {
 }
 
 const downloadImageFromCanvas = (canvas, fileName) => {
-	const imageUrl = canvas.toDataURL("image/png")
+	const imageUrl = canvas.toDataURL("image/png", 1)
 	let xhr = new XMLHttpRequest()
 	xhr.responseType = "blob"
 	xhr.onload = function() {
