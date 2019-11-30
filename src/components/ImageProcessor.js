@@ -18,14 +18,20 @@ function ImageProcessor() {
 
 	return (
 		<Container>
+			{/* canvases */}
 			<BackgroundCanvas />
 			<IconCanvas image={images[currentImage]} />
+			{/* loading overlay */}
 			{isLoading && <LoadingOverlay>Loading...</LoadingOverlay>}
+			{/* uploader */}
 			<Uploader />
+			{/* nav-buttons */}
 			<NavigationButtons images={images} setCurrentImage={setCurrentImage} />
+			{/* settings button */}
 			<SettingsButtonContainer>
 				<SettingsButton />
 			</SettingsButtonContainer>
+			{/* file drawer */}
 			{isDrawerOpen && <FileDrawer />}
 		</Container>
 	)
