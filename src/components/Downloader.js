@@ -1,21 +1,55 @@
-import React from "react"
+import React, { useState } from "react"
 import styled from "styled-components/macro"
 import Button from "./Button"
 import { useFileContext } from "./FilesProvider"
+import { useSettingsContext } from "./SettingsProvider"
+import {
+	drawIcon,
+	calculateDimensions,
+	drawBackground,
+	createVirtualCanvas
+} from "./CanvasCommon"
+import { makeAsync } from "../utils"
 
 const Downloader = () => {
-	const {
-		isLoading,
-		images,
-		hasImages,
-		generateDownloadUrls,
-		downloadUrls
-	} = useFileContext()
+	const { isLoading, setIsLoading, images, hasImages } = useFileContext()
+	const { scale, bgColor, exportDimensions } = useSettingsContext()
+	const [downloadUrls, setDownloadUrls] = useState([])
 
 	const onDownload = async () => {
-		await generateDownloadUrls()
-		alert("Done")
+		if (isLoading) {
+			alert("Wait for the previous action to finish")
+			return
+		}
+
+		setIsLoading(true)
+
+		try {
+			const _downloadUrls = await Promise.all(
+				images.map((image) => {
+					return generateDownloadUrl(image, scale, bgColor, exportDimensions)
+				})
+			)
+			setDownloadUrls(_downloadUrls)
+		} catch (err) {
+			alert("Error")
+			console.error(err)
+		}
+
+		setIsLoading(false)
 	}
+
+	const generateDownloadUrl = makeAsync((image, scale, bgColor, exportDimensions) => {
+		try {
+			const [canvas] = createVirtualCanvas(...exportDimensions)
+			const { width, height } = calculateDimensions(image, scale, canvas)
+			drawBackground(canvas, bgColor)
+			drawIcon(canvas, image, width, height)
+			return canvas.toDataURL()
+		} catch (err) {
+			return null
+		}
+	})
 
 	return (
 		<>

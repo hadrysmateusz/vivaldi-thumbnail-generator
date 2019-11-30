@@ -1,4 +1,4 @@
 import loadImage from "./loadImage"
-import generateDownloadUrl from "./generateDownloadUrl"
+import makeAsync from "./makeAsync"
 
-export { loadImage, generateDownloadUrl }
+export { loadImage, makeAsync }

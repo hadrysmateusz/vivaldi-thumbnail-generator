@@ -1,7 +1,6 @@
 import React, { useState, createContext, useContext } from "react"
-import { loadImage, generateDownloadUrl } from "../utils"
+import { loadImage } from "../utils"
 import { trimImageWhitespace } from "./CanvasCommon"
-import { useSettingsContext } from "./SettingsProvider"
 
 export const FileContext = createContext()
 
@@ -9,33 +8,8 @@ export const useFileContext = () => useContext(FileContext)
 
 const FilesProvider = ({ children }) => {
 	const [images, setImages] = useState([])
-	const [downloadUrls, setDownloadUrls] = useState([])
 	const [isLoading, setIsLoading] = useState(false)
 	const [isDrawerOpen, setIsDrawerOpen] = useState(false)
-	const { scale, bgColor, exportDimensions } = useSettingsContext()
-
-	const generateDownloadUrls = async () => {
-		if (isLoading) {
-			alert("Wait for the previous action to finish")
-			return
-		}
-
-		setIsLoading(true)
-
-		try {
-			const _downloadUrls = await Promise.all(
-				images.map((image) => {
-					return generateDownloadUrl(image, scale, bgColor, exportDimensions)
-				})
-			)
-			setDownloadUrls(_downloadUrls)
-		} catch (err) {
-			alert("Error")
-			console.error(err)
-		}
-
-		setIsLoading(false)
-	}
 
 	const addFromFiles = async (files) => {
 		if (isLoading) {
@@ -141,9 +115,7 @@ const FilesProvider = ({ children }) => {
 		setIsLoading,
 		openFileDrawer,
 		closeFileDrawer,
-		isDrawerOpen,
-		generateDownloadUrls,
-		downloadUrls
+		isDrawerOpen
 	}
 
 	return <FileContext.Provider value={contextValue}>{children}</FileContext.Provider>
