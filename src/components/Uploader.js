@@ -48,6 +48,7 @@ const Uploader = () => {
 		if (url) {
 			await addFromImageUrl(url)
 		}
+		closeModal()
 	}
 
 	const onFileUpload = async () => {
