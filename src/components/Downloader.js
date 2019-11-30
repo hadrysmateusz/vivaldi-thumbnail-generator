@@ -1,59 +1,47 @@
-import React, { useState } from "react"
+import React from "react"
 import styled from "styled-components/macro"
 import Button from "./Button"
 import { useFileContext } from "./FilesProvider"
-import { useSettingsContext } from "./SettingsProvider"
-import {
-	drawIcon,
-	calculateDimensions,
-	drawBackground,
-	createVirtualCanvas
-} from "./CanvasCommon"
 
 const Downloader = () => {
-	const { isLoading, setIsLoading, images, hasImages } = useFileContext()
-	const { bgColor, scale } = useSettingsContext()
-	// eslint-disable-next-line
-	const [exportDimensions, setExportDimensions] = useState([1320, 1098])
+	const {
+		isLoading,
+		images,
+		hasImages,
+		generateDownloadUrls,
+		downloadUrls
+	} = useFileContext()
 
-	const onDownload = () => {
-		setIsLoading(true)
-
-		images.forEach((image, i) => {
-			const [canvas] = createVirtualCanvas(...exportDimensions)
-			const { width, height } = calculateDimensions(image, scale, canvas)
-			drawBackground(canvas, bgColor)
-			drawIcon(canvas, image, width, height)
-			downloadImageFromCanvas(canvas, `thumbnail-${i + 1}.png`)
-		})
-
-		setIsLoading(false)
+	const onDownload = async () => {
+		await generateDownloadUrls()
+		alert("Done")
 	}
 
 	return (
-		<Container>
-			<Button onClick={onDownload} disabled={isLoading || !hasImages}>
-				Download All {images && images.length > 0 && `(${images.length})`}
-			</Button>
-		</Container>
+		<>
+			<Container>
+				<Button onClick={onDownload} disabled={isLoading || !hasImages}>
+					Download All {images && images.length > 0 && `(${images.length})`}
+				</Button>
+			</Container>
+			<ul>
+				{downloadUrls.map((url, i) => (
+					<li onClick={() => downloadImage(url, i)}>thumbnail {i}</li>
+				))}
+			</ul>
+		</>
 	)
 }
 
-const downloadImageFromCanvas = (canvas, fileName) => {
-	const imageUrl = canvas.toDataURL("image/png", 1)
-	let xhr = new XMLHttpRequest()
-	xhr.responseType = "blob"
-	xhr.onload = function() {
-		let a = document.createElement("a")
-		a.href = window.URL.createObjectURL(xhr.response)
-		a.download = fileName
-		a.style.display = "none"
-		document.body.appendChild(a)
-		a.click()
-		a.remove()
-	}
-	xhr.open("GET", imageUrl) // This is to download the canvas Image
-	xhr.send()
+const downloadImage = (data, filename) => {
+	filename = filename || "thumbnail.png"
+	const a = document.createElement("a")
+	a.href = data
+	a.download = filename
+	a.style.display = "none"
+	document.body.appendChild(a)
+	a.click()
+	a.remove()
 }
 
 const Container = styled.div`

@@ -8,6 +8,7 @@ const SettingsProvider = ({ children }) => {
 	const [bgColor, setBgColor] = useState("#fff")
 	const [scale, setScale] = useState(40)
 	const [isSettingsDisplayed, setIsSettingsDisplayed] = useState(false)
+	const [exportDimensions, setExportDimensions] = useState([1320, 1098]) // eslint-disable-line
 
 	const toggleSettings = () => {
 		setIsSettingsDisplayed((prevValue) => !prevValue)
@@ -21,7 +22,9 @@ const SettingsProvider = ({ children }) => {
 				scale,
 				setScale,
 				isSettingsDisplayed,
-				toggleSettings
+				toggleSettings,
+				exportDimensions,
+				setExportDimensions
 			}}
 		>
 			{children}

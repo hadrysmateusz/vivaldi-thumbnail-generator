@@ -1,3 +1,4 @@
 import loadImage from "./loadImage"
+import generateDownloadUrl from "./generateDownloadUrl"
 
-export { loadImage }
+export { loadImage, generateDownloadUrl }
