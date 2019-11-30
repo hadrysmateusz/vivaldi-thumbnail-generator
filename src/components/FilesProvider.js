@@ -19,14 +19,20 @@ const FilesProvider = ({ children }) => {
 
 		setIsLoading(true)
 
-		const images = await Promise.all(
-			files.map((file) => {
-				const objectUrl = URL.createObjectURL(file)
-				return loadImage(objectUrl).then((image) => trimImageWhitespace(image))
-			})
-		)
+		try {
+			const images = await Promise.all(
+				files.map((file) => {
+					const objectUrl = URL.createObjectURL(file)
+					return loadImage(objectUrl).then((image) => trimImageWhitespace(image))
+				})
+			)
 
-		setImages((prevState) => [...prevState, ...images])
+			setImages((prevState) => [...prevState, ...images])
+		} catch (err) {
+			alert("Some files could not be loaded")
+			console.error(err)
+		}
+
 		setIsLoading(false)
 	}
 
@@ -38,15 +44,21 @@ const FilesProvider = ({ children }) => {
 
 		setIsLoading(true)
 
-		const hostname = getHostname(url)
+		try {
+			const hostname = getHostname(url)
 
-		const clearbitApiUrl = `//logo.clearbit.com/${hostname}`
+			const clearbitApiUrl = `//logo.clearbit.com/${hostname}`
 
-		const image = await loadImage(clearbitApiUrl).then((image) =>
-			trimImageWhitespace(image)
-		)
+			const image = await loadImage(clearbitApiUrl).then((image) =>
+				trimImageWhitespace(image)
+			)
 
-		setImages((prevState) => [...prevState, image])
+			setImages((prevState) => [...prevState, image])
+		} catch (err) {
+			alert("Couldn't find icon for this url")
+			console.error(err)
+		}
+
 		setIsLoading(false)
 	}
 
@@ -59,9 +71,15 @@ const FilesProvider = ({ children }) => {
 
 		setIsLoading(true)
 
-		const image = await loadImage(url).then((image) => trimImageWhitespace(image))
+		try {
+			const image = await loadImage(url).then((image) => trimImageWhitespace(image))
+			setImages((prevState) => [...prevState, image])
+		} catch (err) {
+			// TODO: better error handling
+			alert("This image could not be loaded")
+			console.error(err)
+		}
 
-		setImages((prevState) => [...prevState, image])
 		setIsLoading(false)
 	}
 
