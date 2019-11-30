@@ -1,10 +1,10 @@
 import { useEffect } from "react"
 import styled from "styled-components/macro"
-import { overlay } from "../styleUtils"
+import { cover } from "polished"
 import { loadImage } from "../utils"
 
 export const StyledCanvas = styled.canvas`
-	${overlay}
+	${cover()}
 	width: 100%;
 	height: 100%;
 	display: block;

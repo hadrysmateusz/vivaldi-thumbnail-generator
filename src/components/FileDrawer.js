@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import styled from "styled-components/macro"
-import { overlay } from "../styleUtils"
+import { cover } from "polished"
 import Button from "./Button"
 import FileItem from "./FileItem"
 import { useFileContext } from "./FilesProvider"
@@ -68,7 +68,7 @@ const InnerContainer = styled.div`
 `
 
 const Container = styled.div`
-	${overlay}
+	${cover()}
 	background: white;
 	height: 100%;
 	position: relative;

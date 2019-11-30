@@ -1,7 +1,8 @@
 import React, { useState } from "react"
 import { useDropzone } from "react-dropzone"
 import styled from "styled-components/macro"
-import { overlay, center } from "../styleUtils"
+import { cover } from "polished"
+import { center } from "../styleUtils"
 import Button from "./Button"
 import { useFileContext } from "./FilesProvider"
 import UploaderModal from "./UploaderModal"
@@ -129,11 +130,11 @@ const DropText = styled.div`
 `
 
 const DropzoneContainer = styled.div`
-	${overlay}
+	${cover()}
 `
 
 const Overlay = styled.div`
-	${overlay}
+	${cover()}
 	${center}
 	z-index: 80;
 	background: rgba(0, 0, 0, 0.36);
