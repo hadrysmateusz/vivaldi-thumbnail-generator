@@ -3,10 +3,11 @@ import styled from "styled-components/macro"
 
 import ThumbnailGenerator from "./ThumbnailGenerator"
 import { Explainer, Roadmap } from "./Copy"
-// test
+import GlobalStyle from "../globalStyle"
 
 const App = () => (
 	<Container>
+		<GlobalStyle />
 		<Background />
 		<OuterContainer>
 			<InnerContainer>
