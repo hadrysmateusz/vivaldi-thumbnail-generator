@@ -16,7 +16,7 @@ const Downloader = () => {
 	const { scale, bgColor, exportDimensions } = useSettingsContext()
 	const [downloadUrls, setDownloadUrls] = useState([])
 
-	const onDownload = async () => {
+	const onGenerate = async () => {
 		if (isLoading) {
 			alert("Wait for the previous action to finish")
 			return
@@ -54,8 +54,8 @@ const Downloader = () => {
 	return (
 		<>
 			<Container>
-				<Button onClick={onDownload} disabled={isLoading || !hasImages}>
-					Download All {images && images.length > 0 && `(${images.length})`}
+				<Button onClick={onGenerate} disabled={isLoading || !hasImages}>
+					Generate
 				</Button>
 			</Container>
 			<ul>
@@ -66,6 +66,8 @@ const Downloader = () => {
 		</>
 	)
 }
+
+// Download All {images && images.length > 0 && `(${images.length})`}
 
 const downloadImage = (data, filename) => {
 	filename = filename || "thumbnail.png"
