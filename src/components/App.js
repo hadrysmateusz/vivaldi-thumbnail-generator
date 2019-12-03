@@ -1,4 +1,5 @@
 import React from "react"
+import { BrowserRouter as Router } from "react-router-dom"
 import styled from "styled-components/macro"
 
 import ThumbnailGenerator from "./ThumbnailGenerator"
@@ -6,26 +7,28 @@ import { Explainer, Roadmap } from "./Copy"
 import GlobalStyle from "../globalStyle"
 
 const App = () => (
-	<Container>
-		<GlobalStyle />
-		<Background />
-		<OuterContainer>
-			<InnerContainer>
-				<MainCopy>
-					<Headline>
-						<em>Vivaldi</em> Thumbnail Generator
-					</Headline>
-					<Description>
-						Quickly and effortlessly generate thumbnails for use in{" "}
-						<a href="https://vivaldi.com/">Vivaldi Browser’s</a> Speed Dials.
-					</Description>
-				</MainCopy>
-				<ThumbnailGenerator />
-				<Explainer />
-				<Roadmap />
-			</InnerContainer>
-		</OuterContainer>
-	</Container>
+	<Router>
+		<Container>
+			<GlobalStyle />
+			<Background />
+			<OuterContainer>
+				<InnerContainer>
+					<MainCopy>
+						<Headline>
+							<em>Vivaldi</em> Thumbnail Generator
+						</Headline>
+						<Description>
+							Quickly and effortlessly generate thumbnails for use in{" "}
+							<a href="https://vivaldi.com/">Vivaldi Browser’s</a> Speed Dials.
+						</Description>
+					</MainCopy>
+					<ThumbnailGenerator />
+					<Explainer />
+					<Roadmap />
+				</InnerContainer>
+			</OuterContainer>
+		</Container>
+	</Router>
 )
 
 const Container = styled.div``

@@ -1,4 +1,5 @@
 import React from "react"
+import { Route, Switch } from "react-router-dom"
 import styled from "styled-components/macro"
 
 import SettingsProvider from "./SettingsProvider"
@@ -11,11 +12,16 @@ const ThumbnailGenerator = () => {
 	return (
 		<SettingsProvider>
 			<FilesProvider>
-				<Container>
-					<ImageProcessor />
-					<SettingsEditor />
-				</Container>
-				<Downloader />
+				<Switch>
+					<Route path="/downloads">Downloads</Route>
+					<Route path="/">
+						<Container>
+							<ImageProcessor />
+							<SettingsEditor />
+						</Container>
+						<Downloader />
+					</Route>
+				</Switch>
 			</FilesProvider>
 		</SettingsProvider>
 	)
