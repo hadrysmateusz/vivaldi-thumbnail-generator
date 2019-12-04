@@ -1,6 +1,5 @@
 import React, { useState } from "react"
 import styled from "styled-components/macro"
-import { cover } from "polished"
 import NavigationButtons from "./NavigationButtons"
 import Uploader from "./Uploader"
 import FileDrawer from "./FileDrawer"
@@ -8,8 +7,8 @@ import { useFileContext } from "./FilesProvider"
 import { useSettingsContext } from "./SettingsProvider"
 import BackgroundCanvas from "./BackgroundCanvas"
 import IconCanvas from "./IconCanvas"
-import { center } from "../styleUtils"
 import IconButton from "./IconButton"
+import LoadingOverlay from "./LoadingOverlay"
 import { ReactComponent as SettingsIcon } from "../assets/cog.svg"
 
 function ImageProcessor() {
@@ -53,14 +52,6 @@ const SettingsButtonContainer = styled.div`
 	right: 20px;
 	display: flex;
 	align-items: center;
-`
-
-const LoadingOverlay = styled.div`
-	${cover()}
-	${center}
-	background: white;
-	font-size: 32px;
-	font-weight: bold;
 `
 
 const Container = styled.div`

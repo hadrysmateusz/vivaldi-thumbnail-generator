@@ -3,13 +3,17 @@ import styled from "styled-components/macro"
 import { Link } from "react-router-dom"
 
 import Button from "../Button"
-import { useFileContext } from "../FilesProvider"
 import { useExporter } from "."
-import { useSettingsContext } from "../SettingsProvider"
+import LoadingOverlay from "../LoadingOverlay"
 
 const Exporter = () => {
-	const { hasImages } = useFileContext()
 	const [{ isLoading, isError, isCanceled, data }, { generate, cancel }] = useExporter()
+
+	// TODO: if I make renaming thumbnails possible, the names will have to be lifted here
+
+	const downloadAll = () => {
+		data.forEach((url, i) => downloadImage(url, `thumbnail-${i}.png`))
+	}
 
 	return (
 		<OuterContainer>
@@ -17,14 +21,32 @@ const Exporter = () => {
 				<Header>
 					<h2>Downloads</h2>
 					<Button as={Link} to={"/"}>
-						Edit
+						Back
 					</Button>
 				</Header>
-				<ListContainer>
-					{data.map((url, i) => (
-						<ExporterItem key={url} name={`thumbnail-${i}`} url={url} />
-					))}
-				</ListContainer>
+				{isLoading ? (
+					<LoadingOverlay>Loading...</LoadingOverlay>
+				) : (
+					<ListContainer>
+						{data.map((url, i) => (
+							<ExporterItem key={url} name={`thumbnail-${i}`} url={url} />
+						))}
+					</ListContainer>
+				)}
+
+				<Footer>
+					<Disclaimer>
+						Make sure to allow this site to download multiple files at once, by clicking
+						the 'i' icon in your browser's address bar.
+					</Disclaimer>
+					<Button
+						variant="primary"
+						onClick={downloadAll}
+						disabled={isLoading || isError || !data || data.length === 0}
+					>
+						Download All
+					</Button>
+				</Footer>
 			</Container>
 		</OuterContainer>
 	)
@@ -59,7 +81,24 @@ const downloadImage = (url, filename) => {
 	a.remove()
 }
 
-const ListContainer = styled.div``
+const Footer = styled.div`
+	display: flex;
+	align-items: center;
+	height: 72px;
+	border-top: 2px solid #f5f5f5;
+`
+
+const Disclaimer = styled.div`
+	color: #747474;
+	font-size: 12px;
+	line-height: 20px;
+	max-width: 378px;
+	margin-right: auto;
+`
+
+const ListContainer = styled.div`
+	min-height: 100px;
+`
 
 const ItemContainer = styled.div`
 	margin: 24px 0;
