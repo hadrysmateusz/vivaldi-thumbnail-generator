@@ -23,6 +23,17 @@ const buttonVariants = {
 			background: #fcfcfc;
 			color: #e01818;
 		}
+	`,
+	"text-only": css`
+		background: none;
+		box-shadow: none;
+		color: #383838;
+		:hover {
+			box-shadow: none;
+			background: none;
+			color: black;
+			text-decoration: underline;
+		}
 	`
 }
 
@@ -59,8 +70,14 @@ const Button = styled.button`
 	line-height: 18px;
 	letter-spacing: 0.02em;
 	padding: 0 32px;
+	/* 
+		the split of disabled and enabled-only styles is intentional 
+		enabled-only styles should be overriden by variant styles 
+		disabled styles should override variant styles 
+	*/
+	${(p) => !p.disabled && enabledOnlyStyles}
 	${(p) => buttonVariants[p.variant]}
-	${(p) => (p.disabled ? disabledStyles : enabledOnlyStyles)}
+	${(p) => p.disabled && disabledStyles}
 `
 
 Button.defaultProps = {
