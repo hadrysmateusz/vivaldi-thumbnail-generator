@@ -6,22 +6,26 @@ import SettingsProvider from "./SettingsProvider"
 import SettingsEditor from "./SettingsEditor"
 import FilesProvider from "./FilesProvider"
 import ImageProcessor from "./ImageProcessor"
-import Downloader from "./Downloader"
+import { GenerateButton, Exporter, ExporterProvider } from "./Exporter"
 
 const ThumbnailGenerator = () => {
 	return (
 		<SettingsProvider>
 			<FilesProvider>
-				<Switch>
-					<Route path="/downloads">Downloads</Route>
-					<Route path="/">
-						<Container>
-							<ImageProcessor />
-							<SettingsEditor />
-						</Container>
-						<Downloader />
-					</Route>
-				</Switch>
+				<ExporterProvider>
+					<Switch>
+						<Route path="/downloads">
+							<Exporter />
+						</Route>
+						<Route path="/">
+							<Container>
+								<ImageProcessor />
+								<SettingsEditor />
+							</Container>
+							<GenerateButton />
+						</Route>
+					</Switch>
+				</ExporterProvider>
 			</FilesProvider>
 		</SettingsProvider>
 	)
