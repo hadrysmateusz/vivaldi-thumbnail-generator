@@ -7,7 +7,7 @@ import { useExporter } from "."
 import LoadingOverlay from "../LoadingOverlay"
 
 const Exporter = () => {
-	const [{ isLoading, isError, isCanceled, data }, { generate, cancel }] = useExporter()
+	const [{ isLoading, isError, data }] = useExporter()
 
 	// TODO: if I make renaming thumbnails possible, the names will have to be lifted here
 
