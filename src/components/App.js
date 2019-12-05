@@ -1,10 +1,16 @@
 import React from "react"
 import { BrowserRouter as Router } from "react-router-dom"
 import styled from "styled-components/macro"
+import ReactMarkdown from "react-markdown"
 
 import ThumbnailGenerator from "./ThumbnailGenerator"
-import { Explainer, Roadmap } from "./Copy"
+import { Roadmap } from "./Copy"
 import GlobalStyle from "../globalStyle"
+
+const taglines = [
+	"Quickly and effortlessly generate thumbnails for use in [Vivaldi Browser](https://vivaldi.com/)’s Speed Dials.",
+	"Create beautiful thumbnails for [Vivaldi Browser](https://vivaldi.com/)’s Speed Dials, in a matter of seconds."
+]
 
 const App = () => (
 	<Router>
@@ -18,12 +24,10 @@ const App = () => (
 							<em>Vivaldi</em> Thumbnail Generator
 						</Headline>
 						<Description>
-							Quickly and effortlessly generate thumbnails for use in{" "}
-							<a href="https://vivaldi.com/">Vivaldi Browser’s</a> Speed Dials.
+							<ReactMarkdown source={taglines[1]} />
 						</Description>
 					</MainCopy>
 					<ThumbnailGenerator />
-					<Explainer />
 					<Roadmap />
 				</InnerContainer>
 			</OuterContainer>
@@ -93,6 +97,11 @@ const Description = styled.p`
 	a,
 	a:visited {
 		color: inherit;
+		text-decoration: underline;
+	}
+
+	a:hover {
+		color: var(--accent-color);
 	}
 `
 
