@@ -28,10 +28,10 @@ export const Roadmap = () => (
 		<Heading>Upcoming features</Heading>
 		<Body>
 			<List>
-				<li>Import icons from URL</li>
+				<li>Importing icons from URL</li>
 				<li>Per image settings overrides</li>
 				<li>Icon-based color suggestions</li>
-				<li>Save your preferences</li>
+				<li>Saving your preferences</li>
 				<li>
 					<b>and more</b>
 				</li>
