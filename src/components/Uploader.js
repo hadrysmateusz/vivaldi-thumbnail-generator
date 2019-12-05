@@ -95,7 +95,11 @@ const Uploader = () => {
 
 			{/* buttons */}
 			<ButtonsContainer>
-				<Button onClick={onAdd} variant="primary" disabled={isLoading}>
+				<Button
+					onClick={onAdd}
+					variant={hasImages ? "normal" : "primary"}
+					disabled={isLoading}
+				>
 					{isLoading ? "Loading" : "Add Icons"}
 				</Button>
 				<DropText>or drop files here</DropText>
