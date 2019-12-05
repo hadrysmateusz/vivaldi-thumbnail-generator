@@ -1,5 +1,5 @@
 import React from "react"
-import { BrowserRouter as Router } from "react-router-dom"
+import { BrowserRouter as Router, Route } from "react-router-dom"
 import styled from "styled-components/macro"
 import ReactMarkdown from "react-markdown"
 
@@ -28,7 +28,9 @@ const App = () => (
 						</Description>
 					</MainCopy>
 					<ThumbnailGenerator />
-					<Roadmap />
+					<Route path="/" exact>
+						<Roadmap />
+					</Route>
 				</InnerContainer>
 			</OuterContainer>
 		</Container>
