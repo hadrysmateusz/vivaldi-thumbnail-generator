@@ -12,7 +12,7 @@ const Exporter = () => {
 	// TODO: if I make renaming thumbnails possible, the names will have to be lifted here
 
 	const downloadAll = () => {
-		data.forEach((url, i) => downloadImage(url, `thumbnail-${i}.png`))
+		data.forEach((url, i) => downloadImage(url, `thumbnail-${i + 1}.png`))
 	}
 
 	return (
@@ -29,7 +29,7 @@ const Exporter = () => {
 				) : (
 					<ListContainer>
 						{data.map((url, i) => (
-							<ExporterItem key={url} name={`thumbnail-${i}`} url={url} />
+							<ExporterItem key={url} name={`thumbnail-${i + 1}`} url={url} />
 						))}
 					</ListContainer>
 				)}
