@@ -23,7 +23,7 @@ const StyledButton = styled.button`
 	align-items: center;
 	width: ${(p) => p.size};
 	height: ${(p) => p.size};
-	background: rgba(255, 255, 255, 0.35);
+	background: white;
 	border: none;
 	border-radius: 50%;
 	color: var(--black25);
