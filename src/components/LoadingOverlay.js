@@ -7,7 +7,9 @@ const LoadingOverlay = styled.div`
 	${cover()}
 	${center}
 	background: white;
-	font-size: 32px;
+	color: #686868;
+	font-size: 24px;
+	line-height: 48px;
 	font-weight: bold;
 `
 
