@@ -4,7 +4,7 @@ import styled from "styled-components/macro"
 import ReactMarkdown from "react-markdown"
 
 import ThumbnailGenerator from "./ThumbnailGenerator"
-import { Roadmap } from "./Copy"
+import { H2, TextBlock, List } from "./CopywritingElements"
 import GlobalStyle from "../globalStyle"
 
 const taglines = [
@@ -29,7 +29,18 @@ const App = () => (
 					</MainCopy>
 					<ThumbnailGenerator />
 					<Route path="/" exact>
-						<Roadmap />
+						<H2>Upcoming features</H2>
+						<TextBlock>
+							<List>
+								<li>Importing icons from URL</li>
+								<li>Per image settings overrides</li>
+								<li>Icon-based color suggestions</li>
+								<li>Saving your preferences</li>
+								<li>
+									<b>and more</b>
+								</li>
+							</List>
+						</TextBlock>
 					</Route>
 				</InnerContainer>
 			</OuterContainer>
