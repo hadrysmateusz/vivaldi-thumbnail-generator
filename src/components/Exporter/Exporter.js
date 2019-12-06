@@ -37,7 +37,8 @@ const Exporter = () => {
 				<Footer>
 					<Disclaimer>
 						Make sure to allow this site to download multiple files at once, by clicking
-						the 'i' icon in your browser's address bar.
+						the 'i' icon in your browser's address bar and changing the appropriate
+						settings.
 					</Disclaimer>
 					<Button
 						variant="primary"
@@ -92,7 +93,7 @@ const Disclaimer = styled.div`
 	color: #747474;
 	font-size: 12px;
 	line-height: 20px;
-	max-width: 378px;
+	max-width: 410px;
 	margin-right: auto;
 `
 
