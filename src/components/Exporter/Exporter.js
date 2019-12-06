@@ -133,7 +133,10 @@ const ContentContainer = styled.div`
 	position: relative;
 `
 
-const ListContainer = styled.div``
+const ListContainer = styled.div`
+	max-height: 640px;
+	overflow-y: auto;
+`
 
 const ItemContainer = styled.div`
 	margin: 24px 0;
