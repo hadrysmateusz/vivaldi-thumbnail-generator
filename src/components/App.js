@@ -94,7 +94,6 @@ const Description = styled.p`
 	line-height: 24px;
 	text-align: center;
 	color: #444;
-	text-shadow: 0px 1px 2px rgba(0, 0, 0, 0.1);
 
 	a,
 	a:visited {
