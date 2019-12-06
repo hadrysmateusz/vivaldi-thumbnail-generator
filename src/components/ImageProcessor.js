@@ -10,16 +10,26 @@ import IconCanvas from "./IconCanvas"
 import IconButton from "./IconButton"
 import LoadingOverlay from "./LoadingOverlay"
 import { ReactComponent as SettingsIcon } from "../assets/cog.svg"
+import { ReactComponent as UploadIcon } from "../assets/file-upload.svg"
+import { cover } from "polished"
 
 function ImageProcessor() {
 	const [currentImage, setCurrentImage] = useState(0)
-	const { isLoading, images, isDrawerOpen } = useFileContext()
+	const { isLoading, images, hasImages, isDrawerOpen } = useFileContext()
 
 	return (
 		<Container>
 			{/* canvases */}
 			<BackgroundCanvas />
 			<IconCanvas image={images[currentImage]} />
+			{/* loading overlay */}
+			{!hasImages && (
+				<EmptyState>
+					<EmptyStateIcon width={84} height={112} />
+					<EmptyStateHeading>There are no icons here yet</EmptyStateHeading>
+					<EmptyStateBody>Upload some, to get started</EmptyStateBody>
+				</EmptyState>
+			)}
 			{/* loading overlay */}
 			{isLoading && <LoadingOverlay>Loading...</LoadingOverlay>}
 			{/* uploader */}
@@ -45,6 +55,33 @@ const SettingsButton = () => {
 		</IconButton>
 	)
 }
+
+const EmptyState = styled.div`
+	${cover()}
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+`
+
+const EmptyStateIcon = styled(UploadIcon)`
+	path {
+		fill: #e2e2e2;
+	}
+`
+
+const EmptyStateHeading = styled.div`
+	color: #686868;
+	font-size: 24px;
+	line-height: 48px;
+	font-weight: bold;
+`
+
+const EmptyStateBody = styled.div`
+	color: #5b5b5b;
+	font-size: 14px;
+	line-height: 24px;
+`
 
 const SettingsButtonContainer = styled.div`
 	position: absolute;
