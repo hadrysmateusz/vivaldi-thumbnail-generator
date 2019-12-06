@@ -5,6 +5,7 @@ import { Link } from "react-router-dom"
 import Button from "../Button"
 import { useExporter } from "."
 import LoadingOverlay from "../LoadingOverlay"
+import { cover } from "polished"
 
 const Exporter = () => {
 	const [{ isLoading, isError, data }] = useExporter()
@@ -15,6 +16,8 @@ const Exporter = () => {
 		data.forEach((url, i) => downloadImage(url, `thumbnail-${i + 1}.png`))
 	}
 
+	const isEmpty = !data || data.length === 0
+
 	return (
 		<OuterContainer>
 			<Container>
@@ -24,30 +27,39 @@ const Exporter = () => {
 						Back
 					</Button>
 				</Header>
-				{isLoading ? (
-					<LoadingOverlay>Loading...</LoadingOverlay>
-				) : (
-					<ListContainer>
-						{data.map((url, i) => (
-							<ExporterItem key={url} name={`thumbnail-${i + 1}`} url={url} />
-						))}
-					</ListContainer>
-				)}
+				<ContentContainer>
+					{isLoading ? (
+						<LoadingOverlay>Loading...</LoadingOverlay>
+					) : isEmpty ? (
+						<EmptyState>
+							There is nothing here,&nbsp;<Link to="/">go back</Link>&nbsp;to add some
+							icons and try again
+						</EmptyState>
+					) : (
+						<ListContainer>
+							{data.map((url, i) => (
+								<ExporterItem key={url} name={`thumbnail-${i + 1}`} url={url} />
+							))}
+						</ListContainer>
+					)}
+				</ContentContainer>
 
-				<Footer>
-					<Disclaimer>
-						Make sure to allow this site to download multiple files at once, by clicking
-						the 'i' icon in your browser's address bar and changing the appropriate
-						settings.
-					</Disclaimer>
-					<Button
-						variant="primary"
-						onClick={downloadAll}
-						disabled={isLoading || isError || !data || data.length === 0}
-					>
-						Download All
-					</Button>
-				</Footer>
+				{!isEmpty && (
+					<Footer>
+						<Disclaimer>
+							Make sure to allow this site to download multiple files at once, by clicking
+							the 'i' icon in your browser's address bar and changing the appropriate
+							settings.
+						</Disclaimer>
+						<Button
+							variant="primary"
+							onClick={downloadAll}
+							disabled={isLoading || isError || !data || data.length === 0}
+						>
+							Download All
+						</Button>
+					</Footer>
+				)}
 			</Container>
 		</OuterContainer>
 	)
@@ -97,14 +109,50 @@ const Disclaimer = styled.div`
 	margin-right: auto;
 `
 
-const ListContainer = styled.div`
-	min-height: 100px;
+const OuterContainer = styled.div`
+	margin: 0 auto;
+	max-width: 1024px;
+	display: flex;
+	justify-content: center;
 `
+
+const Container = styled.div`
+	width: 732px;
+	background: white;
+	padding: 0 24px;
+	position: relative;
+	border-radius: 5px;
+	overflow: hidden;
+	box-shadow: 0 3px 16px rgba(0, 0, 0, 0.1);
+	display: flex;
+	flex-direction: column;
+`
+
+const ContentContainer = styled.div`
+	flex: 1 0 100px;
+	position: relative;
+`
+
+const ListContainer = styled.div``
 
 const ItemContainer = styled.div`
 	margin: 24px 0;
 	display: flex;
 	align-items: center;
+`
+
+const EmptyState = styled.div`
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 12px;
+	color: #747474;
+	${cover()}
+
+	a {
+		color: black;
+		text-decoration: underline;
+	}
 `
 
 const Preview = styled.div`
@@ -142,23 +190,6 @@ const Header = styled.div`
 		margin-right: auto;
 		letter-spacing: 0.03em;
 	}
-`
-
-const OuterContainer = styled.div`
-	margin: 0 auto;
-	max-width: 1024px;
-	display: flex;
-	justify-content: center;
-`
-
-const Container = styled.div`
-	width: 732px;
-	background: white;
-	padding: 0 24px;
-	position: relative;
-	border-radius: 5px;
-	overflow: hidden;
-	box-shadow: 0 3px 16px rgba(0, 0, 0, 0.1);
 `
 
 export default Exporter
