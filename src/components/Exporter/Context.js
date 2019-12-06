@@ -90,9 +90,8 @@ const generatorReducer = (state, action) => {
 const generateDownloadUrl = makeAsync((image, scale, bgColor, exportDimensions) => {
 	try {
 		const [canvas] = createVirtualCanvas(...exportDimensions)
-		const { width, height } = calculateDimensions(image, scale, canvas)
 		drawBackground(canvas, bgColor)
-		drawIcon(canvas, image, width, height)
+		drawIcon(canvas, image, scale)
 		return canvas.toDataURL()
 	} catch (err) {
 		return null
