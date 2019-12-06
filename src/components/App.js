@@ -34,7 +34,7 @@ const App = () => (
 							<List>
 								<li>Importing icons from URL</li>
 								<li>Per image settings overrides</li>
-								<li>Icon-based color suggestions</li>
+								<li>Icon-based color palettes</li>
 								<li>Saving your preferences</li>
 								<li>
 									<b>and more</b>
