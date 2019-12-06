@@ -37,9 +37,11 @@ function ImageProcessor() {
 			{/* nav-buttons */}
 			<NavigationButtons images={images} setCurrentImage={setCurrentImage} />
 			{/* settings button */}
-			<SettingsButtonContainer>
-				<SettingsButton />
-			</SettingsButtonContainer>
+			{hasImages && (
+				<SettingsButtonContainer>
+					<SettingsButton />
+				</SettingsButtonContainer>
+			)}
 			{/* file drawer */}
 			{isDrawerOpen && <FileDrawer />}
 		</Container>
