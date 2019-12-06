@@ -1,37 +1,27 @@
-import React, { useEffect, useContext, useRef, useMemo } from "react"
-import { SettingsContext } from "./SettingsProvider"
+import React, { useEffect, useRef } from "react"
+import { useSettingsContext } from "./SettingsProvider"
 import {
 	useSizeCanvasToCssDimensions,
 	StyledCanvas,
 	clearCanvas,
-	drawIcon,
-	calculateDimensions
+	drawIcon
 } from "./CanvasCommon"
 
 const IconCanvas = ({ image }) => {
-	const { scale } = useContext(SettingsContext)
-	const ref = useRef()
-	useSizeCanvasToCssDimensions(ref)
-
-	// get the correct dimensions based on image's dimensions and the target size
-	const { width, height } = useDimensions(image, scale, ref.current)
+	const { scale } = useSettingsContext()
+	const canvasRef = useRef()
+	useSizeCanvasToCssDimensions(canvasRef)
 
 	useEffect(() => {
-		const canvas = ref.current
 		// clear canvas to remove previous image
-		clearCanvas(canvas)
+		clearCanvas(canvasRef.current)
 		// if there are no images yet, or they were all removed, exit to prevent errors
 		if (!image) return
 		// draw the current image with the correct dimensions
-		drawIcon(canvas, image, width, height)
-	}, [height, image, width])
+		drawIcon(canvasRef.current, image, scale)
+	}, [image, scale])
 
-	return <StyledCanvas ref={ref} />
-}
-
-// hook that returns memoized value of the rescaled dimensions
-export const useDimensions = (image, scale, canvas) => {
-	return useMemo(() => calculateDimensions(image, scale, canvas), [canvas, image, scale])
+	return <StyledCanvas ref={canvasRef} />
 }
 
 export default IconCanvas

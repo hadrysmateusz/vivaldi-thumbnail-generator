@@ -50,7 +50,8 @@ export const drawBackground = (canvas, bgColor) => {
 	ctx.restore()
 }
 
-export const drawIcon = (canvas, image, width, height) => {
+export const drawIcon = (canvas, image, scale) => {
+	const { width, height } = calculateDimensions(image, scale, canvas)
 	const ctx = canvas.getContext("2d")
 	const positionX = canvas.width / 2 - width / 2
 	const positionY = canvas.height / 2 - height / 2
@@ -93,6 +94,7 @@ export const calculateDimensions = (image, scale, canvas) => {
 
 		return { width: round(width), height: round(height) }
 	} catch (err) {
+		console.error("failed to calculate image dimensions: ", err)
 		// if the calculations fail for any reason, just use the image's original dimensions
 		return { width: image.naturalWidth, height: image.naturalHeight }
 	}

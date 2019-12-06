@@ -1,5 +1,5 @@
-import React, { useEffect, useContext, useRef } from "react"
-import { SettingsContext } from "./SettingsProvider"
+import React, { useEffect, useRef } from "react"
+import { useSettingsContext } from "./SettingsProvider"
 import {
 	useSizeCanvasToCssDimensions,
 	StyledCanvas,
@@ -7,16 +7,15 @@ import {
 } from "./CanvasCommon"
 
 const BackgroundCanvas = () => {
-	const { bgColor } = useContext(SettingsContext)
-	const ref = useRef()
-	useSizeCanvasToCssDimensions(ref)
+	const { bgColor } = useSettingsContext()
+	const canvasRef = useRef()
+	useSizeCanvasToCssDimensions(canvasRef)
 
 	useEffect(() => {
-		const canvas = ref.current
-		drawBackground(canvas, bgColor)
+		drawBackground(canvasRef.current, bgColor)
 	}, [bgColor])
 
-	return <StyledCanvas ref={ref} />
+	return <StyledCanvas ref={canvasRef} />
 }
 
 export default BackgroundCanvas
