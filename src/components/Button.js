@@ -38,11 +38,13 @@ const buttonVariants = {
 }
 
 const disabledStyles = css`
-	background: #d8d8d8;
+	background: #e2e2e2;
 	color: #fcfcfc;
+	text-shadow: 1px 1px rgba(0, 0, 0, 0.1);
 	:hover {
 		color: #fcfcfc;
-		background: #d8d8d8;
+		background: #e2e2e2;
+		text-shadow: 1px 1px rgba(0, 0, 0, 0.1);
 	}
 `
 
