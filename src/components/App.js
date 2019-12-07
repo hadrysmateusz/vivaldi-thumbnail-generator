@@ -3,9 +3,11 @@ import { BrowserRouter as Router, Route } from "react-router-dom"
 import styled from "styled-components/macro"
 import ReactMarkdown from "react-markdown"
 
+import { ReactComponent as TwitterIcon } from "../assets/twitter.svg"
 import ThumbnailGenerator from "./ThumbnailGenerator"
 import { H2, TextBlock, List } from "./CopywritingElements"
 import GlobalStyle from "../globalStyle"
+import * as links from "../links"
 
 const taglines = [
 	"Quickly and effortlessly generate thumbnails for use in [Vivaldi Browser](https://vivaldi.com/)’s Speed Dials.",
@@ -27,6 +29,15 @@ const App = () => (
 							<ReactMarkdown source={taglines[1]} />
 						</Description>
 					</MainCopy>
+					<Social>
+						<div>by Mateusz Hadryś</div>
+						<div>
+							Follow me to get updates:
+							<a href={links.twitter}>
+								<TwitterIcon width={20} height={20} />
+							</a>
+						</div>
+					</Social>
 					<ThumbnailGenerator />
 					<Route path="/" exact>
 						<H2>Upcoming features</H2>
@@ -48,6 +59,36 @@ const App = () => (
 		</Container>
 	</Router>
 )
+
+const Social = styled.div`
+	max-width: 732px;
+	padding: 1px;
+	margin: 0 auto 4px;
+	margin-top: -24px;
+	color: #888;
+	font-size: 12px;
+	line-height: 12px;
+	height: 24px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+
+	svg {
+		margin-bottom: -2px;
+		margin-left: 8px;
+		path {
+			fill: #999;
+			:hover {
+				fill: #1da1f2;
+			}
+		}
+	}
+
+	div {
+		display: flex;
+		align-items: center;
+	}
+`
 
 const Container = styled.div``
 
