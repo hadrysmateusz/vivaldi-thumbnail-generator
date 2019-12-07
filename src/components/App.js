@@ -32,9 +32,10 @@ const App = () => (
 						<H2>Upcoming features</H2>
 						<TextBlock>
 							<List>
-								<li>Importing icons from URL</li>
 								<li>Per image settings overrides</li>
+								<li>Manually position the icon</li>
 								<li>Icon-based color palettes</li>
+								<li>Importing icons from URL</li>
 								<li>Saving your preferences</li>
 								<li>
 									<b>and more</b>
