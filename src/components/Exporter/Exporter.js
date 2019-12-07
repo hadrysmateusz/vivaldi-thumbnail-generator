@@ -61,6 +61,9 @@ const Exporter = () => {
 					</Footer>
 				)}
 			</Container>
+			<ShareButtonsContainer>
+				<div className="sharethis-inline-share-buttons" />
+			</ShareButtonsContainer>
 		</OuterContainer>
 	)
 }
@@ -94,6 +97,10 @@ const downloadImage = (url, filename) => {
 	a.remove()
 }
 
+const ShareButtonsContainer = styled.div`
+	margin: 36px auto;
+`
+
 const Footer = styled.div`
 	display: flex;
 	align-items: center;
@@ -111,9 +118,7 @@ const Disclaimer = styled.div`
 
 const OuterContainer = styled.div`
 	margin: 0 auto;
-	max-width: 1024px;
-	display: flex;
-	justify-content: center;
+	max-width: 732px;
 `
 
 const Container = styled.div`
