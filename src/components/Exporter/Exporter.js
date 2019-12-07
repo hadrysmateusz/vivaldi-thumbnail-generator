@@ -165,8 +165,8 @@ const Preview = styled.div`
 	background-size: cover;
 	box-shadow: 0 0 4px rgba(0, 0, 0, 0.1) inset;
 	border-radius: 5px;
-	width: 60px;
 	height: 60px;
+	width: 73px;
 	margin-right: 16px;
 `
 
