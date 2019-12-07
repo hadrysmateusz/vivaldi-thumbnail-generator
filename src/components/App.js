@@ -55,7 +55,7 @@ const MainCopy = styled.div`
 `
 
 const Background = styled.div`
-	height: 560px;
+	height: 508px;
 	position: relative;
 	border-top: 6px solid var(--accent-color);
 	background: linear-gradient(
