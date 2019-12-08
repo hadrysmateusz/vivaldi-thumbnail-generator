@@ -13,7 +13,7 @@ const Exporter = () => {
 	// TODO: if I make renaming thumbnails possible, the names will have to be lifted here
 
 	const downloadAll = () => {
-		data.forEach((url, i) => downloadImage(url, `thumbnail-${i + 1}.png`))
+		data.forEach((url, i) => downloadImage(url, `thumbnail-${i + 1}`))
 	}
 
 	const isEmpty = !data || data.length === 0
@@ -139,7 +139,7 @@ const ContentContainer = styled.div`
 `
 
 const ListContainer = styled.div`
-	max-height: 640px;
+	max-height: 474px;
 	overflow-y: auto;
 `
 
