@@ -3,7 +3,8 @@ import { useSettingsContext } from "./SettingsProvider"
 import {
 	useSizeCanvasToCssDimensions,
 	StyledCanvas,
-	drawBackground
+	drawBackground,
+	clearCanvas
 } from "./CanvasCommon"
 
 const BackgroundCanvas = () => {
@@ -12,6 +13,9 @@ const BackgroundCanvas = () => {
 	useSizeCanvasToCssDimensions(canvasRef)
 
 	useEffect(() => {
+		// clear canvas to remove previous image
+		clearCanvas(canvasRef.current)
+		// draw background color
 		drawBackground(canvasRef.current, bgColor)
 	}, [bgColor])
 

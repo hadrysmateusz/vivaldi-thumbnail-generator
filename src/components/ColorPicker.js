@@ -6,8 +6,8 @@ const ColorPicker = ({ value, onChange }) => {
 	const [isPickerDisplayed, setIsPickerDisplayed] = useState(false)
 
 	const onColorChange = (color) => {
-		console.log(color)
-		onChange(color.hex)
+		const { r, g, b, a } = color.rgb
+		onChange(`rgba(${r},${g},${b},${a})`)
 	}
 
 	const displayPicker = () => {

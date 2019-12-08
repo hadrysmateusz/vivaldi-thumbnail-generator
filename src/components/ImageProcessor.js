@@ -11,6 +11,7 @@ import IconButton from "./IconButton"
 import LoadingOverlay from "./LoadingOverlay"
 import { ReactComponent as SettingsIcon } from "../assets/cog.svg"
 import { ReactComponent as UploadIcon } from "../assets/file-upload.svg"
+import transparency from "../assets/transparency.png"
 import { cover } from "polished"
 
 function ImageProcessor() {
@@ -102,6 +103,8 @@ const Container = styled.div`
 	border-radius: 5px;
 	overflow: hidden;
 	box-shadow: 0 3px 16px rgba(0, 0, 0, 0.1);
+	background: url(${transparency});
+	background-repeat: repeat;
 `
 
 export default ImageProcessor
