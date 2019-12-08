@@ -103,7 +103,7 @@ const Background = styled.div`
 	background: linear-gradient(
 		180deg,
 		rgba(253, 253, 253, 0.6) 94%,
-		rgba(247, 247, 247) 100%
+		rgba(248, 248, 248) 100%
 	);
 `
 
