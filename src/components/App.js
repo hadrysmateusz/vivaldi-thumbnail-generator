@@ -102,9 +102,8 @@ const Background = styled.div`
 	border-top: 6px solid var(--accent-color);
 	background: linear-gradient(
 		180deg,
-		rgba(250, 250, 250, 0) 0%,
-		rgba(250, 250, 250, 0) 5.73%,
-		#f9f9f9 100%
+		rgba(253, 253, 253, 0.6) 94%,
+		rgba(247, 247, 247) 100%
 	);
 `
 
