@@ -1,9 +1,9 @@
 import React from "react"
 import ArrowButton from "./ArrowButton"
 
-function NavigationButtons({ images, setCurrentImage }) {
+function NavigationButtons({ images, setSelectedIndex }) {
 	const next = () => {
-		setCurrentImage((prevState) => {
+		setSelectedIndex((prevState) => {
 			const newIndex = prevState + 1
 			const numImages = images.length
 			return newIndex % numImages
@@ -11,7 +11,7 @@ function NavigationButtons({ images, setCurrentImage }) {
 	}
 
 	const prev = () => {
-		setCurrentImage((prevState) => {
+		setSelectedIndex((prevState) => {
 			const newIndex = prevState - 1
 			const numImages = images.length
 			return newIndex >= 0 ? newIndex : numImages - 1

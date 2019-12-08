@@ -14,14 +14,16 @@ import { ReactComponent as UploadIcon } from "../assets/file-upload.svg"
 import { cover } from "polished"
 
 function ImageProcessor() {
-	const [currentImage, setCurrentImage] = useState(0)
+	const [selectedIndex, setSelectedIndex] = useState(0)
 	const { isLoading, images, hasImages, isDrawerOpen } = useFileContext()
+
+	const selectedImage = selectedIndex >= images.length ? images[0] : images[selectedIndex]
 
 	return (
 		<Container>
 			{/* canvases */}
 			<BackgroundCanvas />
-			<IconCanvas image={images[currentImage]} />
+			<IconCanvas image={selectedImage} />
 			{/* loading overlay */}
 			{!hasImages && (
 				<EmptyState>
@@ -35,7 +37,7 @@ function ImageProcessor() {
 			{/* uploader */}
 			<Uploader />
 			{/* nav-buttons */}
-			<NavigationButtons images={images} setCurrentImage={setCurrentImage} />
+			<NavigationButtons images={images} setSelectedIndex={setSelectedIndex} />
 			{/* settings button */}
 			{hasImages && (
 				<SettingsButtonContainer>
