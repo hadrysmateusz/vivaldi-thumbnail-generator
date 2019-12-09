@@ -1,12 +1,7 @@
 import React, { useReducer, useContext, createContext } from "react"
 import { useFileContext } from "../FilesProvider"
 import { useSettingsContext } from "../SettingsProvider"
-import {
-	drawIcon,
-	calculateDimensions,
-	drawBackground,
-	createVirtualCanvas
-} from "../CanvasCommon"
+import { drawIcon, drawBackground, createVirtualCanvas } from "../CanvasCommon"
 import { makeAsync } from "../../utils"
 
 export const ExporterContext = createContext({})

@@ -139,7 +139,7 @@ const Headline = styled.h1`
 	/* text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.06); */
 `
 
-const Description = styled.p`
+const Description = styled.div`
 	max-width: 420px;
 	margin: 24px auto 32px;
 	font-size: 18px;

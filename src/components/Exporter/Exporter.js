@@ -1,66 +1,35 @@
 import React from "react"
 import styled from "styled-components/macro"
 import { Link } from "react-router-dom"
+import { cover } from "polished"
 
 import Button from "../Button"
 import { useExporter } from "."
 import LoadingOverlay from "../LoadingOverlay"
-import { cover } from "polished"
 import SharingButtons from "../SharingButtons"
+import { download } from "../../utils"
 
 const Exporter = () => {
 	const [{ isLoading, isError, data }] = useExporter()
-
-	// TODO: if I make renaming thumbnails possible, the names will have to be lifted here
-
-	const downloadAll = () => {
-		data.forEach((url, i) => downloadImage(url, `thumbnail-${i + 1}`))
-	}
-
 	const isEmpty = !data || data.length === 0
+
+	// TODO: consider merging isEmpty and isError inside the exporter hook
+	// TODO: refactor this and move it inside exporter hook, merge error states etc.
+	const downloadAll = async () => {
+		await download.zip.fromUrls(data, "thumbnails")
+	}
 
 	return (
 		<OuterContainer>
 			<Container>
-				<Header>
-					<h2>Downloads</h2>
-					<Button as={Link} to={"/"}>
-						Back
-					</Button>
-				</Header>
-				<ContentContainer>
-					{isLoading ? (
-						<LoadingOverlay>Loading...</LoadingOverlay>
-					) : isEmpty ? (
-						<EmptyState>
-							There is nothing here,&nbsp;<Link to="/">go back</Link>&nbsp;to add some
-							icons and try again
-						</EmptyState>
-					) : (
-						<ListContainer>
-							{data.map((url, i) => (
-								<ExporterItem key={url} name={`thumbnail-${i + 1}`} url={url} />
-							))}
-						</ListContainer>
-					)}
-				</ContentContainer>
-
-				{!isEmpty && (
-					<Footer>
-						<Disclaimer>
-							Make sure to allow this site to download multiple files at once, by clicking
-							the 'i' icon in your browser's address bar and changing the appropriate
-							settings.
-						</Disclaimer>
-						<Button
-							variant="primary"
-							onClick={downloadAll}
-							disabled={isLoading || isError || !data || data.length === 0}
-						>
-							Download All
-						</Button>
-					</Footer>
-				)}
+				<Header />
+				<Content isLoading={isLoading} isEmpty={isEmpty} data={data} />
+				<Footer
+					isLoading={isLoading}
+					isEmpty={isEmpty}
+					isError={isError}
+					downloadAll={downloadAll}
+				/>
 			</Container>
 			{!isEmpty && (
 				<ShareButtonsContainer>
@@ -71,9 +40,50 @@ const Exporter = () => {
 	)
 }
 
+const Header = () => (
+	<HeaderContainer>
+		<h2>Downloads</h2>
+		<Button as={Link} to={"/"}>
+			Back
+		</Button>
+	</HeaderContainer>
+)
+
+const Content = ({ isLoading, isEmpty, data }) => (
+	<ContentContainer>
+		{isLoading ? (
+			<LoadingOverlay>Loading...</LoadingOverlay>
+		) : isEmpty ? (
+			<EmptyState>
+				There is nothing here,&nbsp;<Link to="/">go back</Link>&nbsp;to add some icons and
+				try again
+			</EmptyState>
+		) : (
+			<ListContainer>
+				{data.map((url, i) => (
+					<ExporterItem key={url} name={`thumbnail-${i + 1}`} url={url} />
+				))}
+			</ListContainer>
+		)}
+	</ContentContainer>
+)
+
+const Footer = ({ isEmpty, isLoading, isError, downloadAll }) =>
+	!isEmpty ? (
+		<FooterContainer>
+			<Disclaimer>
+				Make sure to allow this site to download multiple files at once, by clicking the
+				'i' icon in your browser's address bar and changing the appropriate settings.
+			</Disclaimer>
+			<Button variant="primary" onClick={downloadAll} disabled={isLoading || isError}>
+				Download All
+			</Button>
+		</FooterContainer>
+	) : null
+
 const ExporterItem = ({ name, url }) => {
 	const handleClick = () => {
-		downloadImage(url, name)
+		download.fromUrl(url, name)
 	}
 
 	return (
@@ -89,22 +99,11 @@ const ExporterItem = ({ name, url }) => {
 	)
 }
 
-const downloadImage = (url, filename) => {
-	filename += ".png"
-	const a = document.createElement("a")
-	a.href = url
-	a.download = filename
-	a.style.display = "none"
-	document.body.appendChild(a)
-	a.click()
-	a.remove()
-}
-
 const ShareButtonsContainer = styled.div`
 	margin: 40px auto;
 `
 
-const Footer = styled.div`
+const FooterContainer = styled.div`
 	display: flex;
 	align-items: center;
 	height: 72px;
@@ -185,7 +184,7 @@ const Data = styled.div`
 
 const Actions = styled.div``
 
-const Header = styled.div`
+const HeaderContainer = styled.div`
 	height: 72px;
 	display: flex;
 	justify-content: center;
