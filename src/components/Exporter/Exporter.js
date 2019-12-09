@@ -6,6 +6,7 @@ import Button from "../Button"
 import { useExporter } from "."
 import LoadingOverlay from "../LoadingOverlay"
 import { cover } from "polished"
+import SharingButtons from "../SharingButtons"
 
 const Exporter = () => {
 	const [{ isLoading, isError, data }] = useExporter()
@@ -61,9 +62,11 @@ const Exporter = () => {
 					</Footer>
 				)}
 			</Container>
-			<ShareButtonsContainer>
-				<div className="sharethis-inline-share-buttons" />
-			</ShareButtonsContainer>
+			{!isEmpty && (
+				<ShareButtonsContainer>
+					<SharingButtons />
+				</ShareButtonsContainer>
+			)}
 		</OuterContainer>
 	)
 }
@@ -98,7 +101,7 @@ const downloadImage = (url, filename) => {
 }
 
 const ShareButtonsContainer = styled.div`
-	margin: 36px auto;
+	margin: 40px auto;
 `
 
 const Footer = styled.div`

@@ -10,8 +10,8 @@ import GlobalStyle from "../globalStyle"
 import * as links from "../links"
 
 const taglines = [
-	"Quickly and effortlessly generate thumbnails for use in [Vivaldi Browser](https://vivaldi.com/)’s Speed Dials.",
-	"Create beautiful thumbnails for [Vivaldi Browser](https://vivaldi.com/)’s Speed Dials, in a matter of seconds."
+	"Quickly and effortlessly generate thumbnails for use in [Vivaldi Browser](https://vivaldi.com/)’s Speed Dials",
+	"Create beautiful thumbnails for [Vivaldi Browser](https://vivaldi.com/)’s Speed Dials, in a matter of seconds"
 ]
 
 const App = () => (
