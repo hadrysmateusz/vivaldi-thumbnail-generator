@@ -34,14 +34,23 @@ export const heading = css`
 `
 
 export const H1 = styled.h1`
-	${heading}
-	font-size: 40px;
-	line-height: 52px;
+	font-size: 32px;
+	line-height: 40px;
+	@media (min-width: 732px) {
+		${heading}
+		font-size: 43px;
+		line-height: 48px;
+	}
 `
 export const H2 = styled.h2`
 	${heading}
-	font-size: 32px;
-	line-height: 40px;
+	font-size: 30px;
+	line-height: 36px;
+	@media (min-width: 732px) {
+		${heading}
+		font-size: 32px;
+		line-height: 40px;
+	}
 `
 export const H3 = styled.h3`
 	${heading}
