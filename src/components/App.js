@@ -2,6 +2,7 @@ import React from "react"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import styled from "styled-components/macro"
 import ReactMarkdown from "react-markdown"
+import { useMeta, useTitle } from "react-meta-elements"
 
 import { ReactComponent as TwitterIcon } from "../assets/twitter.svg"
 import ThumbnailGenerator from "./ThumbnailGenerator"
@@ -33,45 +34,58 @@ const App = () => (
 	</Router>
 )
 
-const GeneratorPage = () => (
-	<InnerContainer>
-		<MainCopy>
-			<Headline>
-				<em>Vivaldi</em> Thumbnail Generator
-			</Headline>
-			<Description>
-				<ReactMarkdown source={taglines[1]} />
-			</Description>
-		</MainCopy>
-		<Social>
-			<div>by Mateusz Hadryś</div>
-			<div>
-				Follow me to get updates:
-				<a href={links.twitter}>
-					<TwitterIcon width={20} height={20} />
-				</a>
-			</div>
-		</Social>
-		<ThumbnailGenerator />
-		<Route path="/" exact>
-			<H2>Upcoming features</H2>
-			<TextBlock>
-				<List>
-					<li>Per image settings overrides</li>
-					<li>Manually position the icon</li>
-					<li>Icon-based color palettes</li>
-					<li>Importing icons from URL</li>
-					<li>Saving your preferences</li>
-					<li>
-						<b>and more</b>
-					</li>
-				</List>
-			</TextBlock>
-		</Route>
-	</InnerContainer>
-)
+const GeneratorPage = () => {
+	useTitle(
+		"Create Beautiful Thumbnails For Vivaldi&#x27;s Speed Dials | Vivaldi Thumbnail Generator"
+	)
+	useMeta({
+		name: "description",
+		content:
+			"Custom thumbnail generator for Vivaldi Browser&#x27;s Speed Dials. Create thumbnails that will match your theme and preferences, quickly and for free"
+	})
+
+	return (
+		<InnerContainer>
+			<MainCopy>
+				<Headline>
+					<em>Vivaldi</em> Thumbnail Generator
+				</Headline>
+				<Description>
+					<ReactMarkdown source={taglines[1]} />
+				</Description>
+			</MainCopy>
+			<Social>
+				<div>by Mateusz Hadryś</div>
+				<div>
+					Follow me to get updates:
+					<a href={links.twitter}>
+						<TwitterIcon width={20} height={20} />
+					</a>
+				</div>
+			</Social>
+			<ThumbnailGenerator />
+			<Route path="/" exact>
+				<H2>Upcoming features</H2>
+				<TextBlock>
+					<List>
+						<li>Per image settings overrides</li>
+						<li>Manually position the icon</li>
+						<li>Icon-based color palettes</li>
+						<li>Importing icons from URL</li>
+						<li>Saving your preferences</li>
+						<li>
+							<b>and more</b>
+						</li>
+					</List>
+				</TextBlock>
+			</Route>
+		</InnerContainer>
+	)
+}
 
 const BlogPage = () => {
+	useTitle("Blog | Vivaldi Thumbnail Generator")
+	// TODO: add description meta
 	return (
 		<InnerContainer>
 			<Headline>Blog Coming Soon</Headline>
