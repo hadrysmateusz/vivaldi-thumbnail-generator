@@ -50,7 +50,7 @@ const SharingButtons = () => (
 					target="_blank"
 					rel="noopener noreferrer"
 				>
-					<img alt="Share on Facebook" src="social_flat_rounded_rects_svg/Facebook.svg" />
+					<img alt="Share on Facebook" src="social_icons/Facebook.svg" />
 				</a>
 			</li>
 			<li>
@@ -60,7 +60,7 @@ const SharingButtons = () => (
 					rel="noopener noreferrer"
 					title="Tweet"
 				>
-					<img alt="Tweet" src="social_flat_rounded_rects_svg/Twitter.svg" />
+					<img alt="Tweet" src="social_icons/Twitter.svg" />
 				</a>
 			</li>
 			<li>
@@ -70,7 +70,7 @@ const SharingButtons = () => (
 					rel="noopener noreferrer"
 					title="Pin it"
 				>
-					<img alt="Pin it" src="social_flat_rounded_rects_svg/Pinterest.svg" />
+					<img alt="Pin it" src="social_icons/Pinterest.svg" />
 				</a>
 			</li>
 			<li>
@@ -80,7 +80,7 @@ const SharingButtons = () => (
 					rel="noopener noreferrer"
 					title="Submit to Reddit"
 				>
-					<img alt="Submit to Reddit" src="social_flat_rounded_rects_svg/Reddit.svg" />
+					<img alt="Submit to Reddit" src="social_icons/Reddit.svg" />
 				</a>
 			</li>
 			<li>
@@ -90,7 +90,7 @@ const SharingButtons = () => (
 					rel="noopener noreferrer"
 					title="Send email"
 				>
-					<img alt="Send email" src="social_flat_rounded_rects_svg/Email.svg" />
+					<img alt="Send email" src="social_icons/Email.svg" />
 				</a>
 			</li>
 		</ul>
