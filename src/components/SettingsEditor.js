@@ -28,10 +28,11 @@ const Container = styled.div`
 	${(p) =>
 		p.visible
 			? css`
-					flex: 1;
+					flex: 1 1 240px;
+					min-width: 200px;
 					opacity: 1;
-					margin-left: 20px;
 					padding: 20px;
+					margin-left: 20px;
 			  `
 			: css`
 					opacity: 0;
@@ -41,7 +42,6 @@ const Container = styled.div`
 	height: 100%;
 	border-radius: 5px;
 	box-shadow: 0 3px 16px rgba(0, 0, 0, 0.1);
-
 	background: white;
 	text-align: center;
 `

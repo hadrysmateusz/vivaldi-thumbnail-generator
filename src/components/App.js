@@ -10,8 +10,6 @@ import { H2, TextBlock, List } from "./CopywritingElements"
 import GlobalStyle from "../globalStyle"
 import * as links from "../links"
 
-// force build
-
 const App = () => (
 	<Router>
 		<div>
@@ -98,8 +96,9 @@ const BlogPage = () => {
 }
 
 const Social = styled.div`
+	box-sizing: content-box;
+	padding: 0 21px;
 	max-width: 732px;
-	padding: 1px;
 	margin: 0 auto 4px;
 	margin-top: -24px;
 	color: var(--light-gray);

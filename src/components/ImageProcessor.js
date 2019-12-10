@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import styled from "styled-components/macro"
+
 import NavigationButtons from "./NavigationButtons"
 import Uploader from "./Uploader"
 import FileDrawer from "./FileDrawer"
@@ -8,10 +9,12 @@ import { useSettingsContext } from "./SettingsProvider"
 import BackgroundCanvas from "./BackgroundCanvas"
 import IconCanvas from "./IconCanvas"
 import IconButton from "./IconButton"
+import { center } from "../styleUtils"
+
+import { VIVALDI_THUMBNAIL_RATIO } from "../constants"
 import { ReactComponent as SettingsIcon } from "../assets/cog.svg"
 import { ReactComponent as UploadIcon } from "../assets/file-upload.svg"
 import transparency from "../assets/transparency.png"
-import { center } from "../styleUtils"
 
 function ImageProcessor() {
 	const [selectedIndex, setSelectedIndex] = useState(0)
@@ -20,45 +23,51 @@ function ImageProcessor() {
 	const selectedImage = selectedIndex >= images.length ? images[0] : images[selectedIndex]
 
 	return (
-		<Container>
-			{isLoading ? (
-				<>
-					{/* loading overlay */}
-					<LoadingOverlay>Loading...</LoadingOverlay>
-					{/* uploader */}
-					{!isDrawerOpen && <Uploader />}
-				</>
-			) : isEmpty ? (
-				<>
-					{/* empty state */}
-					<EmptyState>
-						<EmptyStateIcon width={84} height={112} />
-						<EmptyStateHeading>There are no icons here yet</EmptyStateHeading>
-						<EmptyStateBody>Upload some, to get started</EmptyStateBody>
-					</EmptyState>
-					{/* uploader */}
-					{!isDrawerOpen && <Uploader />}
-				</>
-			) : (
-				<>
-					{/* canvases */}
-					<BackgroundCanvas />
-					<IconCanvas image={selectedImage} />
-					{/* uploader */}
-					{!isDrawerOpen && <Uploader />}
-					{/* nav-buttons */}
-					<NavigationButtons images={images} setSelectedIndex={setSelectedIndex} />
-					{/* settings button */}
-					{hasImages && (
-						<SettingsButtonContainer>
-							<SettingsButton />
-						</SettingsButtonContainer>
-					)}
-					{/* file drawer */}
-					{isDrawerOpen && <FileDrawer />}
-				</>
-			)}
-		</Container>
+		<RatioContainer>
+			<InnerContainer>
+				{isLoading ? (
+					<>
+						{/* loading overlay */}
+						<LoadingOverlay>Loading...</LoadingOverlay>
+						{/* uploader */}
+						{!isDrawerOpen && <Uploader />}
+					</>
+				) : isEmpty ? (
+					<>
+						{/* empty state */}
+						<EmptyState>
+							<EmptyStateIcon width={84} height={112} />
+							<EmptyStateHeading>There are no icons here yet</EmptyStateHeading>
+							<EmptyStateBody>Upload some, to get started</EmptyStateBody>
+						</EmptyState>
+						{/* uploader */}
+						{!isDrawerOpen && <Uploader />}
+					</>
+				) : (
+					<>
+						{/* canvases */}
+						<BackgroundCanvas />
+						<IconCanvas image={selectedImage} />
+						{/* uploader */}
+						{!isDrawerOpen && <Uploader />}
+						{/* nav-buttons */}
+						<NavigationButtons images={images} setSelectedIndex={setSelectedIndex} />
+						{/* settings button */}
+						{hasImages && (
+							<SettingsButtonContainer>
+								<SettingsButton />
+							</SettingsButtonContainer>
+						)}
+						{/* file drawer */}
+						{isDrawerOpen && <FileDrawer />}
+					</>
+				)}
+
+				<SettingsButtonContainer>
+					<SettingsButton />
+				</SettingsButtonContainer>
+			</InnerContainer>
+		</RatioContainer>
 	)
 }
 
@@ -71,6 +80,35 @@ const SettingsButton = () => {
 		</IconButton>
 	)
 }
+
+const InnerContainer = styled.div`
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+`
+
+const RatioContainer = styled.div`
+	background: green;
+	width: 100%;
+	max-width: 732px;
+	flex: 1 1 732px;
+
+	border-radius: 5px;
+	overflow: hidden;
+	box-shadow: 0 3px 16px rgba(0, 0, 0, 0.1);
+	background: url(${transparency});
+	background-repeat: repeat;
+	position: relative;
+
+	&:before {
+		display: block;
+		content: "";
+		width: 100%;
+		padding-top: calc(${VIVALDI_THUMBNAIL_RATIO} * 100%);
+	}
+`
 
 const LoadingOverlay = styled.div`
 	width: 100%;
@@ -116,17 +154,8 @@ const SettingsButtonContainer = styled.div`
 	right: 20px;
 	display: flex;
 	align-items: center;
-`
-
-const Container = styled.div`
-	width: 732px;
-	height: 600px;
-	position: relative;
-	border-radius: 5px;
-	overflow: hidden;
-	box-shadow: 0 3px 16px rgba(0, 0, 0, 0.1);
-	background: url(${transparency});
-	background-repeat: repeat;
+	width: 40px;
+	height: 40px;
 `
 
 export default ImageProcessor

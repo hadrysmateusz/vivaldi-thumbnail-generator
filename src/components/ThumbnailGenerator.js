@@ -32,10 +32,11 @@ const ThumbnailGenerator = () => {
 }
 
 const Container = styled.div`
-	margin: 0 auto;
-	max-width: 1024px;
+	padding: 0 20px;
 	display: flex;
 	justify-content: center;
+	max-width: 1000px;
+	margin: 0 auto;
 `
 
 export default ThumbnailGenerator

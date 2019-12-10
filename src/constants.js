@@ -1,1 +1,1 @@
-export const VIVALDI_THUMBNAIL_RATIO = 1.22
+export const VIVALDI_THUMBNAIL_RATIO = 50 / 61
