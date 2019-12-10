@@ -35,8 +35,7 @@ const Container = styled.div`
 					margin-left: 20px;
 			  `
 			: css`
-					opacity: 0;
-					width: 0;
+					display: none;
 			  `}
 
 	height: 100%;

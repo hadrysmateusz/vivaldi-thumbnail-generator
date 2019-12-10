@@ -62,10 +62,6 @@ function ImageProcessor() {
 						{isDrawerOpen && <FileDrawer />}
 					</>
 				)}
-
-				<SettingsButtonContainer>
-					<SettingsButton />
-				</SettingsButtonContainer>
 			</InnerContainer>
 		</RatioContainer>
 	)
