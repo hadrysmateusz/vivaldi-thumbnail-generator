@@ -1,10 +1,12 @@
 import styled, { css } from "styled-components/macro"
+import { ellipsis } from "polished"
 
 const buttonVariants = {
 	normal: css`
 		background: white;
 		color: #383838;
-		:hover {
+		:hover,
+		:active {
 			background: #fcfcfc;
 			color: #050505;
 		}
@@ -12,14 +14,16 @@ const buttonVariants = {
 	primary: css`
 		background: var(--accent-color);
 		color: white;
-		:hover {
+		:hover,
+		:active {
 			background: var(--accent-color-darker);
 		}
 	`,
 	danger: css`
 		background: white;
 		color: #e14f4f;
-		:hover {
+		:hover,
+		:active {
 			background: #fcfcfc;
 			color: #e01818;
 		}
@@ -28,7 +32,8 @@ const buttonVariants = {
 		background: none;
 		box-shadow: none;
 		color: #383838;
-		:hover {
+		:hover,
+		:active {
 			box-shadow: none;
 			background: none;
 			color: black;
@@ -66,12 +71,17 @@ const Button = styled.button`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	height: 40px;
 	font-weight: bold;
 	font-size: 14px;
 	line-height: 18px;
 	letter-spacing: 0.02em;
-	padding: 0 32px;
+	height: 32px;
+	padding: 0 16px;
+	@media (min-width: 732px) {
+		padding: 0 32px;
+		height: 40px;
+	}
+
 	/* 
 		the split of disabled and enabled-only styles is intentional 
 		enabled-only styles should be overriden by variant styles 

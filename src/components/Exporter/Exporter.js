@@ -3,8 +3,9 @@ import styled from "styled-components/macro"
 import { Link } from "react-router-dom"
 import { cover } from "polished"
 
-import Button from "../Button"
 import { useExporter } from "."
+import Button from "../Button"
+import FluidContainer from "../FluidContainer"
 import SharingButtons from "../SharingButtons"
 import { download } from "../../utils"
 import { center } from "../../styleUtils"
@@ -20,7 +21,7 @@ const Exporter = () => {
 	}
 
 	return (
-		<OuterContainer>
+		<FluidContainer>
 			<Container>
 				<Header />
 				<Content isLoading={isLoading} isEmpty={isEmpty} data={data} />
@@ -36,7 +37,7 @@ const Exporter = () => {
 					<SharingButtons />
 				</ShareButtonsContainer>
 			)}
-		</OuterContainer>
+		</FluidContainer>
 	)
 }
 
@@ -55,8 +56,10 @@ const Content = ({ isLoading, isEmpty, data }) => (
 			<LoadingOverlay>Loading...</LoadingOverlay>
 		) : isEmpty ? (
 			<EmptyState>
-				There is nothing here,&nbsp;<Link to="/">go back</Link>&nbsp;to add some icons and
-				try again
+				<div>
+					There is nothing here,&nbsp;<Link to="/">go back</Link>&nbsp;to add some icons
+					and try again
+				</div>
 			</EmptyState>
 		) : (
 			<ListContainer>
@@ -115,7 +118,7 @@ const ShareButtonsContainer = styled.div`
 const FooterContainer = styled.div`
 	display: flex;
 	align-items: center;
-	height: 72px;
+	min-height: 72px;
 	border-top: 2px solid #f5f5f5;
 `
 
@@ -127,13 +130,9 @@ const Disclaimer = styled.div`
 	margin-right: auto;
 `
 
-const OuterContainer = styled.div`
-	margin: 0 auto;
-	max-width: 732px;
-`
-
 const Container = styled.div`
-	width: 732px;
+	width: 100%;
+	max-width: 732px;
 	background: white;
 	padding: 0 24px;
 	position: relative;
@@ -165,7 +164,9 @@ const EmptyState = styled.div`
 	${center}
 	${cover()}
 	font-size: 12px;
+	line-height: 18px;
 	color: var(--light-gray);
+	text-align: center;
 
 	a {
 		color: black;

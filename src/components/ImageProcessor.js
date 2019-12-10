@@ -36,7 +36,7 @@ function ImageProcessor() {
 					<>
 						{/* empty state */}
 						<EmptyState>
-							<EmptyStateIcon width={84} height={112} />
+							<EmptyStateIcon />
 							<EmptyStateHeading>There are no icons here yet</EmptyStateHeading>
 							<EmptyStateBody>Upload some, to get started</EmptyStateBody>
 						</EmptyState>
@@ -77,6 +77,12 @@ const SettingsButton = () => {
 	)
 }
 
+const SettingsButtonContainer = styled.div`
+	position: absolute;
+	top: 20px;
+	right: 20px;
+`
+
 const InnerContainer = styled.div`
 	position: absolute;
 	top: 0;
@@ -90,7 +96,6 @@ const RatioContainer = styled.div`
 	width: 100%;
 	max-width: 732px;
 	flex: 1 1 732px;
-
 	border-radius: 5px;
 	overflow: hidden;
 	box-shadow: 0 3px 16px rgba(0, 0, 0, 0.1);
@@ -126,6 +131,15 @@ const EmptyState = styled.div`
 `
 
 const EmptyStateIcon = styled(UploadIcon)`
+	width: 48px;
+	height: 63px;
+	margin-bottom: 8px;
+	@media (min-width: 732px) {
+		width: 84px;
+		height: 112px;
+		margin-bottom: 0;
+	}
+
 	path {
 		fill: #e2e2e2;
 	}
@@ -133,8 +147,14 @@ const EmptyStateIcon = styled(UploadIcon)`
 
 const EmptyStateHeading = styled.div`
 	color: var(--light-gray);
-	font-size: 24px;
-	line-height: 48px;
+	font-size: 20px;
+	line-height: 28px;
+
+	@media (min-width: 732px) {
+		font-size: 24px;
+		line-height: 48px;
+	}
+
 	font-weight: bold;
 `
 
@@ -142,16 +162,6 @@ const EmptyStateBody = styled.div`
 	color: #5b5b5b;
 	font-size: 14px;
 	line-height: 24px;
-`
-
-const SettingsButtonContainer = styled.div`
-	position: absolute;
-	top: 20px;
-	right: 20px;
-	display: flex;
-	align-items: center;
-	width: 40px;
-	height: 40px;
 `
 
 export default ImageProcessor

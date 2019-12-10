@@ -28,7 +28,7 @@ const Container = styled.div`
 	${(p) =>
 		p.visible
 			? css`
-					flex: 1 1 240px;
+					flex: 1 1 250px;
 					min-width: 200px;
 					opacity: 1;
 					padding: 20px;

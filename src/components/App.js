@@ -1,9 +1,10 @@
 import React from "react"
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom"
 import styled from "styled-components/macro"
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom"
 import { useMeta, useTitle } from "react-meta-elements"
 import { hideVisually } from "polished"
 
+import FluidContainer from "./FluidContainer"
 import { ReactComponent as TwitterIcon } from "../assets/twitter.svg"
 import ThumbnailGenerator from "./ThumbnailGenerator"
 import { H2, TextBlock, List } from "./CopywritingElements"
@@ -40,48 +41,52 @@ const GeneratorPage = () => {
 	})
 
 	return (
-		<InnerContainer>
-			<MainCopy>
-				<Headline>
-					<em>Vivaldi</em> Thumbnail Generator
-				</Headline>
-				<Description>
-					Create beautiful thumbnails for{" "}
-					<a href="https://vivaldi.com/">Vivaldi Browser</a>’s Speed Dials, in a matter of
-					seconds
-				</Description>
-			</MainCopy>
-			<Social>
-				<div>by Mateusz Hadryś</div>
-				<div>
-					Follow me to get updates:
-					<a href={links.twitter}>
-						<TwitterIcon width={20} height={20} />
-						<IconLabel>Follow on Twitter</IconLabel>
-					</a>
-				</div>
-			</Social>
+		<>
+			<FluidContainer>
+				<MainCopy>
+					<Headline>
+						<em>Vivaldi</em> Thumbnail Generator
+					</Headline>
+					<Description>
+						Create beautiful thumbnails for{" "}
+						<a href="https://vivaldi.com/">Vivaldi Browser</a>’s Speed Dials, in a matter
+						of seconds
+					</Description>
+				</MainCopy>
+				<Social>
+					<div>by Mateusz Hadryś</div>
+					<div>
+						Follow me to get updates:
+						<a href={links.twitter}>
+							<TwitterIcon width={20} height={20} />
+							<IconLabel>Follow on Twitter</IconLabel>
+						</a>
+					</div>
+				</Social>
+			</FluidContainer>
 			<ThumbnailGenerator />
 			<Route path="/" exact>
-				<H2>Upcoming features</H2>
-				<TextBlock>
-					<List>
-						<li>Per image settings overrides</li>
-						<li>Manually position the icon</li>
-						<li>Icon-based color palettes</li>
-						<li>Importing icons from URL</li>
-						<li>Saving your preferences</li>
-						<li>
-							<b>and more</b>
-						</li>
-					</List>
-				</TextBlock>
-				<H2>From the blog</H2>
-				<TextBlock>
-					<Link to="/blog">Go to the blog</Link>
-				</TextBlock>
+				<FluidContainer>
+					<H2>Upcoming features</H2>
+					<TextBlock>
+						<List>
+							<li>Per image settings overrides</li>
+							<li>Manually position the icon</li>
+							<li>Icon-based color palettes</li>
+							<li>Importing icons from URL</li>
+							<li>Saving your preferences</li>
+							<li>
+								<b>and more</b>
+							</li>
+						</List>
+					</TextBlock>
+					<H2>From the blog</H2>
+					<TextBlock>
+						<Link to="/blog">Go to the blog</Link>
+					</TextBlock>
+				</FluidContainer>
 			</Route>
-		</InnerContainer>
+		</>
 	)
 }
 
@@ -89,17 +94,16 @@ const BlogPage = () => {
 	useTitle("Blog | Vivaldi Thumbnail Generator")
 	// TODO: add description meta
 	return (
-		<InnerContainer>
+		<FluidContainer>
 			<Headline>Blog Coming Soon</Headline>
-		</InnerContainer>
+		</FluidContainer>
 	)
 }
 
 const Social = styled.div`
 	box-sizing: content-box;
-	padding: 0 21px;
-	max-width: 732px;
-	margin: 0 auto 4px;
+	padding: 0 1px;
+	margin-bottom: 4px;
 	margin-top: -24px;
 	color: var(--light-gray);
 	font-size: 12px;
@@ -152,10 +156,6 @@ const OuterContainer = styled.div`
 	width: 100%;
 `
 
-const InnerContainer = styled.div`
-	margin: 0 auto;
-`
-
 const Headline = styled.h1`
 	margin: 40px auto 24px;
 
@@ -165,8 +165,13 @@ const Headline = styled.h1`
 	}
 
 	font-weight: 900;
-	font-size: 43px;
-	line-height: 48px;
+
+	font-size: 32px;
+	line-height: 40px;
+	@media (min-width: 732px) {
+		font-size: 43px;
+		line-height: 48px;
+	}
 
 	text-align: center;
 	justify-content: center;
