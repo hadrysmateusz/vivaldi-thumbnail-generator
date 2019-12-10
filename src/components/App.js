@@ -24,7 +24,7 @@ const App = () => (
 					<Route path={["/", "/downloads"]} exact>
 						<GeneratorPage />
 					</Route>
-					<Route path={"/blog"} exact>
+					<Route path={"/blog"}>
 						<BlogPage />
 					</Route>
 				</Switch>
