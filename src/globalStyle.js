@@ -7,6 +7,7 @@ const GlobalStyle = createGlobalStyle`
   :root {
     --accent-color: #e71313; /* #ef3938 is vivaldi's brand color,  #e71313 is used for accessibility */
     --accent-color-darker: #be1f1f;
+    --light-gray: #757575
   }
 
   *,

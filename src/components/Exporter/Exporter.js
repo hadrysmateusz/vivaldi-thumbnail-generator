@@ -122,7 +122,7 @@ const FooterContainer = styled.div`
 `
 
 const Disclaimer = styled.div`
-	color: #747474;
+	color: var(--light-gray);
 	font-size: 12px;
 	line-height: 20px;
 	max-width: 410px;
@@ -167,7 +167,7 @@ const EmptyState = styled.div`
 	align-items: center;
 	justify-content: center;
 	font-size: 12px;
-	color: #747474;
+	color: var(--light-gray);
 	${cover()}
 
 	a {

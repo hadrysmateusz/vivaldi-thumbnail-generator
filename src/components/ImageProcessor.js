@@ -71,7 +71,7 @@ const LoadingOverlay = styled.div`
 	height: 100%;
 	${center}
 	background: white;
-	color: #686868;
+	color: var(--light-gray);
 	font-size: 24px;
 	line-height: 48px;
 	font-weight: bold;
@@ -92,7 +92,7 @@ const EmptyStateIcon = styled(UploadIcon)`
 `
 
 const EmptyStateHeading = styled.div`
-	color: #686868;
+	color: var(--light-gray);
 	font-size: 24px;
 	line-height: 48px;
 	font-weight: bold;

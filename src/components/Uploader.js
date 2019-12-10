@@ -128,7 +128,7 @@ const DropText = styled.div`
 	font-size: 14px;
 	line-height: 18px;
 	letter-spacing: 0.015em;
-	color: #888888;
+	color: var(--light-gray);
 	cursor: default;
 	flex: 1;
 `

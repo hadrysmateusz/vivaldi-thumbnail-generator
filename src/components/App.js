@@ -104,7 +104,7 @@ const Social = styled.div`
 	padding: 1px;
 	margin: 0 auto 4px;
 	margin-top: -24px;
-	color: #888;
+	color: var(--light-gray);
 	font-size: 12px;
 	line-height: 12px;
 	height: 24px;
