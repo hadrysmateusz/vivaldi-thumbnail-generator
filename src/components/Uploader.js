@@ -1,11 +1,12 @@
 import React, { useState } from "react"
-import { useDropzone } from "react-dropzone"
 import styled from "styled-components/macro"
+import { useDropzone } from "react-dropzone"
 import { cover } from "polished"
 import { center } from "../styleUtils"
 import Button from "./Button"
 import { useFileContext } from "./FilesProvider"
 import UploaderModal from "./UploaderModal"
+import Spacer from "./Spacer"
 
 // bookmark url works, but produces very low quality images
 const availableMethods = {
@@ -103,7 +104,7 @@ const Uploader = () => {
 					{isLoading ? "Loading" : "Add Icons"}
 				</Button>
 				<DropText>or drop files here</DropText>
-				<Spacer />
+				<Spacer /> {/* The spacer is used to allow drop text to disappear on mobile */}
 				{hasImages && <Button onClick={openFileDrawer}>Manage Icons</Button>}
 			</ButtonsContainer>
 
@@ -124,11 +125,6 @@ const Uploader = () => {
 		</DropzoneContainer>
 	)
 }
-
-// The spacer is used to allow drop text to disappear on mobile
-const Spacer = styled.div`
-	margin-right: auto;
-`
 
 const DropText = styled.div`
 	font-size: 14px;

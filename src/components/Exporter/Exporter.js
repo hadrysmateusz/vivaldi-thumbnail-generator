@@ -5,6 +5,7 @@ import { cover } from "polished"
 
 import { useExporter } from "."
 import Button from "../Button"
+import Spacer from "../Spacer"
 import FluidContainer from "../FluidContainer"
 import SharingButtons from "../SharingButtons"
 import { download } from "../../utils"
@@ -13,6 +14,7 @@ import { center } from "../../styleUtils"
 const Exporter = () => {
 	const [{ isLoading, isError, data }] = useExporter()
 	const isEmpty = !data || data.length === 0
+	const numThumbnails = isEmpty ? 0 : data.length
 
 	// TODO: consider merging isEmpty and isError inside the exporter hook
 	// TODO: refactor this and move it inside exporter hook, merge error states etc.
@@ -25,12 +27,14 @@ const Exporter = () => {
 			<Container>
 				<Header />
 				<Content isLoading={isLoading} isEmpty={isEmpty} data={data} />
-				<Footer
-					isLoading={isLoading}
-					isEmpty={isEmpty}
-					isError={isError}
-					downloadAll={downloadAll}
-				/>
+				{!isEmpty && (
+					<Footer
+						numThumbnails={numThumbnails}
+						isLoading={isLoading}
+						isError={isError}
+						downloadAll={downloadAll}
+					/>
+				)}
 			</Container>
 			{!isEmpty && (
 				<ShareButtonsContainer>
@@ -71,18 +75,17 @@ const Content = ({ isLoading, isEmpty, data }) => (
 	</ContentContainer>
 )
 
-const Footer = ({ isEmpty, isLoading, isError, downloadAll }) =>
-	!isEmpty ? (
-		<FooterContainer>
-			<Disclaimer>
-				Make sure to allow this site to download multiple files at once, by clicking the
-				'i' icon in your browser's address bar and changing the appropriate settings.
-			</Disclaimer>
-			<Button variant="primary" onClick={downloadAll} disabled={isLoading || isError}>
-				Download All
-			</Button>
-		</FooterContainer>
-	) : null
+const Footer = ({ numThumbnails, isLoading, isError, downloadAll }) => (
+	<FooterContainer>
+		<div>
+			Generated <b>{numThumbnails}</b> thumbnail{numThumbnails > 1 && "s"} 🎉
+		</div>
+		<Spacer />
+		<Button variant="primary" onClick={downloadAll} disabled={isLoading || isError}>
+			Download All
+		</Button>
+	</FooterContainer>
+)
 
 const ExporterItem = ({ name, url }) => {
 	const handleClick = () => {
@@ -120,14 +123,9 @@ const FooterContainer = styled.div`
 	align-items: center;
 	min-height: 72px;
 	border-top: 2px solid #f5f5f5;
-`
-
-const Disclaimer = styled.div`
-	color: var(--light-gray);
-	font-size: 12px;
-	line-height: 20px;
-	max-width: 410px;
-	margin-right: auto;
+	font-size: 14px;
+	line-height: 18px;
+	color: #444;
 `
 
 const Container = styled.div`
