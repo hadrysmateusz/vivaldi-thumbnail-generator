@@ -30,6 +30,7 @@ const Container = styled.div`
 			? css`
 					flex: 1 1 250px;
 					min-width: 200px;
+					max-width: 250px;
 					opacity: 1;
 					padding: 20px;
 					margin-left: 20px;

@@ -63,7 +63,7 @@ const Popover = styled.div`
 	justify-content: center;
 	position: absolute;
 	top: calc(16px + 100%);
-	z-index: 2;
+	z-index: 900;
 `
 
 const Cover = styled.div`

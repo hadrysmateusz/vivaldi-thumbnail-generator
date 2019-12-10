@@ -14,6 +14,10 @@ const SettingsProvider = ({ children }) => {
 		setIsSettingsDisplayed((prevValue) => !prevValue)
 	}
 
+	const closeSettings = () => {
+		setIsSettingsDisplayed(false)
+	}
+
 	return (
 		<SettingsContext.Provider
 			value={{
@@ -23,6 +27,7 @@ const SettingsProvider = ({ children }) => {
 				setScale,
 				isSettingsDisplayed,
 				toggleSettings,
+				closeSettings,
 				exportDimensions,
 				setExportDimensions
 			}}

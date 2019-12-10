@@ -140,12 +140,13 @@ const DropText = styled.div`
 
 const DropzoneContainer = styled.div`
 	${cover()}
+	z-index: 400;
 `
 
 const Overlay = styled.div`
 	${cover()}
 	${center}
-	z-index: 80;
+	z-index: 410;
 	background: rgba(0, 0, 0, 0.36);
 	color: white;
 	font-size: 1.6em;

@@ -33,7 +33,6 @@ const Container = styled.div`
 	padding: 0 20px;
 	display: flex;
 	justify-content: center;
-	max-width: 1000px;
 	margin: 0 auto;
 `
 

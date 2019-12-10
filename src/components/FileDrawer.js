@@ -4,6 +4,7 @@ import { cover } from "polished"
 import Button from "./Button"
 import FileItem from "./FileItem"
 import { useFileContext } from "./FilesProvider"
+import { useSettingsContext } from "./SettingsProvider"
 
 const FileDrawer = () => {
 	const {
@@ -13,15 +14,19 @@ const FileDrawer = () => {
 		hasImages,
 		clearImages
 	} = useFileContext()
+	const { closeSettings } = useSettingsContext()
 
 	const closeOnEsc = (e) => {
 		if (e.key === "Escape") {
+			closeSettings()
 			closeFileDrawer()
 		}
 	}
 
 	useEffect(() => {
-		if (!hasImages) closeFileDrawer()
+		if (!hasImages) {
+			closeFileDrawer()
+		}
 	}, [closeFileDrawer, hasImages])
 
 	return (
@@ -69,6 +74,7 @@ const InnerContainer = styled.div`
 
 const Container = styled.div`
 	${cover()}
+	z-index: 600;
 	background: white;
 	height: 100%;
 	position: relative;

@@ -29,8 +29,6 @@ function ImageProcessor() {
 					<>
 						{/* loading overlay */}
 						<LoadingOverlay>Loading...</LoadingOverlay>
-						{/* uploader */}
-						{!isDrawerOpen && <Uploader />}
 					</>
 				) : isEmpty ? (
 					<>
@@ -40,16 +38,12 @@ function ImageProcessor() {
 							<EmptyStateHeading>There are no icons here yet</EmptyStateHeading>
 							<EmptyStateBody>Upload some, to get started</EmptyStateBody>
 						</EmptyState>
-						{/* uploader */}
-						{!isDrawerOpen && <Uploader />}
 					</>
 				) : (
 					<>
 						{/* canvases */}
 						<BackgroundCanvas />
 						<IconCanvas image={selectedImage} />
-						{/* uploader */}
-						{!isDrawerOpen && <Uploader />}
 						{/* nav-buttons */}
 						<NavigationButtons images={images} setSelectedIndex={setSelectedIndex} />
 						{/* settings button */}
@@ -58,10 +52,13 @@ function ImageProcessor() {
 								<SettingsButton />
 							</SettingsButtonContainer>
 						)}
-						{/* file drawer */}
-						{isDrawerOpen && <FileDrawer />}
 					</>
 				)}
+
+				{/* uploader */}
+				{!isDrawerOpen && <Uploader />}
+				{/* file drawer */}
+				{isDrawerOpen && <FileDrawer />}
 			</InnerContainer>
 		</RatioContainer>
 	)
@@ -81,6 +78,7 @@ const SettingsButtonContainer = styled.div`
 	position: absolute;
 	top: 20px;
 	right: 20px;
+	z-index: 500;
 `
 
 const InnerContainer = styled.div`
