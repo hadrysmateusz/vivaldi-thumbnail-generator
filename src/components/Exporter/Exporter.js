@@ -8,6 +8,7 @@ import Button from "../Button"
 import Spacer from "../Spacer"
 import FluidContainer from "../FluidContainer"
 import SharingButtons from "../SharingButtons"
+import Loader from "../Loader"
 import { download } from "../../utils"
 import { center } from "../../styleUtils"
 
@@ -57,7 +58,7 @@ const Header = () => (
 const Content = ({ isLoading, isEmpty, data }) => (
 	<ContentContainer>
 		{isLoading ? (
-			<LoadingOverlay>Loading...</LoadingOverlay>
+			<Loader>Exporting...</Loader>
 		) : isEmpty ? (
 			<EmptyState>
 				<div>
@@ -103,17 +104,6 @@ const ExporterItem = ({ name, url }) => {
 	)
 }
 
-const LoadingOverlay = styled.div`
-	${center}
-	width: 100%;
-	height: 100px;
-	background: white;
-	color: #686868;
-	font-size: 24px;
-	line-height: 48px;
-	font-weight: bold;
-`
-
 const ShareButtonsContainer = styled.div`
 	margin: 40px auto;
 `
@@ -132,7 +122,7 @@ const Container = styled.div`
 	width: 100%;
 	max-width: 732px;
 	background: white;
-	padding: 0 24px;
+	padding: 0 20px;
 	position: relative;
 	border-radius: 5px;
 	overflow: hidden;
@@ -153,7 +143,7 @@ const ListContainer = styled.div`
 `
 
 const ItemContainer = styled.div`
-	margin: 24px 0;
+	margin: 20px 0;
 	display: flex;
 	align-items: center;
 `

@@ -9,6 +9,7 @@ import { useSettingsContext } from "./SettingsProvider"
 import BackgroundCanvas from "./BackgroundCanvas"
 import IconCanvas from "./IconCanvas"
 import IconButton from "./IconButton"
+import Loader from "./Loader"
 import { center } from "../styleUtils"
 
 import { VIVALDI_THUMBNAIL_RATIO } from "../constants"
@@ -26,19 +27,13 @@ function ImageProcessor() {
 		<RatioContainer>
 			<InnerContainer>
 				{isLoading ? (
-					<>
-						{/* loading overlay */}
-						<LoadingOverlay>Loading...</LoadingOverlay>
-					</>
+					<Loader>Loading...</Loader>
 				) : isEmpty ? (
-					<>
-						{/* empty state */}
-						<EmptyState>
-							<EmptyStateIcon />
-							<EmptyStateHeading>There are no icons here yet</EmptyStateHeading>
-							<EmptyStateBody>Upload some, to get started</EmptyStateBody>
-						</EmptyState>
-					</>
+					<EmptyState>
+						<EmptyStateIcon />
+						<EmptyStateHeading>There are no icons here yet</EmptyStateHeading>
+						<EmptyStateBody>Upload some, to get started</EmptyStateBody>
+					</EmptyState>
 				) : (
 					<>
 						{/* canvases */}
@@ -55,9 +50,7 @@ function ImageProcessor() {
 					</>
 				)}
 
-				{/* uploader */}
 				{!isDrawerOpen && <Uploader />}
-				{/* file drawer */}
 				{isDrawerOpen && <FileDrawer />}
 			</InnerContainer>
 		</RatioContainer>
@@ -107,17 +100,6 @@ const RatioContainer = styled.div`
 		width: 100%;
 		padding-top: calc(${VIVALDI_THUMBNAIL_RATIO} * 100%);
 	}
-`
-
-const LoadingOverlay = styled.div`
-	width: 100%;
-	height: 100%;
-	${center}
-	background: white;
-	color: var(--light-gray);
-	font-size: 24px;
-	line-height: 48px;
-	font-weight: bold;
 `
 
 const EmptyState = styled.div`
