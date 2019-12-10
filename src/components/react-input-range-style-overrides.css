@@ -1,7 +1,0 @@
-.input-range__slider {
-	background: var(--accent-color);
-	border-color: var(--accent-color);
-}
-.input-range__track--active {
-	background: var(--accent-color);
-}

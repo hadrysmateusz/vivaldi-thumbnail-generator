@@ -1,7 +1,6 @@
 import React from "react"
 import InputRange from "react-input-range"
 import "react-input-range/lib/css/index.css"
-import "./react-input-range-style-overrides.css"
 import styled from "styled-components/macro"
 
 const MIN = 1
@@ -22,6 +21,14 @@ const SizePicker = ({ scale, setScale }) => {
 
 const Container = styled.div`
 	margin: 32px 0;
+
+	.input-range__slider {
+		background: var(--accent-color);
+		border-color: var(--accent-color);
+	}
+	.input-range__track--active {
+		background: var(--accent-color);
+	}
 `
 
 export default SizePicker
