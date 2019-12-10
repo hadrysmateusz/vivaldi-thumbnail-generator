@@ -21,8 +21,16 @@ function ImageProcessor() {
 
 	return (
 		<Container>
-			{isEmpty ? (
+			{isLoading ? (
 				<>
+					{/* loading overlay */}
+					<LoadingOverlay>Loading...</LoadingOverlay>
+					{/* uploader */}
+					{!isDrawerOpen && <Uploader />}
+				</>
+			) : isEmpty ? (
+				<>
+					{/* empty state */}
 					<EmptyState>
 						<EmptyStateIcon width={84} height={112} />
 						<EmptyStateHeading>There are no icons here yet</EmptyStateHeading>
@@ -31,8 +39,6 @@ function ImageProcessor() {
 					{/* uploader */}
 					{!isDrawerOpen && <Uploader />}
 				</>
-			) : isLoading ? (
-				<LoadingOverlay>Loading...</LoadingOverlay>
 			) : (
 				<>
 					{/* canvases */}
