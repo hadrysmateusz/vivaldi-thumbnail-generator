@@ -1,5 +1,5 @@
 import React from "react"
-import { BrowserRouter as Router, Route } from "react-router-dom"
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import styled from "styled-components/macro"
 import ReactMarkdown from "react-markdown"
 
@@ -20,45 +20,64 @@ const App = () => (
 			<GlobalStyle />
 			<Background />
 			<OuterContainer>
-				<InnerContainer>
-					<MainCopy>
-						<Headline>
-							<em>Vivaldi</em> Thumbnail Generator
-						</Headline>
-						<Description>
-							<ReactMarkdown source={taglines[1]} />
-						</Description>
-					</MainCopy>
-					<Social>
-						<div>by Mateusz Hadryś</div>
-						<div>
-							Follow me to get updates:
-							<a href={links.twitter}>
-								<TwitterIcon width={20} height={20} />
-							</a>
-						</div>
-					</Social>
-					<ThumbnailGenerator />
-					<Route path="/" exact>
-						<H2>Upcoming features</H2>
-						<TextBlock>
-							<List>
-								<li>Per image settings overrides</li>
-								<li>Manually position the icon</li>
-								<li>Icon-based color palettes</li>
-								<li>Importing icons from URL</li>
-								<li>Saving your preferences</li>
-								<li>
-									<b>and more</b>
-								</li>
-							</List>
-						</TextBlock>
+				<Switch>
+					<Route path={["/", "/downloads"]} exact>
+						<GeneratorPage />
 					</Route>
-				</InnerContainer>
+					<Route path={"/blog"} exact>
+						<BlogPage />
+					</Route>
+				</Switch>
 			</OuterContainer>
 		</Container>
 	</Router>
 )
+
+const GeneratorPage = () => (
+	<InnerContainer>
+		<MainCopy>
+			<Headline>
+				<em>Vivaldi</em> Thumbnail Generator
+			</Headline>
+			<Description>
+				<ReactMarkdown source={taglines[1]} />
+			</Description>
+		</MainCopy>
+		<Social>
+			<div>by Mateusz Hadryś</div>
+			<div>
+				Follow me to get updates:
+				<a href={links.twitter}>
+					<TwitterIcon width={20} height={20} />
+				</a>
+			</div>
+		</Social>
+		<ThumbnailGenerator />
+		<Route path="/" exact>
+			<H2>Upcoming features</H2>
+			<TextBlock>
+				<List>
+					<li>Per image settings overrides</li>
+					<li>Manually position the icon</li>
+					<li>Icon-based color palettes</li>
+					<li>Importing icons from URL</li>
+					<li>Saving your preferences</li>
+					<li>
+						<b>and more</b>
+					</li>
+				</List>
+			</TextBlock>
+		</Route>
+	</InnerContainer>
+)
+
+const BlogPage = () => {
+	return (
+		<InnerContainer>
+			<Headline>Blog Coming Soon</Headline>
+		</InnerContainer>
+	)
+}
 
 const Social = styled.div`
 	max-width: 732px;
