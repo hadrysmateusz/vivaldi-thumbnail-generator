@@ -1,5 +1,5 @@
 import React from "react"
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom"
 import styled from "styled-components/macro"
 import ReactMarkdown from "react-markdown"
 import { useMeta, useTitle } from "react-meta-elements"
@@ -77,6 +77,10 @@ const GeneratorPage = () => {
 							<b>and more</b>
 						</li>
 					</List>
+				</TextBlock>
+				<H2>Read about Vivaldi & Web Technologies</H2>
+				<TextBlock>
+					<Link to="/blog">Go to the blog</Link>
 				</TextBlock>
 			</Route>
 		</InnerContainer>
