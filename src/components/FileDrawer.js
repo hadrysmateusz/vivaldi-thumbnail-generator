@@ -78,7 +78,7 @@ const ButtonsContainer = styled.div`
 	position: absolute;
 	bottom: 0;
 	right: 0;
-	padding: 20px 20px 20px 20px;
+	padding: 20px;
 	width: 100%;
 	display: flex;
 	justify-content: flex-end;

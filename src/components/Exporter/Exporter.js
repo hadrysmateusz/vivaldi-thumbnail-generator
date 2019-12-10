@@ -90,11 +90,9 @@ const ExporterItem = ({ name, url }) => {
 		<ItemContainer>
 			<Preview url={url} />
 			<Data>{name}</Data>
-			<Actions>
-				<Button onClick={handleClick} variant="text-only">
-					Download
-				</Button>
-			</Actions>
+			<Button onClick={handleClick} variant="text-only">
+				Download
+			</Button>
 		</ItemContainer>
 	)
 }
@@ -102,7 +100,7 @@ const ExporterItem = ({ name, url }) => {
 const LoadingOverlay = styled.div`
 	${center}
 	width: 100%;
-	height: 100%;
+	height: 100px;
 	background: white;
 	color: #686868;
 	font-size: 24px;
@@ -147,7 +145,8 @@ const Container = styled.div`
 `
 
 const ContentContainer = styled.div`
-	flex: 1 0 100px;
+	flex: 1;
+	min-height: 100px;
 	position: relative;
 `
 
@@ -163,12 +162,10 @@ const ItemContainer = styled.div`
 `
 
 const EmptyState = styled.div`
-	display: flex;
-	align-items: center;
-	justify-content: center;
+	${center}
+	${cover()}
 	font-size: 12px;
 	color: var(--light-gray);
-	${cover()}
 
 	a {
 		color: black;
@@ -193,14 +190,9 @@ const Data = styled.div`
 	margin-right: auto;
 `
 
-const Actions = styled.div``
-
 const HeaderContainer = styled.div`
+	${center}
 	height: 72px;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-
 	border-bottom: 2px solid #f5f5f5;
 
 	h2 {

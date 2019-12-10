@@ -1,7 +1,6 @@
 import React from "react"
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom"
 import styled from "styled-components/macro"
-import ReactMarkdown from "react-markdown"
 import { useMeta, useTitle } from "react-meta-elements"
 import { hideVisually } from "polished"
 
@@ -11,14 +10,9 @@ import { H2, TextBlock, List } from "./CopywritingElements"
 import GlobalStyle from "../globalStyle"
 import * as links from "../links"
 
-const taglines = [
-	"Quickly and effortlessly generate thumbnails for use in [Vivaldi Browser](https://vivaldi.com/)’s Speed Dials",
-	"Create beautiful thumbnails for [Vivaldi Browser](https://vivaldi.com/)’s Speed Dials, in a matter of seconds"
-]
-
 const App = () => (
 	<Router>
-		<Container>
+		<div>
 			<GlobalStyle />
 			<Background />
 			<OuterContainer>
@@ -31,7 +25,7 @@ const App = () => (
 					</Route>
 				</Switch>
 			</OuterContainer>
-		</Container>
+		</div>
 	</Router>
 )
 
@@ -52,7 +46,9 @@ const GeneratorPage = () => {
 					<em>Vivaldi</em> Thumbnail Generator
 				</Headline>
 				<Description>
-					<ReactMarkdown source={taglines[1]} />
+					Create beautiful thumbnails for{" "}
+					<a href="https://vivaldi.com/">Vivaldi Browser</a>’s Speed Dials, in a matter of
+					seconds
 				</Description>
 			</MainCopy>
 			<Social>
@@ -129,8 +125,6 @@ const Social = styled.div`
 	}
 `
 
-const Container = styled.div``
-
 const IconLabel = styled.span`
 	${hideVisually()}
 `
@@ -164,8 +158,6 @@ const InnerContainer = styled.div`
 const Headline = styled.h1`
 	margin: 40px auto 24px;
 
-	/* font-style: oblique; */
-
 	em {
 		font-style: inherit;
 		color: var(--accent-color);
@@ -179,7 +171,6 @@ const Headline = styled.h1`
 	justify-content: center;
 	letter-spacing: 0.05em;
 	color: #383838;
-	/* text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.06); */
 `
 
 const Description = styled.div`

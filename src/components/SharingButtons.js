@@ -1,8 +1,46 @@
 import React from "react"
-import "./style.css"
+import styled from "styled-components/macro"
+
+const Container = styled.div`
+	ul.share-buttons {
+		list-style: none;
+		padding: 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin: 0;
+	}
+
+	ul.share-buttons li + * {
+		margin-left: 12px;
+	}
+
+	ul.share-buttons .sr-only {
+		position: absolute;
+		clip: rect(1px 1px 1px 1px);
+		clip: rect(1px, 1px, 1px, 1px);
+		padding: 0;
+		border: 0;
+		height: 1px;
+		width: 1px;
+		overflow: hidden;
+	}
+
+	ul.share-buttons img {
+		width: 32px;
+	}
+
+	.share-text {
+		color: var(--light-gray);
+		font-size: 12px;
+		line-height: 12px;
+		margin-bottom: 12px;
+		text-align: center;
+	}
+`
 
 const SharingButtons = () => (
-	<>
+	<Container>
 		<div className="share-text">If you like this tool, consider sharing it: </div>
 		<ul className="share-buttons">
 			<li>
@@ -56,7 +94,7 @@ const SharingButtons = () => (
 				</a>
 			</li>
 		</ul>
-	</>
+	</Container>
 )
 
 export default SharingButtons

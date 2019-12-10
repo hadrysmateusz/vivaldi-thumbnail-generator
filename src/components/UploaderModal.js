@@ -4,6 +4,7 @@ import { center } from "../styleUtils"
 import { ReactComponent as UploadIcon } from "../assets/file-upload.svg"
 import { ReactComponent as LinkIcon } from "../assets/link.svg"
 import { ReactComponent as PasteIcon } from "../assets/paste.svg"
+import { cover } from "polished"
 
 const UploaderModal = ({
 	onRequestClose,
@@ -72,22 +73,16 @@ const UploaderModal = ({
 }
 
 const ModalContainer = styled.div`
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+	${cover()}
+	${center}
 	background: rgba(0, 0, 0, 0.36);
-	z-index: 100;
+	z-index: 300;
 `
 
 const ModalBox = styled.div`
 	background: white;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-	z-index: 110;
+	z-index: 310;
 	position: relative;
 	border-radius: 5px;
 	height: 140px;
