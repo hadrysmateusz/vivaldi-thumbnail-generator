@@ -78,7 +78,7 @@ const GeneratorPage = () => {
 						</li>
 					</List>
 				</TextBlock>
-				<H2>Read about Vivaldi & Web Technologies</H2>
+				<H2>From the blog</H2>
 				<TextBlock>
 					<Link to="/blog">Go to the blog</Link>
 				</TextBlock>
