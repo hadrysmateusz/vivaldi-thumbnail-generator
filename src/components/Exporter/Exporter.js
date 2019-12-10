@@ -5,9 +5,9 @@ import { cover } from "polished"
 
 import Button from "../Button"
 import { useExporter } from "."
-import LoadingOverlay from "../LoadingOverlay"
 import SharingButtons from "../SharingButtons"
 import { download } from "../../utils"
+import { center } from "../../styleUtils"
 
 const Exporter = () => {
 	const [{ isLoading, isError, data }] = useExporter()
@@ -98,6 +98,17 @@ const ExporterItem = ({ name, url }) => {
 		</ItemContainer>
 	)
 }
+
+const LoadingOverlay = styled.div`
+	${center}
+	width: 100%;
+	height: 100%;
+	background: white;
+	color: #686868;
+	font-size: 24px;
+	line-height: 48px;
+	font-weight: bold;
+`
 
 const ShareButtonsContainer = styled.div`
 	margin: 40px auto;

@@ -8,45 +8,50 @@ import { useSettingsContext } from "./SettingsProvider"
 import BackgroundCanvas from "./BackgroundCanvas"
 import IconCanvas from "./IconCanvas"
 import IconButton from "./IconButton"
-import LoadingOverlay from "./LoadingOverlay"
 import { ReactComponent as SettingsIcon } from "../assets/cog.svg"
 import { ReactComponent as UploadIcon } from "../assets/file-upload.svg"
 import transparency from "../assets/transparency.png"
-import { cover } from "polished"
+import { center } from "../styleUtils"
 
 function ImageProcessor() {
 	const [selectedIndex, setSelectedIndex] = useState(0)
 	const { isLoading, images, hasImages, isDrawerOpen } = useFileContext()
-
+	const isEmpty = !hasImages
 	const selectedImage = selectedIndex >= images.length ? images[0] : images[selectedIndex]
 
 	return (
 		<Container>
-			{/* canvases */}
-			<BackgroundCanvas />
-			<IconCanvas image={selectedImage} />
-			{/* loading overlay */}
-			{!hasImages && (
-				<EmptyState>
-					<EmptyStateIcon width={84} height={112} />
-					<EmptyStateHeading>There are no icons here yet</EmptyStateHeading>
-					<EmptyStateBody>Upload some, to get started</EmptyStateBody>
-				</EmptyState>
+			{isEmpty ? (
+				<>
+					<EmptyState>
+						<EmptyStateIcon width={84} height={112} />
+						<EmptyStateHeading>There are no icons here yet</EmptyStateHeading>
+						<EmptyStateBody>Upload some, to get started</EmptyStateBody>
+					</EmptyState>
+					{/* uploader */}
+					{!isDrawerOpen && <Uploader />}
+				</>
+			) : isLoading ? (
+				<LoadingOverlay>Loading...</LoadingOverlay>
+			) : (
+				<>
+					{/* canvases */}
+					<BackgroundCanvas />
+					<IconCanvas image={selectedImage} />
+					{/* uploader */}
+					{!isDrawerOpen && <Uploader />}
+					{/* nav-buttons */}
+					<NavigationButtons images={images} setSelectedIndex={setSelectedIndex} />
+					{/* settings button */}
+					{hasImages && (
+						<SettingsButtonContainer>
+							<SettingsButton />
+						</SettingsButtonContainer>
+					)}
+					{/* file drawer */}
+					{isDrawerOpen && <FileDrawer />}
+				</>
 			)}
-			{/* loading overlay */}
-			{isLoading && <LoadingOverlay>Loading...</LoadingOverlay>}
-			{/* uploader */}
-			<Uploader />
-			{/* nav-buttons */}
-			<NavigationButtons images={images} setSelectedIndex={setSelectedIndex} />
-			{/* settings button */}
-			{hasImages && (
-				<SettingsButtonContainer>
-					<SettingsButton />
-				</SettingsButtonContainer>
-			)}
-			{/* file drawer */}
-			{isDrawerOpen && <FileDrawer />}
 		</Container>
 	)
 }
@@ -61,12 +66,23 @@ const SettingsButton = () => {
 	)
 }
 
+const LoadingOverlay = styled.div`
+	width: 100%;
+	height: 100%;
+	${center}
+	background: white;
+	color: #686868;
+	font-size: 24px;
+	line-height: 48px;
+	font-weight: bold;
+`
+
 const EmptyState = styled.div`
-	${cover()}
-	display: flex;
+	width: 100%;
+	height: 100%;
+	${center}
 	flex-direction: column;
-	justify-content: center;
-	align-items: center;
+	background: white;
 `
 
 const EmptyStateIcon = styled(UploadIcon)`
