@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom"
 import styled from "styled-components/macro"
 import ReactMarkdown from "react-markdown"
 import { useMeta, useTitle } from "react-meta-elements"
+import { hideVisually } from "polished"
 
 import { ReactComponent as TwitterIcon } from "../assets/twitter.svg"
 import ThumbnailGenerator from "./ThumbnailGenerator"
@@ -60,6 +61,7 @@ const GeneratorPage = () => {
 					Follow me to get updates:
 					<a href={links.twitter}>
 						<TwitterIcon width={20} height={20} />
+						<IconLabel>Follow on Twitter</IconLabel>
 					</a>
 				</div>
 			</Social>
@@ -128,6 +130,10 @@ const Social = styled.div`
 `
 
 const Container = styled.div``
+
+const IconLabel = styled.span`
+	${hideVisually()}
+`
 
 const MainCopy = styled.div`
 	margin: 52px 0;
