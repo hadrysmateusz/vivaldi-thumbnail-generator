@@ -65,9 +65,8 @@ const GridContainer = styled.div`
 `
 
 const InnerContainer = styled.div`
-	height: 100%;
-	flex: 1;
 	overflow: auto;
+	background: #f9f9f9;
 `
 
 const Container = styled.div`
@@ -76,9 +75,13 @@ const Container = styled.div`
 	background: white;
 	height: 100%;
 	position: relative;
+	display: grid;
+	grid-template-rows: 1fr 80px;
 `
 
 const ButtonsContainer = styled.div`
+	background: white;
+	box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.15);
 	position: absolute;
 	bottom: 0;
 	right: 0;
