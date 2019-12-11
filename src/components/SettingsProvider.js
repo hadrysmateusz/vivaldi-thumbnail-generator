@@ -8,7 +8,8 @@ const SettingsProvider = ({ children }) => {
 	const [bgColor, setBgColor] = useState("#fff")
 	const [scale, setScale] = useState(45)
 	const [isSettingsDisplayed, setIsSettingsDisplayed] = useState(false)
-	const [exportDimensions, setExportDimensions] = useState([1320, 1098]) // eslint-disable-line
+	// there is a max size for downloads and exceeding it will cause the download to fail, so the resolution needs to be kept pretty low
+	const [exportDimensions, setExportDimensions] = useState([840, 700]) // eslint-disable-line
 
 	const toggleSettings = () => {
 		setIsSettingsDisplayed((prevValue) => !prevValue)
