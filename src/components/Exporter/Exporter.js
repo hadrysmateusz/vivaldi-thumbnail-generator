@@ -35,7 +35,7 @@ const Exporter = () => {
 				<ContentContainer>
 					{isLoading ? (
 						<Loader>
-							Exporting ({progressDone}/{progressTotal})
+							Generating ({progressDone}/{progressTotal})
 						</Loader>
 					) : isEmpty ? (
 						<EmptyState>
