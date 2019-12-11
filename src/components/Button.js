@@ -1,5 +1,4 @@
 import styled, { css } from "styled-components/macro"
-import { ellipsis } from "polished"
 
 const buttonVariants = {
 	normal: css`
