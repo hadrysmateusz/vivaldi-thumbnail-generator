@@ -45,6 +45,8 @@ function ImageProcessor() {
 							Select or drop files here (PNG & SVG work best)
 						</EmptyStateBody>
 					</EmptyState>
+				) : isDrawerOpen ? (
+					<FileDrawer />
 				) : (
 					<>
 						{/* canvases */}
@@ -62,7 +64,6 @@ function ImageProcessor() {
 				)}
 
 				{!isDrawerOpen && <Uploader />}
-				{isDrawerOpen && <FileDrawer />}
 			</InnerContainer>
 		</RatioContainer>
 	)

@@ -2,7 +2,8 @@ import React, { useEffect, useReducer, useContext, createContext } from "react"
 import { useFileContext } from "../FilesProvider"
 import { useSettingsContext } from "../SettingsProvider"
 import { drawIcon, drawBackground, createVirtualCanvas } from "../CanvasCommon"
-import { makeAsync } from "../../utils"
+import { makeAsync, getBase64FromDataUri } from "../../utils"
+import JSZip from "jszip"
 
 export const ExporterContext = createContext({})
 
@@ -39,9 +40,26 @@ export const ExporterProvider = ({ children }) => {
 
 	useEffect(() => {
 		if (state.progressDone === state.progressTotal && state.progressTotal !== 0) {
-			dispatch({ type: "GENERATE_SUCCESS" })
+			const zip = new JSZip()
+			// Generate a directory within the Zip file structure
+			const folder = zip.folder("thumbnails")
+			// Add all files to the folder
+			state.thumbnails.forEach((url, i) => {
+				// Generate file name
+				const fileName = `${i + 1}.png`
+				// Get base64 content of the image
+				const fileData = getBase64FromDataUri(url)
+				// Add file to folder
+				folder.file(fileName, fileData, { base64: true })
+			})
+			// Generate zip file as a base64 string
+			zip.generateAsync({ type: "base64" }).then((zipBase64) => {
+				// Assemble a data url
+				const zipUrl = "data:application/zip;base64," + zipBase64
+				dispatch({ type: "GENERATE_SUCCESS", payload: zipUrl })
+			})
 		}
-	}, [state.progressDone, state.progressTotal])
+	}, [state.progressDone, state.progressTotal, state.thumbnails])
 
 	return (
 		<ExporterContext.Provider value={[state, actions]}>
@@ -56,7 +74,8 @@ const defaultState = {
 	isLoading: false,
 	isError: false,
 	isCanceled: false,
-	thumbnails: []
+	thumbnails: [],
+	zipUrl: null
 }
 
 const generatorReducer = (state, action) => {
@@ -69,28 +88,32 @@ const generatorReducer = (state, action) => {
 				isLoading: true,
 				isError: false,
 				isCanceled: false,
-				thumbnails: []
+				thumbnails: [],
+				zipUrl: null
 			}
 		case "GENERATE_SUCCESS":
 			return {
 				...state,
 				isLoading: false,
 				isError: false,
-				isCanceled: false
+				isCanceled: false,
+				zipUrl: action.payload
 			}
 		case "GENERATE_FAILURE":
 			return {
 				...state,
 				isLoading: false,
 				isError: true,
-				isCanceled: false
+				isCanceled: false,
+				zipUrl: null
 			}
 		case "GENERATE_CANCEL":
 			return {
 				...state,
 				isLoading: false,
 				isError: false,
-				isCanceled: true
+				isCanceled: true,
+				zipUrl: null
 			}
 		case "GENERATE_PROGRESS":
 			return {

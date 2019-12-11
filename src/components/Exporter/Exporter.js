@@ -9,19 +9,17 @@ import Spacer from "../Spacer"
 import FluidContainer from "../FluidContainer"
 import SharingButtons from "../SharingButtons"
 import Loader from "../Loader"
-import { download } from "../../utils"
 import { center } from "../../styleUtils"
 
 const Exporter = () => {
-	const [{ isLoading, isError, thumbnails, progressDone, progressTotal }] = useExporter()
+	const [
+		{ isLoading, isError, thumbnails, progressDone, progressTotal, zipUrl }
+	] = useExporter()
 	const isEmpty = !thumbnails || thumbnails.length === 0
 	const numThumbnails = isEmpty ? 0 : thumbnails.length
+	const tooManyThumbnails = !isEmpty && numThumbnails > 25
 
 	// TODO: consider merging isEmpty and isError inside the exporter hook
-	// TODO: refactor this and move it inside exporter hook, merge error states etc.
-	const downloadAll = async () => {
-		await download.zip.fromUrls(thumbnails, "thumbnails")
-	}
 
 	return (
 		<FluidContainer>
@@ -60,8 +58,9 @@ const Exporter = () => {
 						<Spacer />
 						<Button
 							variant="primary"
-							onClick={downloadAll}
-							disabled={isLoading || isError}
+							as="a"
+							href={zipUrl}
+							disabled={!zipUrl || isError || tooManyThumbnails}
 						>
 							Download All
 						</Button>
@@ -77,21 +76,15 @@ const Exporter = () => {
 	)
 }
 
-const ExporterItem = ({ name, url }) => {
-	const handleClick = () => {
-		download.fromUrl(url, name)
-	}
-
-	return (
-		<ItemContainer>
-			<Preview url={url} />
-			<Data>{name}</Data>
-			<Button onClick={handleClick} variant="text-only">
-				Download
-			</Button>
-		</ItemContainer>
-	)
-}
+const ExporterItem = ({ name, url }) => (
+	<ItemContainer>
+		<Preview url={url} />
+		<Data>{name}</Data>
+		<Button as="a" download href={url} variant="text-only">
+			Download
+		</Button>
+	</ItemContainer>
+)
 
 const ShareButtonsContainer = styled.div`
 	margin: 40px auto;
