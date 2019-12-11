@@ -132,7 +132,7 @@ const ContentContainer = styled.div`
 `
 
 const ListContainer = styled.div`
-	max-height: 474px;
+	max-height: 454px;
 	overflow-y: auto;
 `
 
