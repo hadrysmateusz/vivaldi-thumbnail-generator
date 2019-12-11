@@ -13,28 +13,59 @@ import { download } from "../../utils"
 import { center } from "../../styleUtils"
 
 const Exporter = () => {
-	const [{ isLoading, isError, data }] = useExporter()
-	const isEmpty = !data || data.length === 0
-	const numThumbnails = isEmpty ? 0 : data.length
+	const [{ isLoading, isError, thumbnails, progressDone, progressTotal }] = useExporter()
+	const isEmpty = !thumbnails || thumbnails.length === 0
+	const numThumbnails = isEmpty ? 0 : thumbnails.length
 
 	// TODO: consider merging isEmpty and isError inside the exporter hook
 	// TODO: refactor this and move it inside exporter hook, merge error states etc.
 	const downloadAll = async () => {
-		await download.zip.fromUrls(data, "thumbnails")
+		await download.zip.fromUrls(thumbnails, "thumbnails")
 	}
 
 	return (
 		<FluidContainer>
 			<Container>
-				<Header />
-				<Content isLoading={isLoading} isEmpty={isEmpty} data={data} />
+				<HeaderContainer>
+					<h2>Downloads</h2>
+					<Button as={Link} to={"/"}>
+						Back
+					</Button>
+				</HeaderContainer>
+				<ContentContainer>
+					{isLoading ? (
+						<Loader>
+							Exporting ({progressDone}/{progressTotal})
+						</Loader>
+					) : isEmpty ? (
+						<EmptyState>
+							<div>
+								There is nothing here,&nbsp;<Link to="/">go back</Link>&nbsp;to add some
+								icons and try again
+							</div>
+						</EmptyState>
+					) : (
+						<ListContainer>
+							{thumbnails.map((url, i) => (
+								<ExporterItem key={url} name={`thumbnail-${i + 1}`} url={url} />
+							))}
+						</ListContainer>
+					)}
+				</ContentContainer>
 				{!isEmpty && (
-					<Footer
-						numThumbnails={numThumbnails}
-						isLoading={isLoading}
-						isError={isError}
-						downloadAll={downloadAll}
-					/>
+					<FooterContainer>
+						<div>
+							Generated <b>{numThumbnails}</b> thumbnail{numThumbnails > 1 && "s"} 🎉
+						</div>
+						<Spacer />
+						<Button
+							variant="primary"
+							onClick={downloadAll}
+							disabled={isLoading || isError}
+						>
+							Download All
+						</Button>
+					</FooterContainer>
 				)}
 			</Container>
 			{!isEmpty && (
@@ -45,48 +76,6 @@ const Exporter = () => {
 		</FluidContainer>
 	)
 }
-
-const Header = () => (
-	<HeaderContainer>
-		<h2>Downloads</h2>
-		<Button as={Link} to={"/"}>
-			Back
-		</Button>
-	</HeaderContainer>
-)
-
-const Content = ({ isLoading, isEmpty, data }) => (
-	<ContentContainer>
-		{isLoading ? (
-			<Loader>Exporting...</Loader>
-		) : isEmpty ? (
-			<EmptyState>
-				<div>
-					There is nothing here,&nbsp;<Link to="/">go back</Link>&nbsp;to add some icons
-					and try again
-				</div>
-			</EmptyState>
-		) : (
-			<ListContainer>
-				{data.map((url, i) => (
-					<ExporterItem key={url} name={`thumbnail-${i + 1}`} url={url} />
-				))}
-			</ListContainer>
-		)}
-	</ContentContainer>
-)
-
-const Footer = ({ numThumbnails, isLoading, isError, downloadAll }) => (
-	<FooterContainer>
-		<div>
-			Generated <b>{numThumbnails}</b> thumbnail{numThumbnails > 1 && "s"} 🎉
-		</div>
-		<Spacer />
-		<Button variant="primary" onClick={downloadAll} disabled={isLoading || isError}>
-			Download All
-		</Button>
-	</FooterContainer>
-)
 
 const ExporterItem = ({ name, url }) => {
 	const handleClick = () => {
@@ -119,8 +108,6 @@ const FooterContainer = styled.div`
 `
 
 const Container = styled.div`
-	width: 100%;
-	max-width: 732px;
 	background: white;
 	padding: 0 20px;
 	position: relative;

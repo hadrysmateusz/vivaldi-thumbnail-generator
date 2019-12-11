@@ -17,7 +17,6 @@ const FilesProvider = ({ children }) => {
 
 	const addFromFiles = async (files) => {
 		try {
-			if (state.isLoading) throw new Error("Upload already in progress")
 			// start upload process
 			dispatch({ type: "UPLOAD_INIT", payload: files.length })
 			// start a separate upload job for every file
@@ -31,12 +30,12 @@ const FilesProvider = ({ children }) => {
 					// finish the job for this image
 					dispatch({ type: "UPLOAD_PROGRESS", payload: image })
 				} catch (error) {
-					console.errror(error)
+					console.error(error)
 					dispatch({ type: "UPLOAD_FAILURE", error })
 				}
 			})
 		} catch (error) {
-			console.errror(error)
+			console.error(error)
 			dispatch({ type: "UPLOAD_FAILURE", error })
 		}
 	}
@@ -56,11 +55,11 @@ const FilesProvider = ({ children }) => {
 				// finish the job for this image
 				dispatch({ type: "UPLOAD_PROGRESS", payload: image })
 			} catch (error) {
-				console.errror(error)
+				console.error(error)
 				dispatch({ type: "UPLOAD_FAILURE", error })
 			}
 		} catch (error) {
-			console.errror(error)
+			console.error(error)
 			dispatch({ type: "UPLOAD_FAILURE", error })
 		}
 	}
@@ -78,11 +77,11 @@ const FilesProvider = ({ children }) => {
 				// finish the job for this image
 				dispatch({ type: "UPLOAD_PROGRESS", payload: image })
 			} catch (error) {
-				console.errror(error)
+				console.error(error)
 				dispatch({ type: "UPLOAD_FAILURE", error })
 			}
 		} catch (error) {
-			console.errror(error)
+			console.error(error)
 			dispatch({ type: "UPLOAD_FAILURE", error })
 		}
 	}
@@ -101,7 +100,7 @@ const FilesProvider = ({ children }) => {
 
 	const removeImage = (urlToRemove) => {
 		URL.revokeObjectURL(urlToRemove)
-		dispatch({ type: "FILES_REMOVE_ONE", urlToRemove })
+		dispatch({ type: "FILES_REMOVE_ONE", payload: urlToRemove })
 	}
 
 	const hasImages = state.images && state.images.length > 0

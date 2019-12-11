@@ -10,6 +10,7 @@ const Loader = styled.div`
 	font-size: 24px;
 	line-height: 48px;
 	font-weight: bold;
+	min-height: 100px;
 `
 
 export default Loader
