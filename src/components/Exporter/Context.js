@@ -21,17 +21,17 @@ export const ExporterProvider = ({ children }) => {
 		try {
 			setIsLoading(true)
 			// generate the thumbnails
-			const thumbnailUrls = await Promise.all(
+			const thumbnails = await Promise.all(
 				icons.map(async (icon) => {
 					const url = await renderImage(icon.image, scale, bgColor, exportDimensions)
-					const name = icon.name
+					const name = icon.name + ".png"
 					return { url, name }
 				})
 			)
 			// generate the zip
-			const zipUrl = await generateZip(thumbnailUrls)
+			const zipUrl = await generateZip(thumbnails)
 			// update the state
-			setRenderedThumbnails(thumbnailUrls)
+			setRenderedThumbnails(thumbnails)
 			setZipUrl(zipUrl)
 			setIsLoading(false)
 		} catch (error) {
@@ -46,12 +46,12 @@ export const ExporterProvider = ({ children }) => {
 		const folder = zip.folder("thumbnails")
 		// Add all files to the folder
 		thumbnails.forEach((thumbnail, i) => {
-			// Generate file name
-			const fileName = `${i + 1}.png`
+			const { url, name } = thumbnail
+
 			// Get base64 content of the image
-			const fileData = getBase64FromDataUri(thumbnail.url)
+			const fileData = getBase64FromDataUri(url)
 			// Add file to folder
-			folder.file(fileName, fileData, { base64: true })
+			folder.file(name, fileData, { base64: true })
 		})
 		// Generate zip file as a base64 string
 		const zipBase64 = await zip.generateAsync({ type: "base64" })

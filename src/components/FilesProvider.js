@@ -30,7 +30,8 @@ const FilesProvider = ({ children }) => {
 					image = await loadImage(objectUrl)
 					image = await trimImageWhitespace(image)
 					// create icon object
-					const icon = createIcon(image, file.name)
+					var name = file.name.substring(0, file.name.lastIndexOf("."))
+					const icon = createIcon(image, name)
 					// finish the job for this image
 					dispatch({ type: "UPLOAD_PROGRESS", payload: icon })
 				} catch (error) {
