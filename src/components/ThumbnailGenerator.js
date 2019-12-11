@@ -13,10 +13,10 @@ const ThumbnailGenerator = () => (
 		<FilesProvider>
 			<ExporterProvider>
 				<Switch>
-					<Route path="/downloads">
+					<Route path="/downloads" exact>
 						<Exporter />
 					</Route>
-					<Route path="/">
+					<Route path="/" exact>
 						<Container>
 							<ImageProcessor />
 							<SettingsEditor />
