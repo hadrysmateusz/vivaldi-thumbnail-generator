@@ -41,7 +41,9 @@ function ImageProcessor() {
 					<EmptyState>
 						<EmptyStateIcon />
 						<EmptyStateHeading>There are no icons here yet</EmptyStateHeading>
-						<EmptyStateBody>Upload some, to get started</EmptyStateBody>
+						<EmptyStateBody>
+							Select or drop files here (PNG & SVG work best)
+						</EmptyStateBody>
 					</EmptyState>
 				) : (
 					<>

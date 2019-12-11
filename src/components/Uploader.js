@@ -103,8 +103,7 @@ const Uploader = () => {
 				>
 					{isLoading ? "Loading" : "Add Icons"}
 				</Button>
-				<DropText>or drop files here</DropText>
-				<Spacer /> {/* The spacer is used to allow drop text to disappear on mobile */}
+				<Spacer />
 				{hasImages && <Button onClick={openFileDrawer}>Manage Icons</Button>}
 			</ButtonsContainer>
 
@@ -125,18 +124,6 @@ const Uploader = () => {
 		</DropzoneContainer>
 	)
 }
-
-const DropText = styled.div`
-	font-size: 14px;
-	line-height: 18px;
-	letter-spacing: 0.015em;
-	color: var(--light-gray);
-	cursor: default;
-	display: none;
-	@media (min-width: 732px) {
-		display: block;
-	}
-`
 
 const DropzoneContainer = styled.div`
 	${cover()}
