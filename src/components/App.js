@@ -37,7 +37,7 @@ const GeneratorPage = () => {
 	useMeta({
 		name: "description",
 		content:
-			"Custom thumbnail generator for Vivaldi Browser's Speed Dials. Create thumbnails that will match your theme and preferences, quickly and for free"
+			"Custom thumbnail generator for Vivaldi Browser's Speed Dials. Create thumbnails that will match your theme and preferences, quickly and for free!"
 	})
 
 	return (
