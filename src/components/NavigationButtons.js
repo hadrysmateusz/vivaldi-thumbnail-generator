@@ -3,7 +3,6 @@ import ArrowButton from "./ArrowButton"
 
 function NavigationButtons({ numIcons, setSelectedIndex }) {
 	const next = () => {
-		debugger
 		setSelectedIndex((prevState) => {
 			const newIndex = prevState + 1
 			return newIndex % numIcons
@@ -11,7 +10,6 @@ function NavigationButtons({ numIcons, setSelectedIndex }) {
 	}
 
 	const prev = () => {
-		debugger
 		setSelectedIndex((prevState) => {
 			const newIndex = prevState - 1
 			return newIndex >= 0 ? newIndex : numIcons - 1
