@@ -53,10 +53,14 @@ const FileDrawer = () => {
 }
 
 const GridContainer = styled.div`
-	padding: 32px;
+	padding: 20px;
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(150px, auto));
-	grid-auto-rows: 150px;
+	grid-template-columns: repeat(auto-fill, minmax(120px, auto));
+	grid-auto-rows: 120px;
+	@media (min-width: 732px) {
+		grid-template-columns: repeat(auto-fill, minmax(140px, auto));
+		grid-auto-rows: 140px;
+	}
 	gap: 20px;
 `
 
