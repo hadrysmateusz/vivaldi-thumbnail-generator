@@ -1,31 +1,29 @@
 import React from "react"
 import ArrowButton from "./ArrowButton"
 
-function NavigationButtons({ images, setSelectedIndex }) {
+function NavigationButtons({ numIcons, setSelectedIndex }) {
 	const next = () => {
+		debugger
 		setSelectedIndex((prevState) => {
 			const newIndex = prevState + 1
-			const numImages = images.length
-			return newIndex % numImages
+			return newIndex % numIcons
 		})
 	}
 
 	const prev = () => {
+		debugger
 		setSelectedIndex((prevState) => {
 			const newIndex = prevState - 1
-			const numImages = images.length
-			return newIndex >= 0 ? newIndex : numImages - 1
+			return newIndex >= 0 ? newIndex : numIcons - 1
 		})
 	}
 
-	const hasMultipleImages = images && images.length > 1
-
-	return hasMultipleImages ? (
+	return (
 		<>
 			<ArrowButton direction="right" onClick={next} />
 			<ArrowButton direction="left" onClick={prev} />
 		</>
-	) : null
+	)
 }
 
 export default NavigationButtons

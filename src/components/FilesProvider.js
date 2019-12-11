@@ -12,6 +12,8 @@ export const FileContext = createContext()
 
 export const useFileContext = () => useContext(FileContext)
 
+const createIcon = (image, name) => ({ image, name })
+
 const FilesProvider = ({ children }) => {
 	const [state, dispatch] = useReducer(uploaderReducer, defaultState)
 
@@ -27,18 +29,15 @@ const FilesProvider = ({ children }) => {
 					// load and process the image
 					image = await loadImage(objectUrl)
 					image = await trimImageWhitespace(image)
-
-					console.log(`${i} is uploaded`)
-
+					// create icon object
+					const icon = createIcon(image, file.name)
 					// finish the job for this image
-					dispatch({ type: "UPLOAD_PROGRESS", payload: image })
+					dispatch({ type: "UPLOAD_PROGRESS", payload: icon })
 				} catch (error) {
-					console.error(error)
 					dispatch({ type: "UPLOAD_FAILURE", error })
 				}
 			})
 		} catch (error) {
-			console.error(error)
 			dispatch({ type: "UPLOAD_FAILURE", error })
 		}
 	}
@@ -55,14 +54,14 @@ const FilesProvider = ({ children }) => {
 				// load and process the image
 				image = await loadImage(clearbitApiUrl)
 				image = await trimImageWhitespace(image)
+				// create icon object
+				const icon = createIcon(image, hostname)
 				// finish the job for this image
-				dispatch({ type: "UPLOAD_PROGRESS", payload: image })
+				dispatch({ type: "UPLOAD_PROGRESS", payload: icon })
 			} catch (error) {
-				console.error(error)
 				dispatch({ type: "UPLOAD_FAILURE", error })
 			}
 		} catch (error) {
-			console.error(error)
 			dispatch({ type: "UPLOAD_FAILURE", error })
 		}
 	}
@@ -77,19 +76,20 @@ const FilesProvider = ({ children }) => {
 				// load and process the image
 				image = await loadImage(url)
 				image = await trimImageWhitespace(image)
+				// create icon object
+				var name = url.substring(url.lastIndexOf("/") + 1)
+				const icon = createIcon(image, name)
 				// finish the job for this image
-				dispatch({ type: "UPLOAD_PROGRESS", payload: image })
+				dispatch({ type: "UPLOAD_PROGRESS", payload: icon })
 			} catch (error) {
-				console.error(error)
 				dispatch({ type: "UPLOAD_FAILURE", error })
 			}
 		} catch (error) {
-			console.error(error)
 			dispatch({ type: "UPLOAD_FAILURE", error })
 		}
 	}
 
-	const clearImages = () => {
+	const clear = () => {
 		dispatch({ type: "FILES_REMOVE_ALL" })
 	}
 
@@ -101,17 +101,16 @@ const FilesProvider = ({ children }) => {
 		dispatch({ type: "DRAWER_CLOSE" })
 	}, [])
 
-	const removeImage = (urlToRemove) => {
-		URL.revokeObjectURL(urlToRemove)
-		dispatch({ type: "FILES_REMOVE_ONE", payload: urlToRemove })
+	const removeIcon = (icon) => {
+		dispatch({ type: "FILES_REMOVE_ONE", payload: icon })
 	}
 
-	const numImages = state.images ? state.images.length : 0
-	const hasImages = numImages > 0
+	const numIcons = state.icons ? state.icons.length : 0
+	const hasIcons = numIcons > 0
 
 	useEffect(() => {
-		if (!hasImages) closeFileDrawer()
-	}, [closeFileDrawer, hasImages])
+		if (!hasIcons) closeFileDrawer()
+	}, [closeFileDrawer, hasIcons])
 
 	useEffect(() => {
 		if (state.progressDone === state.progressTotal && state.progressTotal !== 0) {
@@ -123,10 +122,10 @@ const FilesProvider = ({ children }) => {
 		addFromFiles,
 		addFromBookmarkUrl,
 		addFromImageUrl,
-		hasImages,
-		numImages,
-		clearImages,
-		removeImage,
+		hasIcons,
+		numIcons,
+		clear,
+		removeIcon,
 		openFileDrawer,
 		closeFileDrawer,
 		...state
@@ -142,7 +141,7 @@ const defaultState = {
 	isError: false,
 	isCanceled: false,
 	isDrawerOpen: false,
-	images: []
+	icons: []
 }
 
 const uploaderReducer = (state, action) => {
@@ -164,6 +163,7 @@ const uploaderReducer = (state, action) => {
 				isCanceled: false
 			}
 		case "UPLOAD_FAILURE":
+			console.error(action.error)
 			return {
 				...state,
 				isLoading: false,
@@ -181,17 +181,17 @@ const uploaderReducer = (state, action) => {
 			return {
 				...state,
 				progressDone: state.progressDone + 1,
-				images: [...state.images, action.payload]
+				icons: [...state.icons, action.payload]
 			}
 		case "FILES_REMOVE_ONE":
 			return {
 				...state,
-				images: state.images.filter((image) => image.src !== action.payload)
+				icons: state.icons.filter((icon) => icon.name !== action.payload.name)
 			}
 		case "FILES_REMOVE_ALL":
 			return {
 				...state,
-				images: []
+				icons: []
 			}
 		case "DRAWER_OPEN":
 			return {

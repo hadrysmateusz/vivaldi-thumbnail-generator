@@ -11,15 +11,13 @@ import SharingButtons from "../SharingButtons"
 import Loader from "../Loader"
 import { center } from "../../styleUtils"
 
-const Exporter = () => {
-	const [
-		{ isLoading, isError, thumbnails, progressDone, progressTotal, zipUrl }
-	] = useExporter()
-	const isEmpty = !thumbnails || thumbnails.length === 0
-	const numThumbnails = isEmpty ? 0 : thumbnails.length
-	const tooManyThumbnails = !isEmpty && numThumbnails > 25
+const MAX_THUMBNAILS = 25
 
-	// TODO: consider merging isEmpty and isError inside the exporter hook
+const Exporter = () => {
+	const { isLoading, isError, renderedThumbnails, zipUrl } = useExporter()
+	const isEmpty = !renderedThumbnails || renderedThumbnails.length === 0
+	const numThumbnails = isEmpty ? 0 : renderedThumbnails.length
+	const tooManyThumbnails = !isEmpty && numThumbnails > MAX_THUMBNAILS
 
 	return (
 		<FluidContainer>
@@ -32,9 +30,7 @@ const Exporter = () => {
 				</HeaderContainer>
 				<ContentContainer>
 					{isLoading ? (
-						<Loader>
-							Generating ({progressDone}/{progressTotal})
-						</Loader>
+						<Loader>Generating...</Loader>
 					) : isEmpty ? (
 						<EmptyState>
 							<div>
@@ -44,22 +40,36 @@ const Exporter = () => {
 						</EmptyState>
 					) : (
 						<ListContainer>
-							{thumbnails.map((url, i) => (
-								<ExporterItem key={url} name={`thumbnail-${i + 1}`} url={url} />
+							{renderedThumbnails.map((thumbnail) => (
+								<ExporterItem
+									key={thumbnail.name}
+									name={thumbnail.name}
+									url={thumbnail.url}
+								/>
 							))}
 						</ListContainer>
 					)}
 				</ContentContainer>
 				{!isEmpty && (
 					<FooterContainer>
-						<div>
-							Generated <b>{numThumbnails}</b> thumbnail{numThumbnails > 1 && "s"} 🎉
-						</div>
+						<FooterText>
+							{tooManyThumbnails ? (
+								<>
+									❌ It's not yet possible to download more than <b>{MAX_THUMBNAILS}</b>{" "}
+									thumbnails at once. Remove a few or download them one by one.
+								</>
+							) : (
+								<>
+									🎉 Generated <b>{numThumbnails}</b> thumbnail{numThumbnails > 1 && "s"}
+								</>
+							)}
+						</FooterText>
 						<Spacer />
 						<Button
 							variant="primary"
 							as="a"
 							href={zipUrl}
+							download="thumbnails.zip"
 							disabled={!zipUrl || isError || tooManyThumbnails}
 						>
 							Download All
@@ -76,11 +86,15 @@ const Exporter = () => {
 	)
 }
 
+const FooterText = styled.div`
+	max-width: 60%;
+`
+
 const ExporterItem = ({ name, url }) => (
 	<ItemContainer>
 		<Preview url={url} />
 		<Data>{name}</Data>
-		<Button as="a" download href={url} variant="text-only">
+		<Button as="a" download={name} href={url} variant="text-only">
 			Download
 		</Button>
 	</ItemContainer>

@@ -7,13 +7,7 @@ import { useFileContext } from "./FilesProvider"
 import { useSettingsContext } from "./SettingsProvider"
 
 const FileDrawer = () => {
-	const {
-		closeFileDrawer,
-		images,
-		removeImage,
-		hasImages,
-		clearImages
-	} = useFileContext()
+	const { closeFileDrawer, icons, removeIcon, hasIcons, clear } = useFileContext()
 	const { closeSettings } = useSettingsContext()
 
 	const closeOnEsc = (e) => {
@@ -27,11 +21,11 @@ const FileDrawer = () => {
 		<Container onKeyDown={closeOnEsc}>
 			<InnerContainer>
 				<GridContainer>
-					{images.map((image, i) => (
+					{icons.map((icon) => (
 						<FileItem
-							key={image.src}
-							imageUrl={image.src}
-							removeItem={removeImage}
+							key={icon.name}
+							icon={icon}
+							removeItem={removeIcon}
 							/* autoFocus={i === 0 ? true : undefined} */
 						/>
 					))}
@@ -39,12 +33,12 @@ const FileDrawer = () => {
 			</InnerContainer>
 
 			<ButtonsContainer>
-				{hasImages && (
-					<Button onClick={clearImages} variant="danger">
+				{hasIcons && (
+					<Button onClick={clear} variant="danger">
 						Remove All
 					</Button>
 				)}
-				<Button onClick={closeFileDrawer} autoFocus={!hasImages ? true : undefined}>
+				<Button onClick={closeFileDrawer} autoFocus={!hasIcons ? true : undefined}>
 					Close
 				</Button>
 			</ButtonsContainer>
@@ -66,7 +60,7 @@ const GridContainer = styled.div`
 
 const InnerContainer = styled.div`
 	overflow: auto;
-	background: #f9f9f9;
+	background: #fbfbfb;
 `
 
 const Container = styled.div`
@@ -81,7 +75,7 @@ const Container = styled.div`
 
 const ButtonsContainer = styled.div`
 	background: white;
-	box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.15);
+	box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.06);
 	position: absolute;
 	bottom: 0;
 	right: 0;

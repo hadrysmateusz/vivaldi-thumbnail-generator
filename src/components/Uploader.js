@@ -23,11 +23,11 @@ const numAvailableMethods = Object.values(availableMethods).reduce(
 
 const Uploader = () => {
 	const {
-		addFromFiles,
 		isLoading,
 		openFileDrawer,
-		hasImages,
-		numImages,
+		hasIcons,
+		numIcons,
+		addFromFiles,
 		addFromBookmarkUrl,
 		addFromImageUrl
 	} = useFileContext()
@@ -99,15 +99,13 @@ const Uploader = () => {
 			<ButtonsContainer>
 				<Button
 					onClick={onAdd}
-					variant={hasImages ? "normal" : "primary"}
+					variant={hasIcons ? "normal" : "primary"}
 					disabled={isLoading}
 				>
 					{isLoading ? "Loading" : "Add Icons"}
 				</Button>
 				<Spacer />
-				{hasImages && (
-					<Button onClick={openFileDrawer}>Manage Icons ({numImages}) </Button>
-				)}
+				{hasIcons && <Button onClick={openFileDrawer}>Manage Icons ({numIcons}) </Button>}
 			</ButtonsContainer>
 
 			{/* drag overlay */}

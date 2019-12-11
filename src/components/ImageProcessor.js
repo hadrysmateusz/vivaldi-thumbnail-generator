@@ -21,14 +21,15 @@ function ImageProcessor() {
 	const [selectedIndex, setSelectedIndex] = useState(0)
 	const {
 		isLoading,
-		images,
-		hasImages,
+		icons,
+		hasIcons,
+		numIcons,
 		isDrawerOpen,
 		progressDone,
 		progressTotal
 	} = useFileContext()
-	const isEmpty = !hasImages
-	const selectedImage = selectedIndex >= images.length ? images[0] : images[selectedIndex]
+	const isEmpty = !hasIcons
+	const selectedIcon = selectedIndex >= icons.length ? icons[0] : icons[selectedIndex]
 
 	return (
 		<RatioContainer>
@@ -51,11 +52,17 @@ function ImageProcessor() {
 					<>
 						{/* canvases */}
 						<BackgroundCanvas />
-						<IconCanvas image={selectedImage} />
+						<IconCanvas icon={selectedIcon} />
 						{/* nav-buttons */}
-						<NavigationButtons images={images} setSelectedIndex={setSelectedIndex} />
+						{numIcons > 1 && (
+							<NavigationButtons
+								numIcons={numIcons}
+								setSelectedIndex={setSelectedIndex}
+							/>
+						)}
+
 						{/* settings button */}
-						{hasImages && (
+						{hasIcons && (
 							<SettingsButtonContainer>
 								<SettingsButton />
 							</SettingsButtonContainer>

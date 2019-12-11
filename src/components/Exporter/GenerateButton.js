@@ -6,18 +6,18 @@ import { useFileContext } from "../FilesProvider"
 import { useExporter } from "."
 
 const GenerateButton = () => {
-	const { hasImages } = useFileContext()
-	const [{ isLoading }, { generate }] = useExporter()
+	const { hasIcons } = useFileContext()
+	const { renderThumbnails, isLoading } = useExporter()
 	const history = useHistory()
 
 	const handleClick = () => {
-		generate()
+		renderThumbnails()
 		history.push("/downloads")
 	}
 
 	return (
 		<Container>
-			<Button onClick={handleClick} disabled={isLoading || !hasImages} variant="primary">
+			<Button onClick={handleClick} disabled={isLoading || !hasIcons} variant="primary">
 				Generate
 			</Button>
 		</Container>

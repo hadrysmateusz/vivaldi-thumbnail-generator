@@ -3,11 +3,15 @@ import styled from "styled-components/macro"
 import { center } from "../styleUtils"
 import { ReactComponent as TrashIcon } from "../assets/trash.svg"
 
-const FileItem = ({ imageUrl, removeItem }) => {
+const FileItem = ({ icon, removeItem }) => {
+	const remove = () => {
+		removeItem(icon)
+	}
+
 	return (
 		<Container>
-			<Image url={imageUrl} />
-			<RemoveContainer onClick={() => removeItem(imageUrl)}>
+			<Image url={icon.image.src} />
+			<RemoveContainer onClick={remove}>
 				<TrashIcon width="24px" height="24px" title="Remove" />
 			</RemoveContainer>
 		</Container>
