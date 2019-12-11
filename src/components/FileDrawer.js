@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React from "react"
 import styled from "styled-components/macro"
 import { cover } from "polished"
 import Button from "./Button"
@@ -22,12 +22,6 @@ const FileDrawer = () => {
 			closeFileDrawer()
 		}
 	}
-
-	useEffect(() => {
-		if (!hasImages) {
-			closeFileDrawer()
-		}
-	}, [closeFileDrawer, hasImages])
 
 	return (
 		<Container onKeyDown={closeOnEsc}>

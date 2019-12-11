@@ -19,7 +19,14 @@ import transparency from "../assets/transparency.png"
 
 function ImageProcessor() {
 	const [selectedIndex, setSelectedIndex] = useState(0)
-	const { isLoading, images, hasImages, isDrawerOpen } = useFileContext()
+	const {
+		isLoading,
+		images,
+		hasImages,
+		isDrawerOpen,
+		progressDone,
+		progressTotal
+	} = useFileContext()
 	const isEmpty = !hasImages
 	const selectedImage = selectedIndex >= images.length ? images[0] : images[selectedIndex]
 
@@ -27,7 +34,9 @@ function ImageProcessor() {
 		<RatioContainer>
 			<InnerContainer>
 				{isLoading ? (
-					<Loader>Loading...</Loader>
+					<Loader>
+						Loading ({progressDone}/{progressTotal})
+					</Loader>
 				) : isEmpty ? (
 					<EmptyState>
 						<EmptyStateIcon />
