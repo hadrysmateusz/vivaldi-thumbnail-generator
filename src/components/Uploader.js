@@ -27,6 +27,7 @@ const Uploader = () => {
 		isLoading,
 		openFileDrawer,
 		hasImages,
+		numImages,
 		addFromBookmarkUrl,
 		addFromImageUrl
 	} = useFileContext()
@@ -104,7 +105,9 @@ const Uploader = () => {
 					{isLoading ? "Loading" : "Add Icons"}
 				</Button>
 				<Spacer />
-				{hasImages && <Button onClick={openFileDrawer}>Manage Icons</Button>}
+				{hasImages && (
+					<Button onClick={openFileDrawer}>Manage Icons ({numImages}) </Button>
+				)}
 			</ButtonsContainer>
 
 			{/* drag overlay */}

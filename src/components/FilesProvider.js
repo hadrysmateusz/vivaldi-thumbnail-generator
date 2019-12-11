@@ -20,13 +20,16 @@ const FilesProvider = ({ children }) => {
 			// start upload process
 			dispatch({ type: "UPLOAD_INIT", payload: files.length })
 			// start a separate upload job for every file
-			files.forEach(async (file) => {
+			files.forEach(async (file, i) => {
 				try {
 					let image
 					const objectUrl = URL.createObjectURL(file)
 					// load and process the image
 					image = await loadImage(objectUrl)
 					image = await trimImageWhitespace(image)
+
+					console.log(`${i} is uploaded`)
+
 					// finish the job for this image
 					dispatch({ type: "UPLOAD_PROGRESS", payload: image })
 				} catch (error) {
@@ -103,7 +106,8 @@ const FilesProvider = ({ children }) => {
 		dispatch({ type: "FILES_REMOVE_ONE", payload: urlToRemove })
 	}
 
-	const hasImages = state.images && state.images.length > 0
+	const numImages = state.images ? state.images.length : 0
+	const hasImages = numImages > 0
 
 	useEffect(() => {
 		if (!hasImages) closeFileDrawer()
@@ -120,6 +124,7 @@ const FilesProvider = ({ children }) => {
 		addFromBookmarkUrl,
 		addFromImageUrl,
 		hasImages,
+		numImages,
 		clearImages,
 		removeImage,
 		openFileDrawer,
