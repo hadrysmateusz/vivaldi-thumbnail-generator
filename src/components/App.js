@@ -4,29 +4,50 @@ import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom"
 import { useMeta, useTitle } from "react-meta-elements"
 import { hideVisually } from "polished"
 
+import SettingsEditor from "./SettingsEditor"
+import ImageProcessor from "./ImageProcessor"
+import { GenerateButton, Exporter } from "./Exporter"
 import FluidContainer from "./FluidContainer"
 import { ReactComponent as TwitterIcon } from "../assets/twitter.svg"
-import ThumbnailGenerator from "./ThumbnailGenerator"
 import { H2, TextBlock, List } from "./CopywritingElements"
 import GlobalStyle from "../globalStyle"
 import * as links from "../links"
+import SettingsProvider from "./SettingsProvider"
+import FilesProvider from "./FilesProvider"
+import { ExporterProvider } from "./Exporter"
 
 const App = () => (
 	<Router>
-		<div>
-			<GlobalStyle />
-			<Background />
-			<OuterContainer>
-				<Switch>
-					<Route path={["/", "/downloads"]} exact>
-						<GeneratorPage />
-					</Route>
-					<Route path={"/blog"}>
-						<BlogPage />
-					</Route>
-				</Switch>
-			</OuterContainer>
-		</div>
+		<GlobalStyle />
+		<SettingsProvider>
+			<FilesProvider>
+				<ExporterProvider>
+					<div>
+						<Background />
+						<OuterContainer>
+							<Switch>
+								<Route path="/" exact>
+									<TopCopy />
+									<GeneratorPage />
+								</Route>
+								<Route path="/downloads" exact>
+									<TopCopy />
+									<Exporter />
+								</Route>
+								<Route path="/blog">
+									<BlogPage />
+								</Route>
+							</Switch>
+						</OuterContainer>
+						<ul>
+							<Link to="/home">Home</Link>
+							<Link to="/downloads">Downloads</Link>
+							<Link to="/blog">Blog</Link>
+						</ul>
+					</div>
+				</ExporterProvider>
+			</FilesProvider>
+		</SettingsProvider>
 	</Router>
 )
 
@@ -42,29 +63,11 @@ const GeneratorPage = () => {
 
 	return (
 		<>
-			<FluidContainer>
-				<MainCopy>
-					<Headline>
-						<em>Vivaldi</em> Thumbnail Generator
-					</Headline>
-					<Description>
-						Create beautiful thumbnails for{" "}
-						<a href="https://vivaldi.com/">Vivaldi Browser</a>’s Speed Dials, in a matter
-						of seconds
-					</Description>
-				</MainCopy>
-				<Social>
-					<div>by Mateusz Hadryś</div>
-					<div>
-						Follow me to get updates:
-						<a href={links.twitter}>
-							<TwitterIcon width={20} height={20} />
-							<IconLabel>Follow on Twitter</IconLabel>
-						</a>
-					</div>
-				</Social>
-			</FluidContainer>
-			<ThumbnailGenerator />
+			<GeneratorContainer>
+				<ImageProcessor />
+				<SettingsEditor />
+			</GeneratorContainer>
+			<GenerateButton />
 			<Route path="/" exact>
 				<FluidContainer>
 					<H2>Upcoming features</H2>
@@ -99,6 +102,40 @@ const BlogPage = () => {
 		</FluidContainer>
 	)
 }
+
+const TopCopy = () => {
+	return (
+		<FluidContainer>
+			<MainCopy>
+				<Headline>
+					<em>Vivaldi</em> Thumbnail Generator
+				</Headline>
+				<Description>
+					Create beautiful thumbnails for{" "}
+					<a href="https://vivaldi.com/">Vivaldi Browser</a>’s Speed Dials, in a matter of
+					seconds
+				</Description>
+			</MainCopy>
+			<Social>
+				<div>by Mateusz Hadryś</div>
+				<div>
+					Follow me to get updates:
+					<a href={links.twitter}>
+						<TwitterIcon width={20} height={20} />
+						<IconLabel>Follow on Twitter</IconLabel>
+					</a>
+				</div>
+			</Social>
+		</FluidContainer>
+	)
+}
+
+const GeneratorContainer = styled.div`
+	padding: 0 20px;
+	display: flex;
+	justify-content: center;
+	margin: 0 auto;
+`
 
 const Social = styled.div`
 	box-sizing: content-box;
