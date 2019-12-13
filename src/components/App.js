@@ -39,11 +39,6 @@ const App = () => (
 								</Route>
 							</Switch>
 						</OuterContainer>
-						<ul>
-							<Link to="/home">Home</Link>
-							<Link to="/downloads">Downloads</Link>
-							<Link to="/blog">Blog</Link>
-						</ul>
 					</div>
 				</ExporterProvider>
 			</FilesProvider>

@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from "styled-components/macro"
 import { center } from "../styleUtils"
 
 const Loader = styled.div`

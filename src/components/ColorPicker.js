@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import { ChromePicker } from "react-color"
-import styled from "styled-components"
+import styled from "styled-components/macro"
 
 const ColorPicker = ({ value, onChange }) => {
 	const [isPickerDisplayed, setIsPickerDisplayed] = useState(false)

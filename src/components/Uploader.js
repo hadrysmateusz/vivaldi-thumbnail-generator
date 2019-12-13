@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import styled from "styled-components"
+import styled from "styled-components/macro"
 import { useDropzone } from "react-dropzone"
 import { cover } from "polished"
 import { center } from "../styleUtils"

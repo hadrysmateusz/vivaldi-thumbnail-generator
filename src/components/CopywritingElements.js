@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components"
+import styled, { css } from "styled-components/macro"
 
 export const TextBlock = styled.div`
 	max-width: 600px;

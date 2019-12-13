@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components"
+import styled, { css } from "styled-components/macro"
 
 const disabledStyles = css`
 	background: #e2e2e2;

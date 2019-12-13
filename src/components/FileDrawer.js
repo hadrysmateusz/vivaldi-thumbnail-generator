@@ -1,5 +1,5 @@
 import React from "react"
-import styled from "styled-components"
+import styled from "styled-components/macro"
 import { cover } from "polished"
 import Button from "./Button"
 import FileItem from "./FileItem"
