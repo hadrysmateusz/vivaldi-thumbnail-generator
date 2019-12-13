@@ -1,7 +1,6 @@
 import React from "react"
 import styled from "styled-components/macro"
 import { Link, Redirect } from "react-router-dom"
-import { cover } from "polished"
 
 import { useExporter } from "."
 import Button from "../Button"
@@ -143,19 +142,19 @@ const ItemContainer = styled.div`
 	align-items: center;
 `
 
-const EmptyState = styled.div`
-	${center}
-	${cover()}
-	font-size: 12px;
-	line-height: 18px;
-	color: var(--light-gray);
-	text-align: center;
+// const EmptyState = styled.div`
+// 	${center}
+// 	${cover()}
+// 	font-size: 12px;
+// 	line-height: 18px;
+// 	color: var(--light-gray);
+// 	text-align: center;
 
-	a {
-		color: black;
-		text-decoration: underline;
-	}
-`
+// 	a {
+// 		color: black;
+// 		text-decoration: underline;
+// 	}
+// `
 
 const Preview = styled.div`
 	background-color: #f2f2f2;
