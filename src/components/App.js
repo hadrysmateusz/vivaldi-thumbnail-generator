@@ -1,5 +1,5 @@
 import React from "react"
-import styled from "styled-components/macro"
+import styled from "styled-components"
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom"
 import { useMeta, useTitle } from "react-meta-elements"
 import { hideVisually } from "polished"

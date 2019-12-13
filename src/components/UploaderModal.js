@@ -1,5 +1,5 @@
 import React from "react"
-import styled from "styled-components/macro"
+import styled from "styled-components"
 import { center } from "../styleUtils"
 import { ReactComponent as UploadIcon } from "../assets/file-upload.svg"
 import { ReactComponent as LinkIcon } from "../assets/link.svg"

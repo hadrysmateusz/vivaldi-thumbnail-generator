@@ -1,5 +1,5 @@
 import React from "react"
-import styled from "styled-components/macro"
+import styled from "styled-components"
 import { useHistory } from "react-router-dom"
 import Button from "../Button"
 import { useFileContext } from "../FilesProvider"

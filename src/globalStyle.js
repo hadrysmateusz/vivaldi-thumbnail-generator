@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components/macro"
+import { createGlobalStyle } from "styled-components"
 import { normalize } from "polished"
 
 const GlobalStyle = createGlobalStyle`

@@ -1,5 +1,5 @@
 import React from "react"
-import styled from "styled-components/macro"
+import styled from "styled-components"
 import { center } from "../styleUtils"
 import { ReactComponent as TrashIcon } from "../assets/trash.svg"
 

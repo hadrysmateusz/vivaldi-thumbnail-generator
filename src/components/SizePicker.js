@@ -1,7 +1,7 @@
 import React from "react"
 import InputRange from "react-input-range"
 import "react-input-range/lib/css/index.css"
-import styled from "styled-components/macro"
+import styled from "styled-components"
 
 const MIN = 1
 const MAX = 100
