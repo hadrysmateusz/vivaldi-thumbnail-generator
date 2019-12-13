@@ -22,31 +22,18 @@ const App = () => (
 		<SettingsProvider>
 			<FilesProvider>
 				<ExporterProvider>
-					<div>
-						<Background />
-						<OuterContainer>
-							<Switch>
-								<Route path="/" exact>
-									<TopCopy />
-									<GeneratorPage />
-								</Route>
-								<Route path="/downloads" exact>
-									<TopCopy />
-									<Exporter />
-								</Route>
-								<Route path="/blog">
-									<BlogPage />
-								</Route>
-							</Switch>
-						</OuterContainer>
-					</div>
+					<Switch>
+						<Route path="/" exact component={EditorPage} />
+						<Route path="/downloads" exact component={ExporterPage} />
+						<Route path="/blog" component={BlogPage} />
+					</Switch>
 				</ExporterProvider>
 			</FilesProvider>
 		</SettingsProvider>
 	</Router>
 )
 
-const GeneratorPage = () => {
+const EditorPage = () => {
 	useTitle(
 		"Create Beautiful Thumbnails For Vivaldi's Speed Dials | Vivaldi Thumbnail Generator"
 	)
@@ -58,12 +45,14 @@ const GeneratorPage = () => {
 
 	return (
 		<>
-			<GeneratorContainer>
-				<ImageProcessor />
-				<SettingsEditor />
-			</GeneratorContainer>
-			<GenerateButton />
-			<Route path="/" exact>
+			<Background />
+			<OuterContainer>
+				<TopCopy />
+				<GeneratorContainer>
+					<ImageProcessor />
+					<SettingsEditor />
+				</GeneratorContainer>
+				<GenerateButton />
 				<FluidContainer>
 					<H2>Upcoming features</H2>
 					<TextBlock>
@@ -83,7 +72,22 @@ const GeneratorPage = () => {
 						<Link to="/blog">Go to the blog</Link>
 					</TextBlock>
 				</FluidContainer>
-			</Route>
+			</OuterContainer>
+		</>
+	)
+}
+
+const ExporterPage = () => {
+	useTitle("Download Tour New Thumbnails | Vivaldi Thumbnail Generator")
+	useMeta({ name: "robots", content: "noindex" })
+
+	return (
+		<>
+			<Background />
+			<OuterContainer>
+				<TopCopy />
+				<Exporter />
+			</OuterContainer>
 		</>
 	)
 }
@@ -98,32 +102,29 @@ const BlogPage = () => {
 	)
 }
 
-const TopCopy = () => {
-	return (
-		<FluidContainer>
-			<MainCopy>
-				<Headline>
-					<em>Vivaldi</em> Thumbnail Generator
-				</Headline>
-				<Description>
-					Create beautiful thumbnails for{" "}
-					<a href="https://vivaldi.com/">Vivaldi Browser</a>’s Speed Dials, in a matter of
-					seconds
-				</Description>
-			</MainCopy>
-			<Social>
-				<div>by Mateusz Hadryś</div>
-				<div>
-					Follow me to get updates:
-					<a href={links.twitter}>
-						<TwitterIcon width={20} height={20} />
-						<IconLabel>Follow on Twitter</IconLabel>
-					</a>
-				</div>
-			</Social>
-		</FluidContainer>
-	)
-}
+const TopCopy = () => (
+	<FluidContainer>
+		<MainCopy>
+			<Headline>
+				<em>Vivaldi</em> Thumbnail Generator
+			</Headline>
+			<Description>
+				Create beautiful thumbnails for <a href="https://vivaldi.com/">Vivaldi Browser</a>
+				’s Speed Dials, in a matter of seconds
+			</Description>
+		</MainCopy>
+		<Social>
+			<div>by Mateusz Hadryś</div>
+			<div>
+				Follow me to get updates:
+				<a href={links.twitter}>
+					<TwitterIcon width={20} height={20} />
+					<IconLabel>Follow on Twitter</IconLabel>
+				</a>
+			</div>
+		</Social>
+	</FluidContainer>
+)
 
 const GeneratorContainer = styled.div`
 	padding: 0 20px;
