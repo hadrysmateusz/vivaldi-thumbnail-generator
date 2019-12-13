@@ -53,7 +53,7 @@ const EditorPage = () => {
 					<SettingsEditor />
 				</GeneratorContainer>
 				<GenerateButton />
-				<FluidContainer>
+				{/* <FluidContainer>
 					<H2>Upcoming features</H2>
 					<TextBlock>
 						<List>
@@ -71,7 +71,7 @@ const EditorPage = () => {
 					<TextBlock>
 						<Link to="/blog">Go to the blog</Link>
 					</TextBlock>
-				</FluidContainer>
+				</FluidContainer> */}
 			</OuterContainer>
 		</>
 	)
