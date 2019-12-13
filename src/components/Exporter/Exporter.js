@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components/macro"
-import { Link } from "react-router-dom"
+import { Link, Redirect } from "react-router-dom"
 import { cover } from "polished"
 
 import { useExporter } from "."
@@ -32,12 +32,13 @@ const Exporter = () => {
 					{isLoading ? (
 						<Loader>Generating...</Loader>
 					) : isEmpty ? (
-						<EmptyState>
+						/* <EmptyState>
 							<div>
 								There is nothing here,&nbsp;<Link to="/">go back</Link>&nbsp;to add some
 								icons and try again
 							</div>
-						</EmptyState>
+						</EmptyState> */
+						<Redirect to="/" />
 					) : (
 						<ListContainer>
 							{renderedThumbnails.map((thumbnail) => (
