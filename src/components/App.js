@@ -9,12 +9,13 @@ import ImageProcessor from "./ImageProcessor"
 import { GenerateButton, Exporter } from "./Exporter"
 import FluidContainer from "./FluidContainer"
 import { ReactComponent as TwitterIcon } from "../assets/twitter.svg"
-import { H2, TextBlock, List } from "./CopywritingElements"
 import GlobalStyle from "../globalStyle"
 import * as links from "../links"
 import SettingsProvider from "./SettingsProvider"
 import FilesProvider from "./FilesProvider"
 import { ExporterProvider } from "./Exporter"
+import { ReactComponent as ArrowIcon } from "../assets/arrow.svg"
+import { H1, TextBlock } from "./CopywritingElements"
 
 const App = () => (
 	<Router>
@@ -26,6 +27,7 @@ const App = () => (
 						<Route path="/" exact component={EditorPage} />
 						<Route path="/downloads" exact component={ExporterPage} />
 						<Route path="/blog" component={BlogPage} />
+						<Route path="*" component={NotFoundPage} />
 					</Switch>
 				</ExporterProvider>
 			</FilesProvider>
@@ -125,6 +127,32 @@ const TopCopy = () => (
 		</Social>
 	</FluidContainer>
 )
+
+const NotFoundPage = () => {
+	useTitle("404 Page Not Found | Vivaldi Thumbnail Generator")
+
+	return (
+		<FluidContainer>
+			<H1>Page Not Found</H1>
+			<Link to="/">
+				<TextBlock
+					style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
+				>
+					<BackArrow /> Go back to the generator
+				</TextBlock>
+			</Link>
+		</FluidContainer>
+	)
+}
+
+const BackArrow = styled(ArrowIcon)`
+	transform: rotate(180deg);
+	color: #484848;
+	width: 16px;
+	height: 16px;
+	display: inline-block;
+	margin-right: 6px;
+`
 
 const GeneratorContainer = styled.div`
 	padding: 0 20px;
