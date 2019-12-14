@@ -101,7 +101,7 @@ const ExporterItem = ({ name, url }) => (
 )
 
 const ShareButtonsContainer = styled.div`
-	margin: 40px auto;
+	margin: 64px auto;
 `
 
 const FooterContainer = styled.div`
