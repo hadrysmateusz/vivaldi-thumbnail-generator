@@ -80,7 +80,7 @@ const EditorPage = () => {
 }
 
 const ExporterPage = () => {
-	useTitle("Download Tour New Thumbnails | Vivaldi Thumbnail Generator")
+	useTitle("Download Your New Thumbnails | Vivaldi Thumbnail Generator")
 	useMeta({ name: "robots", content: "noindex" })
 
 	return (
