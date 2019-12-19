@@ -68,13 +68,12 @@ const EditorPage = () => {
 							settings icon in the top-right corner.
 						</p>
 						<p>
+							<b>Tip:</b> Use images with transparent backgrounds
+						</p>
+						<p>
 							When you're ready, click <b>Generate</b>. On the downloads page, you can
 							download individual thumbnails or click <b>Download All</b> to create and
 							download a zip archive of all your thumbnails.
-						</p>
-						<p>
-							Any questions, or suggestions? Feel free to contact me at{" "}
-							<a href="mailto:hadrys.mateusz86@gmail.com">hadrys.mateusz86@gmail.com</a>
 						</p>
 					</TextBlock>
 
@@ -93,8 +92,9 @@ const EditorPage = () => {
 					</TextBlock>
 
 					<H4>
-						<StyledLink href={links.twitter}>Follow me on twitter</StyledLink> to stay
-						updated!
+						<StyledLink href={links.twitter}>
+							Follow me on twitter to stay updated!
+						</StyledLink>
 					</H4>
 
 					<PHWidget />
