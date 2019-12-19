@@ -1,5 +1,5 @@
 import React from "react"
-import styled from "styled-components"
+import styled from "styled-components/macro"
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom"
 import { useMeta, useTitle } from "react-meta-elements"
 import { hideVisually } from "polished"
@@ -15,7 +15,7 @@ import SettingsProvider from "./SettingsProvider"
 import FilesProvider from "./FilesProvider"
 import { ExporterProvider } from "./Exporter"
 import { ReactComponent as ArrowIcon } from "../assets/arrow.svg"
-import { H1, H2, TextBlock } from "./CopywritingElements"
+import { H1, H2, H4, TextBlock, List } from "./CopywritingElements"
 
 const App = () => (
 	<Router>
@@ -72,7 +72,7 @@ const EditorPage = () => {
 						<a href="mailto:hadrys.mateusz86@gmail.com">hadrys.mateusz86@gmail.com</a>
 					</p>
 				</TextBlock>
-				{/* <FluidContainer>
+				<FluidContainer>
 					<H2>Upcoming features</H2>
 					<TextBlock>
 						<List>
@@ -86,11 +86,15 @@ const EditorPage = () => {
 							</li>
 						</List>
 					</TextBlock>
-					<H2>From the blog</H2>
+					<H4>
+						<StyledLink href={links.twitter}>Follow me on twitter</StyledLink> to stay
+						updated!
+					</H4>
+					{/* <H2>From the blog</H2>
 					<TextBlock>
 						<Link to="/blog">Go to the blog</Link>
-					</TextBlock>
-				</FluidContainer> */}
+					</TextBlock> */}
+				</FluidContainer>
 			</OuterContainer>
 		</>
 	)
@@ -128,7 +132,8 @@ const TopCopy = () => (
 				<em>Vivaldi</em> Thumbnail Generator
 			</Headline>
 			<Description>
-				Create beautiful thumbnails for <a href="https://vivaldi.com/">Vivaldi Browser</a>
+				Create beautiful thumbnails for{" "}
+				<StyledLink href="https://vivaldi.com/">Vivaldi Browser</StyledLink>
 				’s Speed Dials, in a matter of seconds
 			</Description>
 		</MainCopy>
@@ -232,6 +237,7 @@ const OuterContainer = styled.div`
 	top: 0;
 	left: 0;
 	width: 100%;
+	padding-bottom: 60px;
 `
 
 const Headline = styled.h1`
@@ -257,6 +263,18 @@ const Headline = styled.h1`
 	color: #383838;
 `
 
+const StyledLink = styled.a`
+	&,
+	&:visited {
+		color: inherit;
+		text-decoration: underline;
+	}
+
+	&:hover {
+		color: var(--accent-color);
+	}
+`
+
 const Description = styled.div`
 	max-width: 420px;
 	margin: 24px auto 32px;
@@ -264,16 +282,6 @@ const Description = styled.div`
 	line-height: 24px;
 	text-align: center;
 	color: #444;
-
-	a,
-	a:visited {
-		color: inherit;
-		text-decoration: underline;
-	}
-
-	a:hover {
-		color: var(--accent-color);
-	}
 `
 
 export default App
