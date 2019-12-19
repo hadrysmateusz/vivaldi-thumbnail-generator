@@ -30,12 +30,12 @@ export const heading = css`
 	justify-content: center;
 	letter-spacing: 0.05em;
 	color: #383838;
-	text-decoration: underline #ddd;
 `
 
 export const H1 = styled.h1`
 	font-size: 32px;
 	line-height: 40px;
+	text-decoration: underline #ddd;
 	@media (min-width: 732px) {
 		${heading}
 		font-size: 43px;
@@ -46,6 +46,7 @@ export const H2 = styled.h2`
 	${heading}
 	font-size: 30px;
 	line-height: 36px;
+	text-decoration: underline #ddd;
 	@media (min-width: 732px) {
 		${heading}
 		font-size: 32px;
