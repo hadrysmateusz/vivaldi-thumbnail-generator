@@ -20,7 +20,7 @@ const Blog = () => {
 						<PostItem
 							imageUrl={postImage}
 							title="Ultimate Guide To File Handling"
-							link="/posts/ultimate-guide-to-file-handling-in-client-side-javascript"
+							link="/blog/ultimate-guide-to-file-handling-in-client-side-javascript"
 							excerpt="Learn how to read and manipulate files in the browser"
 						/>
 					</PostsList>

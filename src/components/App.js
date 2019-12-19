@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components/macro"
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom"
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import { useMeta, useTitle } from "react-meta-elements"
 import { hideVisually } from "polished"
 
@@ -29,7 +29,7 @@ const App = () => (
 						<Route path="/" exact component={EditorPage} />
 						<Route path="/downloads" exact component={ExporterPage} />
 						<Route path="/blog" exact component={Blog} />
-						<Route path="/posts/:slug" component={PostPage} />
+						<Route path="/blog/:slug" component={PostPage} />
 						<Route path="*" component={NotFoundPage} />
 					</Switch>
 				</ExporterProvider>
@@ -58,8 +58,6 @@ const EditorPage = () => {
 					<SettingsEditor />
 				</GeneratorContainer>
 				<GenerateButton />
-
-				<Link to="/blog">BLOG</Link>
 
 				<FluidContainer>
 					<H2>How to use</H2>
