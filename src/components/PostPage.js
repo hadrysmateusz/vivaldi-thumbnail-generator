@@ -65,7 +65,7 @@ const OuterContainer = styled.div`
 const Header = () => {
 	return (
 		<HeaderContainer>
-			<img src={logo} />
+			<img src={logo} alt="" />
 		</HeaderContainer>
 	)
 }

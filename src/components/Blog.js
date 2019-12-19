@@ -11,7 +11,7 @@ const Blog = () => {
 	return (
 		<>
 			<HeaderContainer>
-				<img src={logo} />
+				<img src={logo} alt="" />
 			</HeaderContainer>
 			<FluidContainer>
 				<Container>
