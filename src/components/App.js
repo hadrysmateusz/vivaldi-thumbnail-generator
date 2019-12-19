@@ -14,8 +14,10 @@ import * as links from "../links"
 import SettingsProvider from "./SettingsProvider"
 import FilesProvider from "./FilesProvider"
 import { ExporterProvider } from "./Exporter"
-import { ReactComponent as ArrowIcon } from "../assets/arrow.svg"
-import { H1, H2, H4, TextBlock, List } from "./CopywritingElements"
+import { H2, H4, TextBlock, List } from "./CopywritingElements"
+import Blog from "./Blog"
+import PostPage from "./PostPage"
+import NotFoundPage from "./pages/NotFound"
 
 const App = () => (
 	<Router>
@@ -26,7 +28,8 @@ const App = () => (
 					<Switch>
 						<Route path="/" exact component={EditorPage} />
 						<Route path="/downloads" exact component={ExporterPage} />
-						<Route path="/blog" component={BlogPage} />
+						<Route path="/blog" exact component={Blog} />
+						<Route path="/posts/:slug" component={PostPage} />
 						<Route path="*" component={NotFoundPage} />
 					</Switch>
 				</ExporterProvider>
@@ -55,24 +58,28 @@ const EditorPage = () => {
 					<SettingsEditor />
 				</GeneratorContainer>
 				<GenerateButton />
-				<H2>How to use</H2>
-				<TextBlock>
-					<p>
-						Upload one or more images to represent the site you need a thumbnail for.
-						Adjust settings like background color and icon size, by clicking on the
-						settings icon in the top-right corner.
-					</p>
-					<p>
-						When you're ready, click <b>Generate</b>. On the downloads page, you can
-						download individual thumbnails or click <b>Download All</b> to create and
-						download a zip archive of all your thumbnails.
-					</p>
-					<p>
-						Any questions, or suggestions? Feel free to contact me at{" "}
-						<a href="mailto:hadrys.mateusz86@gmail.com">hadrys.mateusz86@gmail.com</a>
-					</p>
-				</TextBlock>
+
+				<Link to="/blog">BLOG</Link>
+
 				<FluidContainer>
+					<H2>How to use</H2>
+					<TextBlock>
+						<p>
+							Upload one or more images to represent the site you need a thumbnail for.
+							Adjust settings like background color and icon size, by clicking on the
+							settings icon in the top-right corner.
+						</p>
+						<p>
+							When you're ready, click <b>Generate</b>. On the downloads page, you can
+							download individual thumbnails or click <b>Download All</b> to create and
+							download a zip archive of all your thumbnails.
+						</p>
+						<p>
+							Any questions, or suggestions? Feel free to contact me at{" "}
+							<a href="mailto:hadrys.mateusz86@gmail.com">hadrys.mateusz86@gmail.com</a>
+						</p>
+					</TextBlock>
+
 					<H2>Upcoming features</H2>
 					<TextBlock>
 						<List>
@@ -86,10 +93,13 @@ const EditorPage = () => {
 							</li>
 						</List>
 					</TextBlock>
+
 					<H4>
 						<StyledLink href={links.twitter}>Follow me on twitter</StyledLink> to stay
 						updated!
 					</H4>
+
+					<PHWidget />
 					{/* <H2>From the blog</H2>
 					<TextBlock>
 						<Link to="/blog">Go to the blog</Link>
@@ -115,15 +125,11 @@ const ExporterPage = () => {
 	)
 }
 
-const BlogPage = () => {
-	useTitle("Blog | Vivaldi Thumbnail Generator")
-	// TODO: add description meta
-	return (
-		<FluidContainer>
-			<Headline>Blog Coming Soon</Headline>
-		</FluidContainer>
-	)
-}
+// const BlogPage = () => {
+// 	useTitle("Blog | Vivaldi Thumbnail Generator")
+// 	// TODO: add description meta
+// 	return <Blog />
+// }
 
 const TopCopy = () => (
 	<FluidContainer>
@@ -150,31 +156,23 @@ const TopCopy = () => (
 	</FluidContainer>
 )
 
-const NotFoundPage = () => {
-	useTitle("404 Page Not Found | Vivaldi Thumbnail Generator")
-
+const PHWidget = () => {
 	return (
-		<FluidContainer>
-			<H1>Page Not Found</H1>
-			<Link to="/">
-				<TextBlock
-					style={{ display: "flex", alignItems: "center", justifyContent: "center" }}
-				>
-					<BackArrow /> Go back to the generator
-				</TextBlock>
-			</Link>
-		</FluidContainer>
+		<a
+			href="https://www.producthunt.com/posts/vivaldi-thumbnail-generator?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-vivaldi-thumbnail-generator"
+			target="_blank"
+			style={{ display: "flex", justifyContent: "center", marginTop: "60px" }}
+		>
+			<img
+				src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=178529&theme=light"
+				alt="Vivaldi Thumbnail Generator - Create Custom Thumbnails for Vivaldi Browser's Speed Dials | Product Hunt Embed"
+				style={{ width: "250px", height: "54px" }}
+				width="250px"
+				height="54px"
+			/>
+		</a>
 	)
 }
-
-const BackArrow = styled(ArrowIcon)`
-	transform: rotate(180deg);
-	color: #484848;
-	width: 16px;
-	height: 16px;
-	display: inline-block;
-	margin-right: 6px;
-`
 
 const GeneratorContainer = styled.div`
 	padding: 0 20px;
