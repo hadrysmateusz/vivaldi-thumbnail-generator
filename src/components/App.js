@@ -161,6 +161,7 @@ const PHWidget = () => {
 		<a
 			href="https://www.producthunt.com/posts/vivaldi-thumbnail-generator?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-vivaldi-thumbnail-generator"
 			target="_blank"
+			rel="noopener noreferrer"
 			style={{ display: "flex", justifyContent: "center", marginTop: "60px" }}
 		>
 			<img
