@@ -15,7 +15,7 @@ import SettingsProvider from "./SettingsProvider"
 import FilesProvider from "./FilesProvider"
 import { ExporterProvider } from "./Exporter"
 import { ReactComponent as ArrowIcon } from "../assets/arrow.svg"
-import { H1, TextBlock } from "./CopywritingElements"
+import { H1, H2, TextBlock } from "./CopywritingElements"
 
 const App = () => (
 	<Router>
@@ -55,6 +55,23 @@ const EditorPage = () => {
 					<SettingsEditor />
 				</GeneratorContainer>
 				<GenerateButton />
+				<H2>How to use</H2>
+				<TextBlock>
+					<p>
+						Upload one or more images to represent the site you need a thumbnail for.
+						Adjust settings like background color and icon size, by clicking on the
+						settings icon in the top-right corner.
+					</p>
+					<p>
+						When you're ready, click <b>Generate</b>. On the downloads page, you can
+						download individual thumbnails or click <b>Download All</b> to create and
+						download a zip archive of all your thumbnails.
+					</p>
+					<p>
+						Any questions, or suggestions? Feel free to contact me at{" "}
+						<a href="mailto:hadrys.mateusz86@gmail.com">hadrys.mateusz86@gmail.com</a>
+					</p>
+				</TextBlock>
 				{/* <FluidContainer>
 					<H2>Upcoming features</H2>
 					<TextBlock>
