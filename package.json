@@ -19,7 +19,6 @@
 		"react-meta-elements": "^1.0.0",
 		"react-router-dom": "^5.1.2",
 		"react-scripts": "3.3.0",
-		"react-snap": "^1.23.0",
 		"styled-components": "^5.0.0-rc.2"
 	},
 	"scripts": {
@@ -42,11 +41,6 @@
 			"last 1 chrome version",
 			"last 1 firefox version",
 			"last 1 safari version"
-		]
-	},
-	"reactSnap": {
-		"include": [
-			"/blog"
 		]
 	}
 }
