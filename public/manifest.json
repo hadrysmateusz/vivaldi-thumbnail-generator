@@ -1,6 +1,6 @@
 {
-	"name": "Vivaldi Thumbnail Generator",
-	"short_name": "Vivaldi Thumbnail Generator",
+	"name": "VTG",
+	"short_name": "VTG",
 	"icons": [
 		{
 			"src": "/android-chrome-192x192.png",
