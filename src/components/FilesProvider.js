@@ -35,7 +35,8 @@ const FilesProvider = ({ children }) => {
 					// finish the job for this image
 					dispatch({ type: "UPLOAD_PROGRESS", payload: icon })
 				} catch (error) {
-					dispatch({ type: "UPLOAD_FAILURE", error })
+					// TODO: custom handling for an error on a single file
+					throw error // before the custom handling is done, rethrow the error
 				}
 			})
 		} catch (error) {
@@ -45,51 +46,44 @@ const FilesProvider = ({ children }) => {
 
 	const addFromBookmarkUrl = async (url) => {
 		// !!! using clearbit api requires ATTRIBUTION
+
+		// start upload process
+		dispatch({ type: "UPLOAD_INIT", payload: 1 })
 		try {
-			// start upload process
-			dispatch({ type: "UPLOAD_INIT", payload: 1 })
-			// fetch the image from clearbit api
-			try {
-				let image
-				const hostname = getHostname(url)
-				const clearbitApiUrl = `//logo.clearbit.com/${hostname}`
-				// load and process the image
-				image = await loadImage(clearbitApiUrl)
-				image = await trimImageWhitespace(image)
-				// create icon object
-				const icon = createIcon(image, hostname)
-				// finish the job for this image
-				dispatch({ type: "UPLOAD_PROGRESS", payload: icon })
-			} catch (error) {
-				dispatch({ type: "UPLOAD_FAILURE", error })
-			}
+			let image
+			const hostname = getHostname(url)
+			// construct a clearbit api url by extracting the domain name and concatenating it to the api address
+			const clearbitApiUrl = `//logo.clearbit.com/${hostname}`
+			// load and process the image
+			image = await loadImage(clearbitApiUrl)
+			image = await trimImageWhitespace(image)
+			// create icon object
+			const icon = createIcon(image, hostname)
+			// finish the job for this image
+			dispatch({ type: "UPLOAD_PROGRESS", payload: icon })
 		} catch (error) {
 			dispatch({ type: "UPLOAD_FAILURE", error })
 		}
 	}
 
 	const addFromImageUrl = async (url) => {
-		console.log("fetching")
-		const response = await fetch("/.netlify/functions/fetchImage")
-		console.log(response)
+		// console.log("fetching")
+		// const response = await fetch("/.netlify/functions/fetchImage")
+		// console.log(response)
 
+		// start upload process
+		dispatch({ type: "UPLOAD_INIT", payload: 1 })
+		// fetch the image from clearbit api
 		try {
-			// start upload process
-			dispatch({ type: "UPLOAD_INIT", payload: 1 })
-			// fetch the image from clearbit api
-			try {
-				let image
-				// load and process the image
-				image = await loadImage(url)
-				image = await trimImageWhitespace(image)
-				// create icon object
-				var name = url.substring(url.lastIndexOf("/") + 1)
-				const icon = createIcon(image, name)
-				// finish the job for this image
-				dispatch({ type: "UPLOAD_PROGRESS", payload: icon })
-			} catch (error) {
-				dispatch({ type: "UPLOAD_FAILURE", error })
-			}
+			let image
+			// load and process the image
+			image = await loadImage(url)
+			image = await trimImageWhitespace(image)
+			// create icon object
+			var name = url.substring(url.lastIndexOf("/") + 1)
+			const icon = createIcon(image, name)
+			// finish the job for this image
+			dispatch({ type: "UPLOAD_PROGRESS", payload: icon })
 		} catch (error) {
 			dispatch({ type: "UPLOAD_FAILURE", error })
 		}
