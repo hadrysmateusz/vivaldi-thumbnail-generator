@@ -44,6 +44,7 @@ const FilesProvider = ({ children }) => {
 	}
 
 	const addFromBookmarkUrl = async (url) => {
+		// !!! using clearbit api requires ATTRIBUTION
 		try {
 			// start upload process
 			dispatch({ type: "UPLOAD_INIT", payload: 1 })
