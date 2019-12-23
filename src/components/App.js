@@ -79,15 +79,17 @@ const EditorPage = () => {
 
 					<H2>Upcoming features</H2>
 					<TextBlock>
+						This is a very new project, and I have a ton of features planned to release
+						very soon. Follow me to be notified about future updates. Here are just a few
+						of the planned features:
+					</TextBlock>
+					<TextBlock>
 						<List>
 							<li>Per image settings overrides</li>
 							<li>Manually position the icon</li>
 							<li>Icon-based color palettes</li>
 							<li>Importing icons from URL</li>
 							<li>Saving your preferences</li>
-							<li>
-								<b>and more</b>
-							</li>
 						</List>
 					</TextBlock>
 
