@@ -40,7 +40,7 @@ const App = () => (
 
 const EditorPage = () => {
 	useTitle(
-		"Create Beautiful Thumbnails For Vivaldi's Speed Dials | Vivaldi Thumbnail Generator"
+		"Custom Thumbnails Generator for Vivaldi's Speed Dials | Vivaldi Thumbnail Generator"
 	)
 	useMeta({
 		name: "description",
