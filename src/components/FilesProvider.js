@@ -69,6 +69,10 @@ const FilesProvider = ({ children }) => {
 	}
 
 	const addFromImageUrl = async (url) => {
+		console.log("fetching")
+		const response = await fetch("/.netlify/functions/fetchImage")
+		console.log(response)
+
 		try {
 			// start upload process
 			dispatch({ type: "UPLOAD_INIT", payload: 1 })
