@@ -14,7 +14,7 @@ const loadImage = (src, revokeUrl = false) => {
 			}
 			resolve(e.target)
 		}
-		img.onerror = () => reject("failed to load image")
+		img.onerror = () => reject("Failed to load image")
 		img.src = src
 	})
 }
