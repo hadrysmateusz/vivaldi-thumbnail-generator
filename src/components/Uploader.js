@@ -11,7 +11,7 @@ import Spacer from "./Spacer"
 // bookmark url works, but produces very low quality images
 const availableMethods = {
 	fileUpload: true,
-	imageUrl: true,
+	imageUrl: false,
 	pasteImage: false,
 	bookmarkUrl: true
 }
