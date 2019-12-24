@@ -62,9 +62,17 @@ const FilesProvider = ({ children }) => {
 		dispatch({ type: "UPLOAD_INIT", payload: 1 })
 		try {
 			let image
-			const hostname = getHostname(url)
-			// construct a clearbit api url by extracting the domain name and concatenating it to the api address
-			const clearbitApiUrl = `//logo.clearbit.com/${hostname}`
+			// clearbit api expects the domain name so we extract it
+			let hostname = getHostname(url)
+
+			/* from my trial-and-error testing it seems that 800 is the max size for the clearbit api,
+			it returns an image with the size closest to the one requested */
+			const size = 800
+			// construct a clearbit api url
+			const clearbitApiUrl = `https://logo.clearbit.com/${hostname}?size=${size}`
+			// TODO: if hostname uses the "www" subdomain, remove it as it causes problems with uplead
+			// const upleadApiUrl = `https://logo.uplead.com/${hostname}`
+			// TODO: add more fallbacks and better error handling
 			// load and process the image
 			image = await loadImage(clearbitApiUrl)
 			image = await trimImageWhitespace(image)

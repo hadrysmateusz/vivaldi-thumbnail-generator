@@ -39,11 +39,11 @@ const Uploader = () => {
 	}
 
 	const onBookmarkUrl = async () => {
-		const url = prompt("Paste bookmark URL here")
+		let url = prompt("Paste bookmark URL here")
 		if (url) {
 			await addFromBookmarkUrl(url)
+			closeModal()
 		}
-		closeModal()
 	}
 
 	const onImageUrl = async () => {
