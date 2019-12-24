@@ -52,19 +52,19 @@ const UploaderModal = ({
 							height={iconSize}
 							title="Get Image From Bookmark URL"
 						/>
-						<ButtonLabel>From bookmark</ButtonLabel>
+						<ButtonLabel>Bookmark URL (beta)</ButtonLabel>
 					</ModalButton>
 				)}
 				{availableMethods.pasteImage && (
 					<ModalButton onClick={onPasteImage}>
 						<PasteIcon width={iconSize} height={iconSize} title="Paste Image" />
-						<ButtonLabel>Paste Image</ButtonLabel>
+						<ButtonLabel>Paste Image (beta)</ButtonLabel>
 					</ModalButton>
 				)}
 				{availableMethods.imageUrl && (
 					<ModalButton onClick={onImageUrl}>
 						<PasteIcon width={iconSize} height={iconSize} title="Get Image From URL" />
-						<ButtonLabel>Image URL</ButtonLabel>
+						<ButtonLabel>Image URL (beta)</ButtonLabel>
 					</ModalButton>
 				)}
 			</ModalBox>
