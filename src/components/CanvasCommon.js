@@ -114,6 +114,16 @@ export const trimImageWhitespace = (image) => {
 	const trimWidth = bounds.right - bounds.left
 	const trimHeight = bounds.bottom - bounds.top
 
+	// Get intrinsic dimensions
+	const { naturalWidth, naturalHeight } = image
+
+	/* if the trimmed dimensions are equal to intrinsic dimensions
+	then there is no need to trim and we return the original image */
+	if (trimWidth === naturalWidth && trimHeight === naturalHeight) {
+		console.info("Image is already trimmed")
+		return image
+	}
+
 	// Create canvas to the dimensions of the trimmed image
 	const [canvas, ctx] = createVirtualCanvas(trimWidth, trimHeight)
 
