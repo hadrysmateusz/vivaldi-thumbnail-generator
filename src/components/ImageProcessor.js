@@ -18,18 +18,17 @@ import { ReactComponent as UploadIcon } from "../assets/file-upload.svg"
 import transparency from "../assets/transparency.png"
 
 function ImageProcessor() {
-	const [selectedIndex, setSelectedIndex] = useState(0)
 	const {
 		isLoading,
-		icons,
 		hasIcons,
 		numIcons,
 		isDrawerOpen,
 		progressDone,
-		progressTotal
+		progressTotal,
+		selectedIcon,
+		setSelectedIcon
 	} = useFileContext()
 	const isEmpty = !hasIcons
-	const selectedIcon = selectedIndex >= icons.length ? icons[0] : icons[selectedIndex]
 
 	return (
 		<RatioContainer>
@@ -55,10 +54,7 @@ function ImageProcessor() {
 						<IconCanvas icon={selectedIcon} />
 						{/* nav-buttons */}
 						{numIcons > 1 && (
-							<NavigationButtons
-								numIcons={numIcons}
-								setSelectedIndex={setSelectedIndex}
-							/>
+							<NavigationButtons numIcons={numIcons} setSelectedIndex={setSelectedIcon} />
 						)}
 
 						{/* settings button */}

@@ -14,6 +14,17 @@ export const useFileContext = () => useContext(FileContext)
 
 const createIcon = (image, name) => ({ image, name })
 
+const defaultState = {
+	selectedIndex: 0,
+	progressTotal: 0,
+	progressDone: 0,
+	isLoading: false,
+	isError: false,
+	isCanceled: false,
+	isDrawerOpen: false,
+	icons: []
+}
+
 const FilesProvider = ({ children }) => {
 	const [state, dispatch] = useReducer(uploaderReducer, defaultState)
 
@@ -105,8 +116,14 @@ const FilesProvider = ({ children }) => {
 		dispatch({ type: "FILES_REMOVE_ONE", payload: icon })
 	}
 
+	const setSelectedIcon = (index) => {
+		dispatch({ type: "SET_SELECTED_ICON", payload: index })
+	}
+
+	const { icons, selectedIndex } = state
 	const numIcons = state.icons ? state.icons.length : 0
 	const hasIcons = numIcons > 0
+	const selectedIcon = selectedIndex >= numIcons ? icons[0] : icons[selectedIndex]
 
 	useEffect(() => {
 		if (!hasIcons) closeFileDrawer()
@@ -128,20 +145,12 @@ const FilesProvider = ({ children }) => {
 		removeIcon,
 		openFileDrawer,
 		closeFileDrawer,
+		selectedIcon,
+		setSelectedIcon,
 		...state
 	}
 
 	return <FileContext.Provider value={contextValue}>{children}</FileContext.Provider>
-}
-
-const defaultState = {
-	progressTotal: 0,
-	progressDone: 0,
-	isLoading: false,
-	isError: false,
-	isCanceled: false,
-	isDrawerOpen: false,
-	icons: []
 }
 
 const uploaderReducer = (state, action) => {
@@ -160,7 +169,8 @@ const uploaderReducer = (state, action) => {
 				...state,
 				isLoading: false,
 				isError: false,
-				isCanceled: false
+				isCanceled: false,
+				selectedIndex: state.icons.length - 1
 			}
 		case "UPLOAD_FAILURE":
 			console.error(action.error)
@@ -202,6 +212,11 @@ const uploaderReducer = (state, action) => {
 			return {
 				...state,
 				isDrawerOpen: false
+			}
+		case "SET_SELECTED_ICON":
+			return {
+				...state,
+				selectedIndex: action.payload
 			}
 		default:
 			throw new Error(`Unknown action type: ${action.type}`)
