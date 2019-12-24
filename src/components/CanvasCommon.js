@@ -94,10 +94,9 @@ export const calculateDimensions = (image, scale, canvas) => {
 		}
 
 		return { width: round(width), height: round(height) }
-	} catch (err) {
-		console.error("failed to calculate image dimensions: ", err)
-		// if the calculations fail for any reason, just use the image's original dimensions
-		return { width: image.naturalWidth, height: image.naturalHeight }
+	} catch (error) {
+		console.error(error)
+		throw new Error("Failed to calculate image dimensions")
 	}
 }
 
@@ -107,6 +106,8 @@ export const calculateDimensions = (image, scale, canvas) => {
  * @returns Promise resolving to the trimmed Image
  */
 export const trimImageWhitespace = (image) => {
+	if (!image) throw new Error("No image")
+
 	// Get bounds of the image (without white-space)
 	const bounds = getImageBounds(image)
 
