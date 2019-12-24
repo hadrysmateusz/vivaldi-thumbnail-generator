@@ -48,10 +48,17 @@ const Uploader = () => {
 
 	const onImageUrl = async () => {
 		const url = prompt("Paste image URL here")
+
+		try {
+			console.log("fetching")
+			const response = await fetch(`/.netlify/functions/fetchImage?url=${url}`)
+			console.log(response)
+		} catch (error) {}
+
 		if (url) {
 			await addFromImageUrl(url)
+			closeModal()
 		}
-		closeModal()
 	}
 
 	const onFileUpload = async () => {
