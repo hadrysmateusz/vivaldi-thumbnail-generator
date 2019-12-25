@@ -5,7 +5,7 @@ import { useFileContext } from "./FilesProvider"
 const NavigationButtons = () => {
 	const { numIcons, nextIcon, prevIcon } = useFileContext()
 
-	return numIcons > 0 ? (
+	return numIcons > 1 ? (
 		<>
 			<ArrowButton direction="right" onClick={nextIcon} />
 			<ArrowButton direction="left" onClick={prevIcon} />
