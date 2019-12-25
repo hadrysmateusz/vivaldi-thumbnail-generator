@@ -1,27 +1,16 @@
 import React from "react"
 import ArrowButton from "./ArrowButton"
+import { useFileContext } from "./FilesProvider"
 
-function NavigationButtons({ numIcons, setSelectedIndex }) {
-	const next = () => {
-		setSelectedIndex((prevState) => {
-			const newIndex = prevState + 1
-			return newIndex % numIcons
-		})
-	}
+const NavigationButtons = () => {
+	const { numIcons, nextIcon, prevIcon } = useFileContext()
 
-	const prev = () => {
-		setSelectedIndex((prevState) => {
-			const newIndex = prevState - 1
-			return newIndex >= 0 ? newIndex : numIcons - 1
-		})
-	}
-
-	return (
+	return numIcons > 0 ? (
 		<>
-			<ArrowButton direction="right" onClick={next} />
-			<ArrowButton direction="left" onClick={prev} />
+			<ArrowButton direction="right" onClick={nextIcon} />
+			<ArrowButton direction="left" onClick={prevIcon} />
 		</>
-	)
+	) : null
 }
 
 export default NavigationButtons

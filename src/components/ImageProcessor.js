@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import styled from "styled-components/macro"
 
 import NavigationButtons from "./NavigationButtons"
@@ -21,12 +21,10 @@ function ImageProcessor() {
 	const {
 		isLoading,
 		hasIcons,
-		numIcons,
 		isDrawerOpen,
 		progressDone,
 		progressTotal,
-		selectedIcon,
-		setSelectedIcon
+		selectedIcon
 	} = useFileContext()
 	const isEmpty = !hasIcons
 
@@ -53,9 +51,7 @@ function ImageProcessor() {
 						<BackgroundCanvas />
 						<IconCanvas icon={selectedIcon} />
 						{/* nav-buttons */}
-						{numIcons > 1 && (
-							<NavigationButtons numIcons={numIcons} setSelectedIndex={setSelectedIcon} />
-						)}
+						{<NavigationButtons />}
 
 						{/* settings button */}
 						{hasIcons && (

@@ -108,25 +108,12 @@ const FilesProvider = ({ children }) => {
 		}
 	}
 
-	const clear = () => {
-		dispatch({ type: "FILES_REMOVE_ALL" })
-	}
-
-	const openFileDrawer = () => {
-		dispatch({ type: "DRAWER_OPEN" })
-	}
-
-	const closeFileDrawer = useCallback(() => {
-		dispatch({ type: "DRAWER_CLOSE" })
-	}, [])
-
-	const removeIcon = (icon) => {
-		dispatch({ type: "FILES_REMOVE_ONE", payload: icon })
-	}
-
-	const setSelectedIcon = (index) => {
-		dispatch({ type: "SET_SELECTED_ICON", payload: index })
-	}
+	const clear = () => dispatch({ type: "FILES_REMOVE_ALL" })
+	const openFileDrawer = () => dispatch({ type: "DRAWER_OPEN" })
+	const closeFileDrawer = useCallback(() => dispatch({ type: "DRAWER_CLOSE" }), [])
+	const removeIcon = (icon) => dispatch({ type: "FILES_REMOVE_ONE", payload: icon })
+	const prevIcon = () => dispatch({ type: "SELECT_PREV_ICON" })
+	const nextIcon = () => dispatch({ type: "SELECT_NEXT_ICON" })
 
 	const { icons, selectedIndex } = state
 	const numIcons = state.icons ? state.icons.length : 0
@@ -154,7 +141,8 @@ const FilesProvider = ({ children }) => {
 		openFileDrawer,
 		closeFileDrawer,
 		selectedIcon,
-		setSelectedIcon,
+		prevIcon,
+		nextIcon,
 		...state
 	}
 
@@ -162,6 +150,10 @@ const FilesProvider = ({ children }) => {
 }
 
 const uploaderReducer = (state, action) => {
+	const { selectedIndex, icons, progressDone } = state
+
+	const numIcons = icons ? icons.length : 0
+
 	switch (action.type) {
 		case "UPLOAD_INIT":
 			return {
@@ -178,7 +170,7 @@ const uploaderReducer = (state, action) => {
 				isLoading: false,
 				isError: false,
 				isCanceled: false,
-				selectedIndex: state.icons.length - 1
+				selectedIndex: icons.length - 1
 			}
 		case "UPLOAD_FAILURE":
 			console.error(action.error)
@@ -198,13 +190,13 @@ const uploaderReducer = (state, action) => {
 		case "UPLOAD_PROGRESS":
 			return {
 				...state,
-				progressDone: state.progressDone + 1,
-				icons: [...state.icons, action.payload]
+				progressDone: progressDone + 1,
+				icons: [...icons, action.payload]
 			}
 		case "FILES_REMOVE_ONE":
 			return {
 				...state,
-				icons: state.icons.filter((icon) => icon.name !== action.payload.name)
+				icons: icons.filter((icon) => icon.name !== action.payload.name)
 			}
 		case "FILES_REMOVE_ALL":
 			return {
@@ -221,10 +213,15 @@ const uploaderReducer = (state, action) => {
 				...state,
 				isDrawerOpen: false
 			}
-		case "SET_SELECTED_ICON":
+		case "SELECT_PREV_ICON":
 			return {
 				...state,
-				selectedIndex: action.payload
+				selectedIndex: selectedIndex - 1 >= 0 ? selectedIndex - 1 : numIcons - 1
+			}
+		case "SELECT_NEXT_ICON":
+			return {
+				...state,
+				selectedIndex: (selectedIndex + 1) % numIcons
 			}
 		default:
 			throw new Error(`Unknown action type: ${action.type}`)
