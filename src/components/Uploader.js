@@ -97,7 +97,8 @@ const Uploader = () => {
 	const { getRootProps, getInputProps, open, isDragActive } = useDropzone({
 		onDrop,
 		accept: "image/*",
-		noClick: true
+		noClick: true,
+		preventDropOnDocument: true
 	})
 
 	return (
