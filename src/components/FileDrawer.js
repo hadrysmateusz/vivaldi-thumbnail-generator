@@ -65,7 +65,7 @@ const InnerContainer = styled.div`
 
 const Container = styled.div`
 	${cover()}
-	z-index: 600;
+	z-index: 700;
 	background: white;
 	height: 100%;
 	position: relative;

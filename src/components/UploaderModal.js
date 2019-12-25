@@ -76,13 +76,12 @@ const ModalContainer = styled.div`
 	${cover()}
 	${center}
 	background: rgba(0, 0, 0, 0.36);
-	z-index: 300;
+	z-index: 600;
 `
 
 const ModalBox = styled.div`
 	background: white;
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-	z-index: 310;
 	position: relative;
 	border-radius: 5px;
 	height: 140px;

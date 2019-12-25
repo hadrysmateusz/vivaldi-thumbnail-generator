@@ -25,6 +25,7 @@ const Uploader = () => {
 	const {
 		isLoading,
 		openFileDrawer,
+		isDrawerOpen,
 		hasIcons,
 		numIcons,
 		addFromFiles,
@@ -100,50 +101,56 @@ const Uploader = () => {
 	})
 
 	return (
-		<DropzoneContainer {...getRootProps()}>
+		<UploaderContainer {...getRootProps()}>
 			{/* input */}
 			<input {...getInputProps()} />
 
-			{/* buttons */}
-			<ButtonsContainer>
-				<Button
-					onClick={onAdd}
-					variant={hasIcons ? "normal" : "primary"}
-					disabled={isLoading}
-				>
-					{isLoading ? "Loading" : "Add Icons"}
-				</Button>
-				<Spacer />
-				{hasIcons && <Button onClick={openFileDrawer}>Manage Icons ({numIcons}) </Button>}
-			</ButtonsContainer>
+			{!isDrawerOpen && (
+				<>
+					{/* buttons */}
+					<ButtonsContainer>
+						<Button
+							onClick={onAdd}
+							variant={hasIcons ? "normal" : "primary"}
+							disabled={isLoading}
+						>
+							{isLoading ? "Loading" : "Add Icons"}
+						</Button>
+						<Spacer />
+						{hasIcons && (
+							<Button onClick={openFileDrawer}>Manage Icons ({numIcons}) </Button>
+						)}
+					</ButtonsContainer>
+
+					{/* icon-add modal */}
+					{isModalOpen && (
+						<UploaderModal
+							availableMethods={availableMethods}
+							onFileUpload={onFileUpload}
+							onBookmarkUrl={onBookmarkUrl}
+							onImageUrl={onImageUrl}
+							onPasteImage={onPasteImage}
+							onRequestClose={closeModal}
+						/>
+					)}
+				</>
+			)}
 
 			{/* drag overlay */}
-			{isDragActive && <Overlay>Drop here to add</Overlay>}
-
-			{/* icon-add modal */}
-			{isModalOpen && (
-				<UploaderModal
-					availableMethods={availableMethods}
-					onFileUpload={onFileUpload}
-					onBookmarkUrl={onBookmarkUrl}
-					onImageUrl={onImageUrl}
-					onPasteImage={onPasteImage}
-					onRequestClose={closeModal}
-				/>
-			)}
-		</DropzoneContainer>
+			{isDragActive && <DropOverlay>Drop here to add</DropOverlay>}
+		</UploaderContainer>
 	)
 }
 
-const DropzoneContainer = styled.div`
+const UploaderContainer = styled.div`
 	${cover()}
 	z-index: 400;
 `
 
-const Overlay = styled.div`
+const DropOverlay = styled.div`
 	${cover()}
 	${center}
-	z-index: 410;
+	z-index: 800;
 	background: rgba(0, 0, 0, 0.36);
 	color: white;
 	font-size: 1.6em;
