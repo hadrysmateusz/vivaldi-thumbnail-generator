@@ -11,30 +11,25 @@ import FluidContainer from "./FluidContainer"
 import { ReactComponent as TwitterIcon } from "../assets/twitter.svg"
 import GlobalStyle from "../globalStyle"
 import * as links from "../links"
-import SettingsProvider from "./SettingsProvider"
-import FilesProvider from "./FilesProvider"
-import { ExporterProvider } from "./Exporter"
+
 import { H2, H4, TextBlock, List } from "./CopywritingElements"
 import Blog from "./Blog"
 import PostPage from "./PostPage"
 import NotFoundPage from "./pages/NotFound"
+import { EditorProvider } from "./Editor"
 
 const App = () => (
 	<Router>
 		<GlobalStyle />
-		<SettingsProvider>
-			<FilesProvider>
-				<ExporterProvider>
-					<Switch>
-						<Route path="/" exact component={EditorPage} />
-						<Route path="/downloads" exact component={ExporterPage} />
-						<Route path="/blog" exact component={Blog} />
-						<Route path="/blog/:slug" component={PostPage} />
-						<Route path="*" component={NotFoundPage} />
-					</Switch>
-				</ExporterProvider>
-			</FilesProvider>
-		</SettingsProvider>
+		<EditorProvider>
+			<Switch>
+				<Route path="/" exact component={EditorPage} />
+				<Route path="/downloads" exact component={ExporterPage} />
+				<Route path="/blog" exact component={Blog} />
+				<Route path="/blog/:slug" component={PostPage} />
+				<Route path="*" component={NotFoundPage} />
+			</Switch>
+		</EditorProvider>
 	</Router>
 )
 
