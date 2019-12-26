@@ -26,8 +26,13 @@ const Uploader = () => {
 	const { isLoading } = useUploader()
 	const [isModalOpen, setIsModalOpen] = useState()
 
-	const onPasteImage = () => {
-		// PLACEHOLDER
+	const onFileUpload = async () => open() // modal gets closed in onDrop after selecting file
+
+	const onDrop = async (acceptedFiles) => {
+		// if no new files are uploaded, exit silently
+		if (!acceptedFiles || acceptedFiles.length === 0) return
+		// transform the files and add to file manager state
+		await add.fromFiles(acceptedFiles)
 		closeModal()
 	}
 
@@ -56,18 +61,7 @@ const Uploader = () => {
 		}
 	}
 
-	const onFileUpload = async () => {
-		open()
-		// modal gets closed in onDrop after selecting file
-	}
-
-	const onDrop = async (acceptedFiles) => {
-		// if no new files are uploaded, exit silently
-		if (!acceptedFiles || acceptedFiles.length === 0) return
-		// transform the files and add to file manager state
-		await add.fromFiles(acceptedFiles)
-		closeModal()
-	}
+	const onPasteImage = () => closeModal() // PLACEHOLDER
 
 	const onAdd = () => {
 		// if there are multiple methods available, open modal, otherwise open file
@@ -78,13 +72,8 @@ const Uploader = () => {
 		}
 	}
 
-	const closeModal = () => {
-		setIsModalOpen(false)
-	}
-
-	const openModal = () => {
-		setIsModalOpen(true)
-	}
+	const closeModal = () => setIsModalOpen(false)
+	const openModal = () => setIsModalOpen(true)
 
 	const { getRootProps, getInputProps, open, isDragActive } = useDropzone({
 		onDrop,
@@ -110,7 +99,11 @@ const Uploader = () => {
 							{isLoading ? "Loading" : "Add Icons"}
 						</Button>
 						<Spacer />
-						{!isEmpty && <Button onClick={manager.open}>Manage Icons ({count}) </Button>}
+						{!isEmpty && (
+							<Button onClick={manager.open} disabled={isLoading}>
+								Manage Icons ({count})
+							</Button>
+						)}
 					</ButtonsContainer>
 
 					{/* icon-add modal */}
