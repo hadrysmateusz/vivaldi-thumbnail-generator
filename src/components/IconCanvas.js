@@ -1,16 +1,18 @@
 import React, { useEffect, useRef } from "react"
-import { useSettingsContext } from "./SettingsProvider"
 import {
 	useSizeCanvasToCssDimensions,
 	StyledCanvas,
 	clearCanvas,
 	drawIcon
 } from "./CanvasCommon"
+import { useSettings, useThumbnails } from "./Generator"
 
 const IconCanvas = ({ icon }) => {
-	const { scale } = useSettingsContext()
+	const { scale } = useSettings()
 	const canvasRef = useRef()
 	useSizeCanvasToCssDimensions(canvasRef)
+
+	const { selected } = useThumbnails()
 
 	useEffect(() => {
 		// clear canvas to remove previous image
@@ -18,8 +20,8 @@ const IconCanvas = ({ icon }) => {
 		// if there are no images yet, or they were all removed, exit to prevent errors
 		if (!icon) return
 		// draw the current image with the correct dimensions
-		drawIcon(canvasRef.current, icon.image, scale)
-	}, [icon, scale])
+		drawIcon(canvasRef.current, selected.image, scale)
+	}, [icon, scale, selected.image])
 
 	return <StyledCanvas ref={canvasRef} />
 }

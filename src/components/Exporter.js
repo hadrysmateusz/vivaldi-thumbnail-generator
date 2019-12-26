@@ -3,7 +3,7 @@ import styled from "styled-components/macro"
 import { Link, Redirect, useHistory } from "react-router-dom"
 import { cover } from "polished"
 
-import { useExporter } from "./Exporter"
+import { useExporter } from "./Generator"
 import Button from "./Button"
 import Spacer from "./Spacer"
 import FluidContainer from "./FluidContainer"

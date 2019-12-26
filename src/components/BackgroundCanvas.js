@@ -1,14 +1,14 @@
 import React, { useEffect, useRef } from "react"
-import { useSettingsContext } from "./SettingsProvider"
 import {
 	useSizeCanvasToCssDimensions,
 	StyledCanvas,
 	drawBackground,
 	clearCanvas
 } from "./CanvasCommon"
+import { useSettings } from "./Generator"
 
 const BackgroundCanvas = () => {
-	const { bgColor } = useSettingsContext()
+	const { bgColor } = useSettings()
 	const canvasRef = useRef()
 	useSizeCanvasToCssDimensions(canvasRef)
 

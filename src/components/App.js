@@ -6,7 +6,7 @@ import { hideVisually } from "polished"
 
 import SettingsEditor from "./SettingsEditor"
 import ImageProcessor from "./ImageProcessor"
-import { GenerateButton, Exporter } from "./Exporter"
+import Exporter, { GenerateButton } from "./Exporter"
 import FluidContainer from "./FluidContainer"
 import { ReactComponent as TwitterIcon } from "../assets/twitter.svg"
 import GlobalStyle from "../globalStyle"
@@ -16,12 +16,12 @@ import { H2, H4, TextBlock, List } from "./CopywritingElements"
 import Blog from "./Blog"
 import PostPage from "./PostPage"
 import NotFoundPage from "./pages/NotFound"
-import { EditorProvider } from "./Editor"
+import Generator from "./Generator"
 
 const App = () => (
 	<Router>
 		<GlobalStyle />
-		<EditorProvider>
+		<Generator>
 			<Switch>
 				<Route path="/" exact component={EditorPage} />
 				<Route path="/downloads" exact component={ExporterPage} />
@@ -29,7 +29,7 @@ const App = () => (
 				<Route path="/blog/:slug" component={PostPage} />
 				<Route path="*" component={NotFoundPage} />
 			</Switch>
-		</EditorProvider>
+		</Generator>
 	</Router>
 )
 

@@ -7,19 +7,21 @@ import { getBase64FromDataUri } from "../../utils"
 import JSZip from "jszip"
 
 export const MAX_THUMBNAILS_IN_ARCHIVE = 15
-
 export const GeneratorContext = createContext()
 
-export const Generator = ({ children }) => {
+const Generator = ({ children }) => {
 	const [state, dispatch] = useReducer(reducer, defaultState)
-	const settings = useSettingsManager(defaultSettings)
-	const fileDrawer = useFileDrawer()
+	const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+	const settings = useSettingsManager({
+		bgColor: "#fff",
+		scale: 45,
+		exportDimensions: [840, 700]
+	})
 
 	const { thumbnails, selectedIndex, uploader, exporter } = state
-	const numIcons = thumbnails ? thumbnails.length : 0
-	const isEmpty = numIcons === 0
-	const selectedIcon =
-		selectedIndex >= numIcons ? thumbnails[0] : thumbnails[selectedIndex]
+	const count = thumbnails ? thumbnails.length : 0
+	const isEmpty = count === 0
+	const selected = selectedIndex >= count ? thumbnails[0] : thumbnails[selectedIndex]
 	const isExporterReady = !exporter.isLoading && !uploader.isLoading && !isEmpty
 
 	const addFromFiles = async (files) => {
@@ -32,7 +34,7 @@ export const Generator = ({ children }) => {
 				try {
 					const url = URL.createObjectURL(file)
 					const name = file.name.substring(0, file.name.lastIndexOf("."))
-					const icon = createThumbnail(url, name)
+					const icon = await createThumbnail(url, name)
 					// finish the job for this image
 					dispatch({ type: "UPLOAD_PROGRESS", payload: icon })
 				} catch (error) {
@@ -60,7 +62,7 @@ export const Generator = ({ children }) => {
 			// TODO: if hostname uses the "www" subdomain, remove it as it causes problems with uplead
 			// const uploadApiUrl = `https://logo.uplead.com/${hostname}`
 			// TODO: add more fallbacks and better error handling
-			const icon = createThumbnail(clearbitApiUrl, hostname)
+			const icon = await createThumbnail(clearbitApiUrl, hostname)
 			// finish the job for this image
 			dispatch({ type: "UPLOAD_PROGRESS", payload: icon })
 		} catch (error) {
@@ -77,7 +79,7 @@ export const Generator = ({ children }) => {
 			// const response = await fetch("/.netlify/functions/fetchImage")
 			// console.log(response)
 			var name = url.substring(url.lastIndexOf("/") + 1)
-			const icon = createThumbnail(url, name)
+			const icon = await createThumbnail(url, name)
 			// finish the job for this image
 			dispatch({ type: "UPLOAD_PROGRESS", payload: icon })
 		} catch (error) {
@@ -115,6 +117,8 @@ export const Generator = ({ children }) => {
 	const clear = () => dispatch({ type: "FILES_REMOVE_ALL" })
 	const prevIcon = () => dispatch({ type: "SELECT_PREV_ICON" })
 	const nextIcon = () => dispatch({ type: "SELECT_NEXT_ICON" })
+	const openDrawer = () => setIsDrawerOpen(true)
+	const closeDrawer = () => setIsDrawerOpen(false)
 
 	const createThumbnail = async (url, name) => {
 		const errorBase = "Couldn't create icon: "
@@ -143,6 +147,8 @@ export const Generator = ({ children }) => {
 			this.lastRendered = Date.now()
 		}
 
+		console.log(image)
+
 		return {
 			id,
 			image,
@@ -166,13 +172,13 @@ export const Generator = ({ children }) => {
 
 	// close file drawer when the icons list is empty
 	useEffect(() => {
-		if (thumbnails.isEmpty) fileDrawer.close()
-	}, [fileDrawer, thumbnails.isEmpty])
+		if (thumbnails.isEmpty) closeDrawer()
+	}, [thumbnails.isEmpty])
 
 	const context = {
 		thumbnails: {
 			isEmpty: isEmpty,
-			count: numIcons,
+			count: count,
 			list: thumbnails,
 			add: {
 				fromFiles: addFromFiles,
@@ -182,10 +188,14 @@ export const Generator = ({ children }) => {
 			},
 			renderAll: renderAll,
 			clear: clear,
-			selected: selectedIcon,
+			selected: selected,
 			next: nextIcon,
 			prev: prevIcon,
-			manager: fileDrawer
+			manager: {
+				isOpen: isDrawerOpen,
+				open: openDrawer,
+				close: closeDrawer
+			}
 		},
 		uploader: {
 			isLoading: uploader.isLoading,
@@ -205,6 +215,8 @@ export const Generator = ({ children }) => {
 		},
 		settings: settings
 	}
+
+	console.log(context)
 
 	return <GeneratorContext.Provider value={context}>{children}</GeneratorContext.Provider>
 }
@@ -347,23 +359,6 @@ const reducer = (state, action) => {
 	}
 }
 
-// there is a max size for downloads and exceeding it will cause the download to fail, so the resolution needs to be kept pretty low until I'm able to split the download into multiple zips
-const defaultSettings = {
-	bgColor: "#fff",
-	scale: 45,
-	exportDimensions: [840, 700]
-}
-
-const useFileDrawer = () => {
-	const [isOpen, setIsOpen] = useState("#fff")
-
-	return {
-		isOpen: isOpen,
-		open: () => setIsOpen(true),
-		close: () => setIsOpen(false)
-	}
-}
-
 const generateZip = async (thumbnails) => {
 	const zip = new JSZip()
 	// Generate a directory within the Zip file structure
@@ -382,6 +377,8 @@ const generateZip = async (thumbnails) => {
 	// Assemble a data url
 	return "data:application/zip;base64," + zipBase64
 }
+
+export default Generator
 
 // OLD SETTINGS IMPLEMENTATIONS
 

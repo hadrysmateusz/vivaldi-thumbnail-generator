@@ -4,8 +4,7 @@ import styled from "styled-components/macro"
 import NavigationButtons from "./NavigationButtons"
 import Uploader from "./Uploader"
 import FileDrawer from "./FileDrawer"
-import { useFileContext } from "./FilesProvider"
-import { useSettingsContext } from "./SettingsProvider"
+import { useUploader, useThumbnails, useSettings } from "./Generator"
 import BackgroundCanvas from "./BackgroundCanvas"
 import IconCanvas from "./IconCanvas"
 import IconButton from "./IconButton"
@@ -18,22 +17,15 @@ import { ReactComponent as UploadIcon } from "../assets/file-upload.svg"
 import transparency from "../assets/transparency.png"
 
 function ImageProcessor() {
-	const {
-		isLoading,
-		hasIcons,
-		isDrawerOpen,
-		progressDone,
-		progressTotal,
-		selectedIcon
-	} = useFileContext()
-	const isEmpty = !hasIcons
+	const { isLoading, progress } = useUploader()
+	const { isEmpty, manager, count } = useThumbnails()
 
 	return (
 		<RatioContainer>
 			<InnerContainer>
 				{isLoading ? (
 					<Loader>
-						Loading ({progressDone}/{progressTotal})
+						Loading ({progress.loaded}/{progress.total})
 					</Loader>
 				) : isEmpty ? (
 					<EmptyState>
@@ -43,38 +35,32 @@ function ImageProcessor() {
 							Select or drop files here (PNG & SVG work best)
 						</EmptyStateBody>
 					</EmptyState>
-				) : isDrawerOpen ? (
+				) : manager.isOpen ? (
 					<FileDrawer />
 				) : (
 					<>
-						{/* canvases */}
 						<BackgroundCanvas />
-						<IconCanvas icon={selectedIcon} />
-						{/* nav-buttons */}
-						{<NavigationButtons />}
-
-						{/* settings button */}
-						{hasIcons && (
-							<SettingsButtonContainer>
-								<SettingsButton />
-							</SettingsButtonContainer>
-						)}
+						<IconCanvas />
+						{count > 1 && <NavigationButtons />}
+						{!isEmpty && <SettingsButton />}
 					</>
 				)}
 
-				{!isDrawerOpen && <Uploader />}
+				{!manager.isOpen && <Uploader />}
 			</InnerContainer>
 		</RatioContainer>
 	)
 }
 
 const SettingsButton = () => {
-	const { toggleSettings } = useSettingsContext()
+	const { editor } = useSettings()
 
 	return (
-		<IconButton onClick={toggleSettings}>
-			<SettingsIcon title="Settings" width="24px" height="24px" />
-		</IconButton>
+		<SettingsButtonContainer>
+			<IconButton onClick={editor.toggle}>
+				<SettingsIcon title="Settings" width="24px" height="24px" />
+			</IconButton>
+		</SettingsButtonContainer>
 	)
 }
 
@@ -138,6 +124,7 @@ const EmptyStateIcon = styled(UploadIcon)`
 
 const EmptyStateHeading = styled.div`
 	color: var(--light-gray);
+	font-weight: bold;
 	font-size: 20px;
 	line-height: 28px;
 
@@ -145,8 +132,6 @@ const EmptyStateHeading = styled.div`
 		font-size: 24px;
 		line-height: 48px;
 	}
-
-	font-weight: bold;
 `
 
 const EmptyStateBody = styled.div`

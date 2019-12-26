@@ -3,23 +3,17 @@ import styled, { css } from "styled-components/macro"
 
 import SizePicker from "./SizePicker"
 import ColorPicker from "./ColorPicker"
-import { useSettingsContext } from "./SettingsProvider"
+import { useSettings } from "./Generator"
 
 const SettingsEditor = () => {
-	const {
-		scale,
-		setScale,
-		bgColor,
-		setBgColor,
-		isSettingsDisplayed
-	} = useSettingsContext()
+	const { scale, bgColor, editor } = useSettings()
 
 	return (
-		<Container visible={isSettingsDisplayed}>
-			<Label>Icon Size</Label>
+		<Container visible={editor.isOpen}>
+			{/* <Label>Icon Size</Label>
 			<SizePicker scale={scale} setScale={setScale} />
 			<Label>Background Color</Label>
-			<ColorPicker value={bgColor} onChange={setBgColor} />
+			<ColorPicker value={bgColor} onChange={setBgColor} /> */}
 		</Container>
 	)
 }

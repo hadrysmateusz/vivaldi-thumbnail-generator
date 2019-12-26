@@ -1,16 +1,16 @@
 import React from "react"
 import ArrowButton from "./ArrowButton"
-import { useFileContext } from "./FilesProvider"
+import { useThumbnails } from "./Generator"
 
 const NavigationButtons = () => {
-	const { numIcons, nextIcon, prevIcon } = useFileContext()
+	const { next, prev } = useThumbnails()
 
-	return numIcons > 1 ? (
+	return (
 		<>
-			<ArrowButton direction="right" onClick={nextIcon} />
-			<ArrowButton direction="left" onClick={prevIcon} />
+			<ArrowButton direction="right" onClick={next} />
+			<ArrowButton direction="left" onClick={prev} />
 		</>
-	) : null
+	)
 }
 
 export default NavigationButtons

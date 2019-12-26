@@ -8,6 +8,7 @@ export const useSettings = () => {
 	/* add a non-enumerbale, immutable 'editor' property 
 	that contains methods and properties related to the settings editor */
 	Object.defineProperty(settings, "editor", {
+		writable: true,
 		value: {
 			toggle: () => setIsSettingsOpen((val) => !val),
 			close: () => setIsSettingsOpen(false),

@@ -3,17 +3,14 @@ import styled from "styled-components/macro"
 import { cover } from "polished"
 import Button from "./Button"
 import FileItem from "./FileItem"
-import { useFileContext } from "./FilesProvider"
-import { useSettingsContext } from "./SettingsProvider"
+import { useThumbnails } from "./Generator"
 
 const FileDrawer = () => {
-	const { closeFileDrawer, icons, removeIcon, hasIcons, clear } = useFileContext()
-	const { closeSettings } = useSettingsContext()
+	const { manager, list, clear } = useThumbnails()
 
 	const closeOnEsc = (e) => {
 		if (e.key === "Escape") {
-			closeSettings()
-			closeFileDrawer()
+			manager.close()
 		}
 	}
 
@@ -21,11 +18,10 @@ const FileDrawer = () => {
 		<Container onKeyDown={closeOnEsc}>
 			<InnerContainer>
 				<GridContainer>
-					{icons.map((icon) => (
+					{list.map((thumbnail) => (
 						<FileItem
-							key={icon.name}
-							icon={icon}
-							removeItem={removeIcon}
+							key={thumbnail.name}
+							thumbnail={thumbnail}
 							/* autoFocus={i === 0 ? true : undefined} */
 						/>
 					))}
@@ -33,14 +29,10 @@ const FileDrawer = () => {
 			</InnerContainer>
 
 			<ButtonsContainer>
-				{hasIcons && (
-					<Button onClick={clear} variant="danger">
-						Remove All
-					</Button>
-				)}
-				<Button onClick={closeFileDrawer} autoFocus={!hasIcons ? true : undefined}>
-					Close
+				<Button onClick={clear} variant="danger">
+					Remove All
 				</Button>
+				<Button onClick={manager.close}>Close</Button>
 			</ButtonsContainer>
 		</Container>
 	)

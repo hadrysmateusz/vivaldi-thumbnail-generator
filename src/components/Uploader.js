@@ -4,7 +4,7 @@ import { useDropzone } from "react-dropzone"
 import { cover } from "polished"
 import { center } from "../styleUtils"
 import Button from "./Button"
-import { useFileContext } from "./FilesProvider"
+import { useThumbnails, useUploader } from "./Generator"
 import UploaderModal from "./UploaderModal"
 import Spacer from "./Spacer"
 
@@ -22,16 +22,8 @@ const numAvailableMethods = Object.values(availableMethods).reduce(
 )
 
 const Uploader = () => {
-	const {
-		isLoading,
-		openFileDrawer,
-		isDrawerOpen,
-		hasIcons,
-		numIcons,
-		addFromFiles,
-		addFromBookmarkUrl,
-		addFromImageUrl
-	} = useFileContext()
+	const { manager, isEmpty, count, add } = useThumbnails()
+	const { isLoading } = useUploader()
 	const [isModalOpen, setIsModalOpen] = useState()
 
 	const onPasteImage = () => {
@@ -42,7 +34,7 @@ const Uploader = () => {
 	const onBookmarkUrl = async () => {
 		let url = prompt("Paste bookmark URL here")
 		if (url) {
-			await addFromBookmarkUrl(url)
+			await add.fromBookmarkUrl(url)
 			closeModal()
 		}
 	}
@@ -59,7 +51,7 @@ const Uploader = () => {
 				console.error("fetching error:", error)
 			}
 
-			await addFromImageUrl(url)
+			await add.fromImageUrl(url)
 			closeModal()
 		}
 	}
@@ -73,7 +65,7 @@ const Uploader = () => {
 		// if no new files are uploaded, exit silently
 		if (!acceptedFiles || acceptedFiles.length === 0) return
 		// transform the files and add to file manager state
-		await addFromFiles(acceptedFiles)
+		await add.fromFiles(acceptedFiles)
 		closeModal()
 	}
 
@@ -106,21 +98,19 @@ const Uploader = () => {
 			{/* input */}
 			<input {...getInputProps()} />
 
-			{!isDrawerOpen && (
+			{!manager.isOpen && (
 				<>
 					{/* buttons */}
 					<ButtonsContainer>
 						<Button
 							onClick={onAdd}
-							variant={hasIcons ? "normal" : "primary"}
+							variant={!isEmpty ? "normal" : "primary"}
 							disabled={isLoading}
 						>
 							{isLoading ? "Loading" : "Add Icons"}
 						</Button>
 						<Spacer />
-						{hasIcons && (
-							<Button onClick={openFileDrawer}>Manage Icons ({numIcons}) </Button>
-						)}
+						{!isEmpty && <Button onClick={manager.open}>Manage Icons ({count}) </Button>}
 					</ButtonsContainer>
 
 					{/* icon-add modal */}
