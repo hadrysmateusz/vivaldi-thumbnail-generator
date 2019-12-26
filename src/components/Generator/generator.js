@@ -21,7 +21,7 @@ const Generator = ({ children }) => {
 	const { thumbnails, selectedIndex, uploader, exporter } = state
 	const count = thumbnails ? thumbnails.length : 0
 	const isEmpty = count === 0
-	const selected = selectedIndex >= count ? thumbnails[0] : thumbnails[selectedIndex]
+	const selected = thumbnails[selectedIndex] || {}
 	const isExporterReady = !exporter.isLoading && !uploader.isLoading && !isEmpty
 
 	const addFromFiles = async (files) => {
@@ -147,8 +147,6 @@ const Generator = ({ children }) => {
 			this.lastRendered = Date.now()
 		}
 
-		console.log(image)
-
 		return {
 			id,
 			image,
@@ -159,6 +157,13 @@ const Generator = ({ children }) => {
 			lastRendered: null // TODO: lastRendered can later be used for performance optimization
 		}
 	}
+
+	// whenever the currently selected index overflows the available thumbnails count, reset it to zero
+	useEffect(() => {
+		if (selectedIndex >= count) {
+			dispatch({ type: "SELECT_NTH_ICON", payload: 0 })
+		}
+	}, [count, selectedIndex])
 
 	// dispatch upload success when batch upload operation finishes
 	useEffect(() => {
@@ -172,8 +177,10 @@ const Generator = ({ children }) => {
 
 	// close file drawer when the icons list is empty
 	useEffect(() => {
-		if (thumbnails.isEmpty) closeDrawer()
-	}, [thumbnails.isEmpty])
+		if (isEmpty) {
+			closeDrawer()
+		}
+	}, [isEmpty])
 
 	const context = {
 		thumbnails: {
@@ -353,6 +360,11 @@ const reducer = (state, action) => {
 			return {
 				...state,
 				selectedIndex: (selectedIndex + 1) % numIcons
+			}
+		case "SELECT_NTH_ICON":
+			return {
+				...state,
+				selectedIndex: action.payload
 			}
 		default:
 			throw new Error(`Unknown action type: ${action.type}`)
