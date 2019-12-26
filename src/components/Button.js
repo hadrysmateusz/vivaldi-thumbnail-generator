@@ -73,7 +73,6 @@ const Button = styled.button`
 	font-weight: bold;
 	font-size: 14px;
 	line-height: 18px;
-	letter-spacing: 0.02em;
 	height: 32px;
 	padding: 0 16px;
 	@media (min-width: 732px) {
