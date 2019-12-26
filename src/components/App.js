@@ -52,6 +52,7 @@ const EditorPage = () => {
 					<ImageProcessor />
 					<SettingsEditor />
 				</GeneratorContainer>
+
 				<GenerateButton />
 
 				<FluidContainer>

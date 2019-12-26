@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react"
 
-export const useSettings = (defaultState) => {
+export const useSettingsManager = (defaultState) => {
 	const [values, setValues] = useState(defaultState)
 
 	const settings = useMemo(() => {

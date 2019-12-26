@@ -1,5 +1,5 @@
 import { useContext, useState } from "react"
-import { GeneratorContext } from "./iconManager"
+import { GeneratorContext } from "./generator"
 
 export const useSettings = () => {
 	const [isSettingsOpen, setIsSettingsOpen] = useState(false)
