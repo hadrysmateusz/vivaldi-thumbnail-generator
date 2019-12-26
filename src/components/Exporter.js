@@ -52,7 +52,7 @@ const Exporter = () => {
 									<span role="img" aria-label="Error!">
 										❌
 									</span>
-									<span>There was a problem, please try again</span>
+									<span>&nbsp;There was a problem, please try again</span>
 								</>
 							) : (
 								<>
@@ -60,7 +60,7 @@ const Exporter = () => {
 										🎉
 									</span>
 									<span>
-										Generated <b>{count}</b> thumbnail{count > 1 && "s"}
+										&nbsp;Generated <b>{count}</b> thumbnail{count > 1 && "s"}
 									</span>
 								</>
 							)}
@@ -98,7 +98,7 @@ const ExporterItem = ({ name, url }) => (
 )
 
 export const GenerateButton = () => {
-	const { isExporterReady, renderAll } = useExporter()
+	const { isReady, renderAll } = useExporter()
 	const history = useHistory()
 
 	const handleClick = () => {
@@ -108,7 +108,7 @@ export const GenerateButton = () => {
 
 	return (
 		<GenerateButtonContainer>
-			<Button onClick={handleClick} disabled={!isExporterReady} variant="primary">
+			<Button onClick={handleClick} disabled={!isReady} variant="primary">
 				Generate
 			</Button>
 		</GenerateButtonContainer>

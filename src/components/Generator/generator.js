@@ -95,18 +95,22 @@ const Generator = ({ children }) => {
 		dispatch({ type: "EXPORT_INIT" })
 		try {
 			const parts = []
+			let archives = []
+
 			// render thumbnails and split the into parts
 			thumbnails.forEach((thumbnail, i) => {
 				// render the thumbnail
 				thumbnail.render()
 				// split the thumbnails into a few parts to avoid the zip size limitation
-				const partIndex = Math.floor(i / MAX_THUMBNAILS_IN_ARCHIVE)
-				parts[partIndex] = thumbnail
+				let index = Math.floor(i / MAX_THUMBNAILS_IN_ARCHIVE)
+
+				// if this is the first thumbnail in this part, create the array it will go into
+				if (!parts[index]) parts[index] = []
+				// push the thumbnail into the assigned array
+				parts[index].push(thumbnail)
 			})
 			// generate zips for all parts
-			const archives = await Promise.all(
-				parts.map((thumbnails) => generateZip(thumbnails))
-			)
+			archives = await Promise.all(parts.map((thumbnails) => generateZip(thumbnails)))
 			// finish exporting
 			dispatch({ type: "EXPORT_SUCCESS", payload: archives })
 		} catch (error) {
@@ -377,12 +381,12 @@ const generateZip = async (thumbnails) => {
 	const folder = zip.folder("thumbnails")
 	// Add all files to the folder
 	thumbnails.forEach((thumbnail) => {
-		const { url, name } = thumbnail
+		const { renderedUrl, name } = thumbnail
 
 		// Get base64 content of the image
-		const fileData = getBase64FromDataUri(url)
+		const fileData = getBase64FromDataUri(renderedUrl)
 		// Add file to folder
-		folder.file(name, fileData, { base64: true })
+		folder.file(name + ".png", fileData, { base64: true })
 	})
 	// Generate zip file as a base64 string
 	const zipBase64 = await zip.generateAsync({ type: "base64" })
