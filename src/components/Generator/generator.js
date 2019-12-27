@@ -3,7 +3,7 @@ import { loadImage, getHostname } from "../../utils"
 import { trimImageWhitespace } from "../CanvasCommon"
 import { drawIcon, drawBackground, createVirtualCanvas } from "../CanvasCommon"
 import { useSettingsManager } from "./settings"
-import { getBase64FromDataUri } from "../../utils"
+import { getBase64FromDataUri, readFile } from "../../utils"
 import JSZip from "jszip"
 
 export const MAX_THUMBNAILS_IN_ARCHIVE = 15
@@ -32,11 +32,11 @@ const Generator = ({ children }) => {
 			files.forEach(async (file) => {
 				if (uploader.isCanceled) return // skip the processing after cancellation
 				try {
-					const url = URL.createObjectURL(file)
+					const url = await readFile(file)
 					const name = file.name.substring(0, file.name.lastIndexOf("."))
-					const icon = await createThumbnail(url, name)
+					const thumbnail = await createThumbnail(url, name)
 					// finish the job for this image
-					dispatch({ type: "UPLOAD_PROGRESS", payload: icon })
+					dispatch({ type: "UPLOAD_PROGRESS", payload: thumbnail })
 				} catch (error) {
 					// TODO: custom handling for an error on a single file
 					throw error // before the custom handling is done, rethrow the error
@@ -185,6 +185,8 @@ const Generator = ({ children }) => {
 			closeDrawer()
 		}
 	}, [isEmpty])
+
+	console.log(selectedIndex)
 
 	const context = {
 		thumbnails: {
