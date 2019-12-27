@@ -1,19 +1,13 @@
 /**
  * Creates an image element and loads an image into it
  * @param {string} src - url of the image
- * @param {boolean} [revokeUrl=false] - whether the onload handler should revoke the src url or not
  * @returns Promise resolving to the loaded image element
  */
-const loadImage = (src, revokeUrl = false) => {
+const loadImage = (src) => {
 	return new Promise((resolve, reject) => {
 		const img = document.createElement("img")
 		img.crossOrigin = "Anonymous"
-		img.onload = (e) => {
-			if (revokeUrl) {
-				URL.revokeObjectURL(e.target.src)
-			}
-			resolve(e.target)
-		}
+		img.onload = () => resolve(img)
 		img.onerror = () => reject("Failed to load image")
 		img.src = src
 	})
