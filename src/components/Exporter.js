@@ -36,7 +36,7 @@ const Exporter = () => {
 						<ListContainer>
 							{list.map((thumbnail) => (
 								<ExporterItem
-									key={thumbnail.name}
+									key={thumbnail.id}
 									name={thumbnail.name}
 									url={thumbnail.renderedUrl}
 								/>

@@ -20,7 +20,7 @@ const FileDrawer = () => {
 				<GridContainer>
 					{list.map((thumbnail) => (
 						<FileItem
-							key={thumbnail.name}
+							key={thumbnail.id}
 							thumbnail={thumbnail}
 							/* autoFocus={i === 0 ? true : undefined} */
 						/>
