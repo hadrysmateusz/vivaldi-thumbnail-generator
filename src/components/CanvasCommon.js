@@ -142,7 +142,7 @@ export const trimImageWhitespace = (image) => {
 	)
 
 	// Get image of canvas as data url
-	const dataUrl = canvas.toDataURL("image/png", 1)
+	const dataUrl = canvas.toDataURL()
 
 	// Return promise resolving to loaded image
 	return loadImage(dataUrl)
