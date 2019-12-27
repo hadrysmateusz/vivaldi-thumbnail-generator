@@ -6,14 +6,14 @@ import ColorPicker from "./ColorPicker"
 import { useSettings } from "./Generator"
 
 const SettingsEditor = () => {
-	const { scale, bgColor, editor } = useSettings()
+	let { values, editor, set } = useSettings()
 
 	return (
 		<Container visible={editor.isOpen}>
-			{/* <Label>Icon Size</Label>
-			<SizePicker scale={scale} setScale={setScale} />
+			<Label>Icon Size</Label>
+			<SizePicker scale={values.scale} onChange={set.scale} />
 			<Label>Background Color</Label>
-			<ColorPicker value={bgColor} onChange={setBgColor} /> */}
+			<ColorPicker value={values.bgColor} onChange={set.bgColor} />
 		</Container>
 	)
 }

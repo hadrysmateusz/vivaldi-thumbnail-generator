@@ -100,7 +100,7 @@ const Generator = ({ children }) => {
 			// render thumbnails and split the into parts
 			thumbnails.forEach((thumbnail, i) => {
 				// render the thumbnail
-				thumbnail.render()
+				renderOne(thumbnail)
 				// split the thumbnails into a few parts to avoid the zip size limitation
 				let index = Math.floor(i / MAX_THUMBNAILS_IN_ARCHIVE)
 
@@ -124,6 +124,17 @@ const Generator = ({ children }) => {
 	const openDrawer = () => setIsDrawerOpen(true)
 	const closeDrawer = () => setIsDrawerOpen(false)
 
+	const renderOne = function(thumbnail) {
+		const { exportDimensions, bgColor, scale } = settings.values
+
+		const [canvas] = createVirtualCanvas(...exportDimensions)
+		drawBackground(canvas, bgColor)
+		drawIcon(canvas, thumbnail.image, scale)
+
+		thumbnail.renderedUrl = canvas.toDataURL()
+		thumbnail.lastRendered = Date.now()
+	}
+
 	const createThumbnail = async (url, name) => {
 		const errorBase = "Couldn't create icon: "
 		// handle argument errors
@@ -140,22 +151,10 @@ const Generator = ({ children }) => {
 			dispatch({ type: "FILES_REMOVE_ONE", payload: this.id })
 		}
 
-		const render = function() {
-			const { exportDimensions, bgColor, scale } = settings
-
-			const [canvas] = createVirtualCanvas(...exportDimensions)
-			drawBackground(canvas, bgColor)
-			drawIcon(canvas, image, scale)
-
-			this.renderedUrl = canvas.toDataURL()
-			this.lastRendered = Date.now()
-		}
-
 		return {
 			id,
 			image,
 			name,
-			render,
 			remove,
 			renderedUrl: null,
 			lastRendered: null // TODO: lastRendered can later be used for performance optimization
@@ -200,6 +199,7 @@ const Generator = ({ children }) => {
 				fromClipboard: addFromClipboard
 			},
 			renderAll: renderAll,
+			renderOne: renderOne,
 			clear: clear,
 			selected: selected,
 			next: nextIcon,
@@ -397,76 +397,3 @@ const generateZip = async (thumbnails) => {
 }
 
 export default Generator
-
-// OLD SETTINGS IMPLEMENTATIONS
-
-// import { useState } from "react"
-
-// export const useSettings = () => {
-// 	const [values, setValues] = useState(defaultState)
-// 	const [isEditorOpen, setIsEditorOpen] = useState(false)
-
-// 	const createSettings = () => {
-// 		const settings = {}
-
-// 		const createSetting = function(name) {
-// 			Object.defineProperty(this, name, {
-// 				enumerable: true,
-// 				get: () => values[name],
-// 				set: (val) => {
-// 					setValues((state) => ({ ...state, [name]: val }))
-// 				}
-// 			})
-// 		}.bind(settings)
-
-// 		Object.keys(defaultState).forEach((key) => createSetting(key))
-
-// 		return settings
-// 	}
-
-// 	const settings = createSettings()
-
-// 	Object.defineProperty(settings, "editor", {
-// 		value: {
-// 			toggle: () => setIsEditorOpen((val) => !val),
-// 			close: () => setIsEditorOpen(false),
-// 			open: () => setIsEditorOpen(true),
-// 			isOpen: isEditorOpen
-// 		}
-// 	})
-
-// 	return settings
-// }
-
-// // there is a max size for downloads and exceeding it will cause the download to fail, so the resolution needs to be kept pretty low until I'm able to split the download into multiple zips
-// const defaultState = {
-// 	bgColor: "#fff",
-// 	scale: 45,
-// 	exportDimensions: [840, 700]
-// }
-
-// const SettingsError = (msg) => new Error("Settings error: " + msg)
-
-// ALT
-
-// const settingsEditor = Object.freeze({
-// 	toggle: () => setIsEditorOpen((val) => !val),
-// 	close: () => setIsEditorOpen(false),
-// 	open: () => setIsEditorOpen(true),
-// 	isOpen: isEditorOpen
-// })
-
-// const value = {
-// 	bgColor: settings.bgColor,
-// 	scale: settings.scale,
-// 	exportDimensions: settings.exportDimensions,
-// 	set: function(key, value) {
-// 		if (key === "set") throw SettingsError(`"set" can't be reassigned`)
-// 		if (!this.hasOwnProperty(key)) throw SettingsError(`${key} is not a valid key`)
-// 		setSettings((state) => ({
-// 			...state,
-// 			[key]: value
-// 		}))
-// 	},
-// 	editor: settingsEditor
-// }

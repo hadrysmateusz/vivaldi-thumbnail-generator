@@ -8,7 +8,7 @@ import {
 import { useSettings, useThumbnails } from "./Generator"
 
 const IconCanvas = () => {
-	const { scale } = useSettings()
+	const { values } = useSettings()
 	const { selected } = useThumbnails()
 	const canvasRef = useRef()
 	useSizeCanvasToCssDimensions(canvasRef)
@@ -19,8 +19,8 @@ const IconCanvas = () => {
 		// if there are no images yet, or they were all removed, exit to prevent errors
 		if (!selected.image) return
 		// draw the current image with the correct dimensions
-		drawIcon(canvasRef.current, selected.image, scale)
-	}, [scale, selected.image])
+		drawIcon(canvasRef.current, selected.image, values.scale)
+	}, [values.scale, selected.image])
 
 	return <StyledCanvas ref={canvasRef} />
 }

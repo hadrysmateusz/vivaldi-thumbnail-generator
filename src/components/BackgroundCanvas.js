@@ -8,7 +8,7 @@ import {
 import { useSettings } from "./Generator"
 
 const BackgroundCanvas = () => {
-	const { bgColor } = useSettings()
+	const { values } = useSettings()
 	const canvasRef = useRef()
 	useSizeCanvasToCssDimensions(canvasRef)
 
@@ -16,8 +16,8 @@ const BackgroundCanvas = () => {
 		// clear canvas to remove previous image
 		clearCanvas(canvasRef.current)
 		// draw background color
-		drawBackground(canvasRef.current, bgColor)
-	}, [bgColor])
+		drawBackground(canvasRef.current, values.bgColor)
+	}, [values.bgColor])
 
 	return <StyledCanvas ref={canvasRef} />
 }

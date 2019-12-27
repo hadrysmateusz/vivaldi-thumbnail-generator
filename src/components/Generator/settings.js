@@ -5,31 +5,32 @@ export const useSettingsManager = (defaultState) => {
 	const [isSettingsOpen, setIsSettingsOpen] = useState(false)
 
 	const settings = useMemo(() => {
-		const settings = {}
-
-		const createSetting = function(name) {
-			Object.defineProperty(this, name, {
-				enumerable: true,
-				get: () => values[name],
-				set: (val) => {
-					setValues((state) => ({ ...state, [name]: val }))
-				}
-			})
-		}.bind(settings)
-
-		Object.keys(defaultState).forEach((key) => createSetting(key))
-
-		/* add a non-enumerbale, immutable 'editor' property 
-		hat contains methods and properties related to the settings editor */
-		Object.defineProperty(settings, "editor", {
-			writable: true,
-			value: {
+		const settings = {
+			values: {},
+			set: {},
+			editor: {
 				toggle: () => setIsSettingsOpen((val) => !val),
 				close: () => setIsSettingsOpen(false),
 				open: () => setIsSettingsOpen(true),
 				isOpen: isSettingsOpen
 			}
-		})
+		}
+
+		const createSetting = (name) => {
+			settings.values[name] = values[name]
+		}
+
+		const createSetter = (name) => {
+			settings.set[name] = (value) => {
+				setValues((state) => ({
+					...state,
+					[name]: value
+				}))
+			}
+		}
+
+		Object.keys(defaultState).forEach((key) => createSetting(key))
+		Object.keys(defaultState).forEach((key) => createSetter(key))
 
 		return settings
 	}, [defaultState, isSettingsOpen, values])
