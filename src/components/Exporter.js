@@ -13,7 +13,7 @@ import { center } from "../styleUtils"
 import { useThumbnails } from "./Generator"
 
 const Exporter = () => {
-	const { isLoading, isError, archives } = useExporter()
+	const { isLoading, isError, download, isReady } = useExporter()
 	const { isEmpty, count, list } = useThumbnails()
 
 	return (
@@ -44,10 +44,10 @@ const Exporter = () => {
 						</ListContainer>
 					)}
 				</ContentContainer>
-				{!isEmpty && (
+				{!isLoading && (
 					<FooterContainer>
 						<FooterText>
-							{isError ? (
+							{isError || isEmpty ? (
 								<>
 									<span role="img" aria-label="Error!">
 										❌
@@ -66,19 +66,13 @@ const Exporter = () => {
 							)}
 						</FooterText>
 						<Spacer />
-						<Button
-							variant="primary"
-							as="a"
-							href={archives[0]}
-							download="thumbnails.zip"
-							disabled={!archives || !archives[0] || isError}
-						>
+						<Button variant="primary" onClick={download} disabled={!isReady}>
 							Download All
 						</Button>
 					</FooterContainer>
 				)}
 			</Container>
-			{!isEmpty && (
+			{!isEmpty && !isLoading && (
 				<ShareButtonsContainer>
 					<SharingButtons />
 				</ShareButtonsContainer>
@@ -91,7 +85,7 @@ const ExporterItem = ({ name, url }) => (
 	<ItemContainer>
 		<Preview url={url} />
 		<Data>{name}</Data>
-		<Button as="a" download={name} href={url} variant="text-only">
+		<Button as="a" download={name + ".png"} href={url} variant="text-only">
 			Download
 		</Button>
 	</ItemContainer>
@@ -140,7 +134,7 @@ const FooterText = styled.div`
 `
 
 const ShareButtonsContainer = styled.div`
-	margin: 64px auto;
+	margin: 40px auto;
 `
 
 const FooterContainer = styled.div`

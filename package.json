@@ -3,6 +3,7 @@
 	"version": "0.1.0",
 	"private": true,
 	"dependencies": {
+		"file-saver": "^2.0.2",
 		"jszip": "^3.2.2",
 		"lodash.debounce": "^4.0.8",
 		"node-sass": "^4.13.0",

@@ -5,6 +5,7 @@ import { drawIcon, drawBackground, createVirtualCanvas } from "../CanvasCommon"
 import { useSettingsManager } from "./settings"
 import { getBase64FromDataUri, readFile } from "../../utils"
 import JSZip from "jszip"
+import FileSaver from "file-saver"
 
 export const MAX_THUMBNAILS_IN_ARCHIVE = 15
 export const GeneratorContext = createContext()
@@ -23,6 +24,7 @@ const Generator = ({ children }) => {
 	const isEmpty = count === 0
 	const selected = thumbnails[selectedIndex] || {}
 	const isExporterReady = !exporter.isLoading && !uploader.isLoading && !isEmpty
+	const isDownloadReady = !exporter.isLoading && !exporter.isError && exporter.archive
 
 	const addFromFiles = async (files) => {
 		try {
@@ -48,7 +50,6 @@ const Generator = ({ children }) => {
 	}
 
 	const addFromBookmarkUrl = async (url) => {
-		// start upload process
 		dispatch({ type: "UPLOAD_INIT", payload: 1 })
 		try {
 			/* from my trial-and-error testing it seems that 800 is the max size for the clearbit api,
@@ -63,7 +64,6 @@ const Generator = ({ children }) => {
 			// const uploadApiUrl = `https://logo.uplead.com/${hostname}`
 			// TODO: add more fallbacks and better error handling
 			const icon = await createThumbnail(clearbitApiUrl, hostname)
-			// finish the job for this image
 			dispatch({ type: "UPLOAD_PROGRESS", payload: icon })
 		} catch (error) {
 			dispatch({ type: "UPLOAD_FAILURE", error })
@@ -71,16 +71,11 @@ const Generator = ({ children }) => {
 	}
 
 	const addFromImageUrl = async (url) => {
-		// start upload process
 		dispatch({ type: "UPLOAD_INIT", payload: 1 })
-		// fetch the image from clearbit api
 		try {
-			// console.log("fetching")
 			// const response = await fetch("/.netlify/functions/fetchImage")
-			// console.log(response)
 			var name = url.substring(url.lastIndexOf("/") + 1)
 			const icon = await createThumbnail(url, name)
-			// finish the job for this image
 			dispatch({ type: "UPLOAD_PROGRESS", payload: icon })
 		} catch (error) {
 			dispatch({ type: "UPLOAD_FAILURE", error })
@@ -91,48 +86,62 @@ const Generator = ({ children }) => {
 		alert("not implemented")
 	}
 
-	const renderAll = async () => {
-		dispatch({ type: "EXPORT_INIT" })
-		try {
-			const parts = []
-			let archives = []
-
-			// render thumbnails and split the into parts
-			thumbnails.forEach((thumbnail, i) => {
-				// render the thumbnail
-				renderOne(thumbnail)
-				// split the thumbnails into a few parts to avoid the zip size limitation
-				let index = Math.floor(i / MAX_THUMBNAILS_IN_ARCHIVE)
-
-				// if this is the first thumbnail in this part, create the array it will go into
-				if (!parts[index]) parts[index] = []
-				// push the thumbnail into the assigned array
-				parts[index].push(thumbnail)
-			})
-			// generate zips for all parts
-			archives = await Promise.all(parts.map((thumbnails) => generateZip(thumbnails)))
-			// finish exporting
-			dispatch({ type: "EXPORT_SUCCESS", payload: archives })
-		} catch (error) {
-			dispatch({ type: "EXPORT_FAILURE", error })
-		}
-	}
-
 	const clear = () => dispatch({ type: "FILES_REMOVE_ALL" })
 	const prevIcon = () => dispatch({ type: "SELECT_PREV_ICON" })
 	const nextIcon = () => dispatch({ type: "SELECT_NEXT_ICON" })
 	const openDrawer = () => setIsDrawerOpen(true)
 	const closeDrawer = () => setIsDrawerOpen(false)
 
+	const renderAll = async () => {
+		dispatch({ type: "EXPORT_INIT" })
+		try {
+			// render thumbnails
+			thumbnails.forEach((thumbnail) => renderOne(thumbnail))
+
+			function renameFiles(arr) {
+				var count = {}
+				arr.forEach(function(thumb, i) {
+					if (arr.indexOf(thumb) !== i) {
+						var c =
+							thumb in count ? (count[thumb] = count[thumb] + 1) : (count[thumb] = 1)
+						var j = c + 1
+						var k = thumb + "(" + j + ")"
+
+						while (arr.indexOf(k) !== -1) k = thumb + "(" + ++j + ")"
+						arr[i] = k
+					}
+				})
+				return arr
+			}
+
+			// TODO: make sure no filenames are the same
+			// generate the zip archive containing all thumbnails
+			const archiveBlob = await generateZip(thumbnails)
+			// finish exporting
+			dispatch({ type: "EXPORT_SUCCESS", payload: archiveBlob })
+		} catch (error) {
+			dispatch({ type: "EXPORT_FAILURE", error })
+		}
+	}
+
+	/**
+	 * Renders the thumbnail and returns the dataURL
+	 * @param {Thumbnail} thumbnail
+	 * @returns dataURL of the rendered thumbnail
+	 */
 	const renderOne = function(thumbnail) {
 		const { exportDimensions, bgColor, scale } = settings.values
-
+		// render the background and icon on a single canvas
 		const [canvas] = createVirtualCanvas(...exportDimensions)
 		drawBackground(canvas, bgColor)
 		drawIcon(canvas, thumbnail.image, scale)
-
-		thumbnail.renderedUrl = canvas.toDataURL()
+		// get the canvas contents as a dataURL
+		const dataURL = canvas.toDataURL()
+		// save the url inside the renderedUrl property of the thumbnail along with a timestamp
+		thumbnail.renderedUrl = dataURL
 		thumbnail.lastRendered = Date.now()
+		// return the dataURL
+		return dataURL
 	}
 
 	const createThumbnail = async (url, name) => {
@@ -159,6 +168,16 @@ const Generator = ({ children }) => {
 			renderedUrl: null,
 			lastRendered: null // TODO: lastRendered can later be used for performance optimization
 		}
+	}
+
+	const download = () => {
+		if (!isDownloadReady) {
+			// TODO: show a message
+			return
+		}
+
+		// download the archive
+		FileSaver.saveAs(exporter.archive, "vtg-thumbnails.zip")
 	}
 
 	// whenever the currently selected index overflows the available thumbnails count, reset it to zero
@@ -223,8 +242,8 @@ const Generator = ({ children }) => {
 			isLoading: exporter.isLoading,
 			isError: exporter.isError,
 			isReady: isExporterReady,
-			archives: exporter.archives,
-			renderAll: renderAll
+			renderAll: renderAll,
+			download: download
 		},
 		settings: settings
 	}
@@ -245,7 +264,7 @@ const defaultState = {
 	exporter: {
 		isLoading: false,
 		isError: false,
-		archives: []
+		archive: null
 	},
 	selectedIndex: 0,
 	thumbnails: []
@@ -322,8 +341,7 @@ const reducer = (state, action) => {
 				exporter: {
 					...exporter,
 					isLoading: true,
-					isError: false,
-					archives: []
+					isError: false
 				}
 			}
 		case "EXPORT_SUCCESS":
@@ -333,7 +351,7 @@ const reducer = (state, action) => {
 					...exporter,
 					isLoading: false,
 					isError: false,
-					archives: action.payload
+					archive: action.payload
 				}
 			}
 		case "EXPORT_FAILURE":
@@ -344,7 +362,7 @@ const reducer = (state, action) => {
 					...exporter,
 					isLoading: false,
 					isError: true,
-					archives: action.payload
+					archive: null
 				}
 			}
 		case "FILES_REMOVE_ONE":
@@ -384,16 +402,14 @@ const generateZip = async (thumbnails) => {
 	// Add all files to the folder
 	thumbnails.forEach((thumbnail) => {
 		const { renderedUrl, name } = thumbnail
-
 		// Get base64 content of the image
 		const fileData = getBase64FromDataUri(renderedUrl)
 		// Add file to folder
 		folder.file(name + ".png", fileData, { base64: true })
 	})
-	// Generate zip file as a base64 string
-	const zipBase64 = await zip.generateAsync({ type: "base64" })
-	// Assemble a data url
-	return "data:application/zip;base64," + zipBase64
+	// Generate zip file as a blob string
+	const blob = await zip.generateAsync({ type: "blob" })
+	return blob
 }
 
 export default Generator
