@@ -97,24 +97,35 @@ const Generator = ({ children }) => {
 		try {
 			// render thumbnails
 			thumbnails.forEach((thumbnail) => renderOne(thumbnail))
-
-			function renameFiles(arr) {
-				var count = {}
-				arr.forEach(function(thumb, i) {
-					if (arr.indexOf(thumb) !== i) {
-						var c =
-							thumb in count ? (count[thumb] = count[thumb] + 1) : (count[thumb] = 1)
-						var j = c + 1
-						var k = thumb + "(" + j + ")"
-
-						while (arr.indexOf(k) !== -1) k = thumb + "(" + ++j + ")"
-						arr[i] = k
+			// helper functions that renames thumbnails with duplicate names
+			;(function renameThumbnails(thumbnails) {
+				var count = {} // object that counts the occurences of every name
+				// go through each file and rename them if necessary
+				thumbnails.forEach((thumb, i) => {
+					// get the thumbnail name
+					const name = thumb.name
+					// if the same name hasn't occured before, skip the renaming
+					if (thumbnails.findIndex((thumb) => thumb.name === name) === i) return
+					// if the name has already occured, increment its count otherwise set the count to zero
+					var c = name in count ? (count[name] = count[name] + 1) : (count[name] = 1)
+					// the current 1-based count used for display
+					var j = c
+					// the constructed name
+					var newName = `${name} (${j})`
+					// helper function that checks if a thumbnail with given name already exists
+					function nameExists(name) {
+						return thumbnails.findIndex((thumb) => thumb.name === name) !== -1
 					}
+					// as long as the name is already taken, keep incrementing the number
+					while (nameExists(newName)) {
+						j += 1
+						newName = `${name} (${j})`
+					}
+					// rename the file
+					thumb.name = newName
 				})
-				return arr
-			}
-
-			// TODO: make sure no filenames are the same
+				return thumbnails
+			})(thumbnails)
 			// generate the zip archive containing all thumbnails
 			const archiveBlob = await generateZip(thumbnails)
 			// finish exporting
