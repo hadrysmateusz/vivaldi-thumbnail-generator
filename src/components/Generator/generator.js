@@ -167,18 +167,19 @@ const Generator = ({ children }) => {
 		image = await loadImage(url)
 		image = await trimImageWhitespace(image)
 
-		const remove = function() {
-			dispatch({ type: "FILES_REMOVE_ONE", payload: this.id })
-		}
-
-		return {
+		const thumbnail = {
 			id,
 			image,
 			name,
-			remove,
 			renderedUrl: null,
 			lastRendered: null // TODO: lastRendered can later be used for performance optimization
 		}
+
+		thumbnail.remove = function() {
+			dispatch({ type: "FILES_REMOVE_ONE", payload: this.id })
+		}.bind(thumbnail)
+
+		return thumbnail
 	}
 
 	const download = () => {
