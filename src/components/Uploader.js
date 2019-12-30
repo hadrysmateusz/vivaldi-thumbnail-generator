@@ -13,7 +13,7 @@ const availableMethods = {
 	fileUpload: true,
 	imageUrl: false,
 	pasteImage: false,
-	bookmarkUrl: true
+	bookmarkUrl: false
 }
 
 const numAvailableMethods = Object.values(availableMethods).reduce(
