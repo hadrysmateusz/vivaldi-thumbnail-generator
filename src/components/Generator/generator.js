@@ -216,8 +216,6 @@ const Generator = ({ children }) => {
 		}
 	}, [isEmpty])
 
-	console.log(selectedIndex)
-
 	const context = {
 		thumbnails: {
 			isEmpty: isEmpty,
@@ -259,8 +257,6 @@ const Generator = ({ children }) => {
 		},
 		settings: settings
 	}
-
-	console.log(context)
 
 	return <GeneratorContext.Provider value={context}>{children}</GeneratorContext.Provider>
 }

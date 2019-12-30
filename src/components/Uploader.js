@@ -49,7 +49,6 @@ const Uploader = () => {
 
 		if (url) {
 			try {
-				console.log("fetching")
 				const response = await fetch(`/.netlify/functions/fetchImage?url=${url}`)
 				console.log(await response.text())
 			} catch (error) {
