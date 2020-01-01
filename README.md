@@ -1,6 +1,8 @@
-## A web app that generates thumbnails for the Vivaldi browser
+## Web app that generates Speed Dial thumbnails for the Vivaldi browser
 
 ![Website preview](https://vivaldi-thumbnails.netlify.com/og-image.png)
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/4a163c11-d599-4a50-b971-1a957f19f4d9/deploy-status)](https://app.netlify.com/sites/vivaldi-thumbnails/deploys)
 
 ### About the project
 
@@ -9,5 +11,5 @@ I've been an avid user of [Vivaldi browser](https://vivaldi.com/) for a long tim
 
 ### Technologies used
 
-It's created using React (CRA) and Styled-Components. 
+It's created using React (CRA) and Styled-Components.
 All image processing is done on the client-side, using the Canvas API.
