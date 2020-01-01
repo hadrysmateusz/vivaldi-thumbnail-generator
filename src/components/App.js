@@ -13,8 +13,8 @@ import GlobalStyle from "../globalStyle"
 import * as links from "../links"
 
 import { H2, H4, TextBlock, List } from "./CopywritingElements"
-import Blog from "./Blog"
-import PostPage from "./PostPage"
+import Blog from "./pages/BlogHome"
+import PostPage from "./pages/BlogPost"
 import NotFoundPage from "./pages/NotFound"
 import Generator from "./Generator"
 

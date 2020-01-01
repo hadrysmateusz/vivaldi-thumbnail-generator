@@ -2,10 +2,10 @@ import React from "react"
 import { Link } from "react-router-dom"
 import styled from "styled-components/macro"
 
-import { H1 } from "./CopywritingElements"
-import FluidContainer from "./FluidContainer"
-import logo from "../assets/logo-no-bg.png"
-import postImage from "./posts/GuideToFileHandling.png"
+import { H1 } from "../CopywritingElements"
+import FluidContainer from "../FluidContainer"
+import logo from "../../assets/logo-no-bg.png"
+import postImage from "../posts/GuideToFileHandling.png"
 
 const Blog = () => {
 	return (

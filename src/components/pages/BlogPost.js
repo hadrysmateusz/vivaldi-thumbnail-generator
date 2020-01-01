@@ -3,11 +3,11 @@ import { useParams, Redirect } from "react-router-dom"
 import styled from "styled-components/macro"
 import { useMeta, useTitle } from "react-meta-elements"
 
-import { H1 } from "./CopywritingElements"
-import FluidContainer from "./FluidContainer"
-import logo from "../assets/logo-no-bg.png"
-import GuideToFileHandling from "./posts/GuideToFileHandling"
-import NotFoundPage from "./pages/NotFound"
+import { H1 } from "../CopywritingElements"
+import FluidContainer from "../FluidContainer"
+import logo from "../../assets/logo-no-bg.png"
+import GuideToFileHandling from "../posts/GuideToFileHandling"
+import NotFoundPage from "./NotFound"
 
 const posts = {
 	"ultimate-guide-to-file-handling-in-client-side-javascript": {
