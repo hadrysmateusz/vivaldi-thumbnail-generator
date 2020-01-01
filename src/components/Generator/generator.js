@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, createContext, useState } from "react"
+import React, { useEffect, useReducer, createContext, useState, useRef } from "react"
 import { loadImage, getHostname } from "../../utils"
 import { trimImageWhitespace } from "../CanvasCommon"
 import { drawIcon, drawBackground, createVirtualCanvas } from "../CanvasCommon"
@@ -11,6 +11,8 @@ export const MAX_THUMBNAILS_IN_ARCHIVE = 15
 export const GeneratorContext = createContext()
 
 const Generator = ({ children }) => {
+	const iconCanvasRef = useRef()
+	const bgCanvasRef = useRef()
 	const [state, dispatch] = useReducer(reducer, defaultState)
 	const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 	const settings = useSettingsManager({
@@ -218,15 +220,9 @@ const Generator = ({ children }) => {
 
 	const context = {
 		thumbnails: {
-			isEmpty: isEmpty,
-			count: count,
 			list: thumbnails,
-			add: {
-				fromFiles: addFromFiles,
-				fromBookmarkUrl: addFromBookmarkUrl,
-				fromImageUrl: addFromImageUrl,
-				fromClipboard: addFromClipboard
-			},
+			count: count,
+			isEmpty: isEmpty,
 			renderAll: renderAll,
 			renderOne: renderOne,
 			clear: clear,
@@ -239,10 +235,20 @@ const Generator = ({ children }) => {
 				close: closeDrawer
 			}
 		},
+		editor: {
+			iconCanvasRef: iconCanvasRef,
+			bgCanvasRef: bgCanvasRef
+		},
 		uploader: {
 			isLoading: uploader.isLoading,
 			isError: uploader.isError,
 			isCanceled: uploader.isCanceled,
+			add: {
+				fromFiles: addFromFiles,
+				fromBookmarkUrl: addFromBookmarkUrl,
+				fromImageUrl: addFromImageUrl,
+				fromClipboard: addFromClipboard
+			},
 			progress: {
 				loaded: uploader.progressLoaded,
 				total: uploader.progressTotal

@@ -22,8 +22,8 @@ const numAvailableMethods = Object.values(availableMethods).reduce(
 )
 
 const Uploader = () => {
-	const { manager, isEmpty, count, add } = useThumbnails()
-	const { isLoading } = useUploader()
+	const { manager, isEmpty, count } = useThumbnails()
+	const { isLoading, add } = useUploader()
 	const [isModalOpen, setIsModalOpen] = useState()
 
 	const onFileUpload = async () => open() // modal gets closed in onDrop after selecting file

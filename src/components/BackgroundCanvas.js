@@ -1,25 +1,25 @@
-import React, { useEffect, useRef } from "react"
+import React, { useEffect } from "react"
 import {
 	useSizeCanvasToCssDimensions,
 	StyledCanvas,
 	drawBackground,
 	clearCanvas
 } from "./CanvasCommon"
-import { useSettings } from "./Generator"
+import { useSettings, useEditor } from "./Generator"
 
 const BackgroundCanvas = () => {
+	const { bgCanvasRef } = useEditor()
 	const { values } = useSettings()
-	const canvasRef = useRef()
-	useSizeCanvasToCssDimensions(canvasRef)
+	useSizeCanvasToCssDimensions(bgCanvasRef)
 
 	useEffect(() => {
 		// clear canvas to remove previous image
-		clearCanvas(canvasRef.current)
+		clearCanvas(bgCanvasRef.current)
 		// draw background color
-		drawBackground(canvasRef.current, values.bgColor)
-	}, [values.bgColor])
+		drawBackground(bgCanvasRef.current, values.bgColor)
+	}, [bgCanvasRef, values.bgColor])
 
-	return <StyledCanvas ref={canvasRef} />
+	return <StyledCanvas ref={bgCanvasRef} />
 }
 
 export default BackgroundCanvas
