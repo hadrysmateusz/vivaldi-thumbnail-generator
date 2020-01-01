@@ -22,7 +22,7 @@ const Generator = ({ children }) => {
 	const { thumbnails, selectedIndex, uploader, exporter } = state
 	const count = thumbnails ? thumbnails.length : 0
 	const isEmpty = count === 0
-	const selected = thumbnails[selectedIndex] || {}
+	const selected = thumbnails[selectedIndex] || null
 	const isExporterReady = !exporter.isLoading && !uploader.isLoading && !isEmpty
 	const isDownloadReady = !exporter.isLoading && !exporter.isError && exporter.archive
 

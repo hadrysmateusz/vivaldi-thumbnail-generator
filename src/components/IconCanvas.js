@@ -17,10 +17,10 @@ const IconCanvas = () => {
 		// clear canvas to remove previous image
 		clearCanvas(canvasRef.current)
 		// if there are no images yet, or they were all removed, exit to prevent errors
-		if (!selected.image) return
+		if (!selected || !selected.image) return
 		// draw the current image with the correct dimensions
 		drawIcon(canvasRef.current, selected.image, values.scale)
-	}, [values.scale, selected.image])
+	}, [values.scale, selected])
 
 	return <StyledCanvas ref={canvasRef} />
 }
