@@ -80,10 +80,11 @@ const EditorPage = () => {
 						of the planned features:
 					</TextBlock>
 					<TextBlock>
+						{/* TODO: add some checkboxes to show what is already done */}
 						<List>
 							<li>Per image settings overrides</li>
 							<li>Manually position the icon</li>
-							<li>Icon-based color palettes</li>
+							{/* <li>Icon-based color palettes</li> */}
 							<li>Importing icons from URL</li>
 							<li>Saving your preferences</li>
 						</List>
