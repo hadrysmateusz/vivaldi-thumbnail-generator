@@ -6,7 +6,8 @@
 const loadImage = (src) => {
 	return new Promise((resolve, reject) => {
 		const img = document.createElement("img")
-		img.crossOrigin = "Anonymous"
+		img.crossOrigin = "anonymous"
+		img.referrerpolicy = "no-referrer"
 		img.onload = () => resolve(img)
 		img.onerror = () => reject("Failed to load image")
 		img.src = src
