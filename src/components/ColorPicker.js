@@ -56,7 +56,7 @@ const ColorPicker = ({ value, onChange }) => {
 		<Container>
 			<SwatchesContainer>
 				{swatches.map((color) => (
-					<Swatch onClick={() => onPickSwatch(color)}>
+					<Swatch key={color} onClick={() => onPickSwatch(color)}>
 						<Color color={color} />
 					</Swatch>
 				))}
