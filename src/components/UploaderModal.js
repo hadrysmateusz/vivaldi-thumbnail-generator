@@ -1,10 +1,13 @@
 import React from "react"
 import styled from "styled-components/macro"
 import { center } from "../styleUtils"
-import { ReactComponent as UploadIcon } from "../assets/file-upload.svg"
-import { ReactComponent as LinkIcon } from "../assets/link.svg"
-import { ReactComponent as PasteIcon } from "../assets/paste.svg"
+// import { ReactComponent as UploadIcon } from "../assets/file-upload.svg"
+// import { ReactComponent as LinkIcon } from "../assets/link.svg"
+// import { ReactComponent as PasteIcon } from "../assets/paste.svg"
+import { ReactComponent as CrossIcon } from "../assets/cross.svg"
 import { cover } from "polished"
+import { resetButtonStyles } from "../styleUtils"
+import Searchbox from "./Searchbox"
 
 const UploaderModal = ({
 	onRequestClose,
@@ -14,32 +17,44 @@ const UploaderModal = ({
 	onImageUrl,
 	availableMethods
 }) => {
+	// TODO: this doesn't seem to work
 	const closeOnEsc = (e) => {
 		if (e.key === "Escape") {
 			onRequestClose()
 		}
 	}
 
-	const iconSize = "32px"
+	const onOverlayClick = (e) => {
+		// prevent clicks from inside the modal from closing it
+		if (e.target !== e.currentTarget) return
+		// call the onRequestClose handler
+		onRequestClose()
+	}
 
 	return (
-		<ModalContainer
-			onKeyDown={closeOnEsc}
-			onClick={(e) => {
-				// prevent click events on the trigger from propagating to the rest of the React tree
-				e.stopPropagation()
-				e.preventDefault()
-				// call the onRequestClose handler
-				onRequestClose()
-			}}
-		>
-			<ModalBox
-				onClick={(e) => {
-					// prevent click events in the modal from accidentaly closing it
-					e.stopPropagation()
-				}}
-			>
-				{availableMethods.fileUpload && (
+		<ModalContainer onKeyDown={closeOnEsc} onClick={onOverlayClick}>
+			<ModalBox>
+				<Header>
+					<Title>Add Icons</Title>
+					<CloseButton onClick={onRequestClose}>
+						<CrossIcon width={10} height={10} title="Close" />
+					</CloseButton>
+				</Header>
+				<Navbar>
+					<NavItem>Upload</NavItem>
+					<NavItem>Bookmark Url</NavItem>
+				</Navbar>
+				<SearchContainer>
+					<Searchbox />
+				</SearchContainer>
+				<ContentContainer></ContentContainer>
+				<Footer>
+					<input type="checkbox" id="trim-whitespace-checkbox" />
+					<label for="trim-whitespace-checkbox">Trim Whitespace</label>
+				</Footer>
+			</ModalBox>
+
+			{/* {availableMethods.fileUpload && (
 					<ModalButton onClick={onFileUpload} autoFocus>
 						<UploadIcon width={iconSize} height={iconSize} title="Upload File" />
 						<ButtonLabel>From file</ButtonLabel>
@@ -66,11 +81,72 @@ const UploaderModal = ({
 						<PasteIcon width={iconSize} height={iconSize} title="Get Image From URL" />
 						<ButtonLabel>Image URL (beta)</ButtonLabel>
 					</ModalButton>
-				)}
-			</ModalBox>
+				)} */}
 		</ModalContainer>
 	)
 }
+
+const Header = styled.div`
+	margin: 20px 0;
+	display: grid;
+	grid-template-columns: 1fr auto;
+	align-items: center;
+`
+const Title = styled.div`
+	font-weight: bold;
+	font-size: 14px;
+	line-height: 20px;
+`
+const CloseButton = styled.button`
+	${resetButtonStyles};
+	padding: 10px;
+	margin: -10px;
+`
+const Navbar = styled.div`
+	--side-padding: 10px;
+	--side-margin: calc(-1 * var(--side-padding));
+
+	padding-bottom: 10px;
+	margin-left: var(--side-margin);
+	margin-right: var(--side-margin);
+
+	border-bottom: 2px solid #f5f5f5;
+
+	display: flex;
+`
+const NavItem = styled.div`
+	color: ${(p) => (p.active ? "#383838" : "#B4B4B4")};
+	text-transform: uppercase;
+	font-size: 11px;
+	line-height: 16px;
+	font-weight: bold;
+	padding: 0 var(--side-padding);
+	cursor: pointer;
+	transition: color 200ms ease;
+	&:hover {
+		color: #383838;
+	}
+`
+
+const SearchContainer = styled.div`
+	margin: 20px 0;
+`
+
+const Footer = styled.div`
+	margin: 20px 0;
+	display: flex;
+`
+
+const ContentContainer = styled.div`
+	height: 140px;
+	border: 2px dashed #e2e2e2;
+	border-radius: 6px;
+	background: white;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+`
 
 const ModalContainer = styled.div`
 	${cover()}
@@ -84,34 +160,9 @@ const ModalBox = styled.div`
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 	position: relative;
 	border-radius: 5px;
-	height: 140px;
-	display: flex;
-	width: auto;
+	width: 540px;
 	overflow: hidden;
-`
-
-const ModalButton = styled.button`
-	:focus {
-		outline: 2px dashed #aaa;
-		outline-offset: -2px;
-	}
-	background: white;
-	display: block;
-	transition: color 200ms ease;
-	height: 100%;
-	width: 140px;
-	border: none;
-	${center}
-	display: flex;
-	flex-direction: column;
-	& + * {
-		border-left: 1px solid #e1e1e1;
-	}
-`
-
-const ButtonLabel = styled.div`
-	margin-top: 12px;
-	color: #383838;
+	padding: 0 20px;
 `
 
 export default UploaderModal

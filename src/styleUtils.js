@@ -5,3 +5,14 @@ export const center = css`
 	justify-content: center;
 	align-items: center;
 `
+
+export const resetButtonStyles = css`
+	padding: 0;
+	background: none;
+	border: none;
+	box-shadow: none;
+	display: block;
+	border-radius: 0;
+	outline: none;
+	cursor: pointer;
+`
