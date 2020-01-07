@@ -6,8 +6,11 @@ export const useSettingsManager = (defaultState) => {
 
 	const settings = useMemo(() => {
 		const settings = {
+			// 'values' contains an object of settings values
 			values: {},
+			// 'set' contains an object of setters (with the same names as the values)
 			set: {},
+			// 'editor' contains methods for interacting with the settings editor menu and its state
 			editor: {
 				toggle: () => setIsSettingsOpen((val) => !val),
 				close: () => setIsSettingsOpen(false),

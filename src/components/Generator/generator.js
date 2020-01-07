@@ -18,7 +18,8 @@ const Generator = ({ children }) => {
 	const settings = useSettingsManager({
 		bgColor: "#fff",
 		scale: 45,
-		exportDimensions: [840, 700]
+		exportDimensions: [840, 700],
+		trimWhitespace: true
 	})
 
 	const { thumbnails, selectedIndex, uploader, exporter } = state

@@ -1,13 +1,15 @@
 import React from "react"
 import styled from "styled-components/macro"
-import { center } from "../styleUtils"
+import { cover } from "polished"
 // import { ReactComponent as UploadIcon } from "../assets/file-upload.svg"
 // import { ReactComponent as LinkIcon } from "../assets/link.svg"
 // import { ReactComponent as PasteIcon } from "../assets/paste.svg"
-import { ReactComponent as CrossIcon } from "../assets/cross.svg"
-import { cover } from "polished"
+import { useSettings } from "./Generator"
 import { resetButtonStyles } from "../styleUtils"
+import { center } from "../styleUtils"
 import Searchbox from "./Searchbox"
+import { ReactComponent as CrossIcon } from "../assets/cross.svg"
+import Checkbox from "./Checkbox"
 
 const UploaderModal = ({
 	onRequestClose,
@@ -17,6 +19,8 @@ const UploaderModal = ({
 	onImageUrl,
 	availableMethods
 }) => {
+	const settings = useSettings()
+
 	// TODO: this doesn't seem to work
 	const closeOnEsc = (e) => {
 		if (e.key === "Escape") {
@@ -29,6 +33,11 @@ const UploaderModal = ({
 		if (e.target !== e.currentTarget) return
 		// call the onRequestClose handler
 		onRequestClose()
+	}
+
+	const onTrimWhitespaceCheckboxChange = (e) => {
+		console.log(e.target.checked)
+		settings.set.trimWhitespace(e.target.checked)
 	}
 
 	return (
@@ -49,8 +58,13 @@ const UploaderModal = ({
 				</SearchContainer>
 				<ContentContainer></ContentContainer>
 				<Footer>
-					<input type="checkbox" id="trim-whitespace-checkbox" />
-					<label for="trim-whitespace-checkbox">Trim Whitespace</label>
+					<CheckboxLabel>
+						<Checkbox
+							value={settings.values.trimWhitespace}
+							onChange={onTrimWhitespaceCheckboxChange}
+						/>
+						<span>Trim Whitespace</span>
+					</CheckboxLabel>
 				</Footer>
 			</ModalBox>
 
@@ -85,6 +99,18 @@ const UploaderModal = ({
 		</ModalContainer>
 	)
 }
+
+const CheckboxLabel = styled.label`
+	display: flex;
+	align-items: center;
+	span {
+		user-select: none;
+		margin-left: 8px;
+		font-size: 12px;
+		line-height: 16px;
+		color: #777;
+	}
+`
 
 const Header = styled.div`
 	margin: 20px 0;
