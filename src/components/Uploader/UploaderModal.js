@@ -1,22 +1,15 @@
 import React, { useState } from "react"
 import styled from "styled-components/macro"
 import { cover } from "polished"
-import { useDropzone } from "react-dropzone"
 
-import { useSettings, useUploader } from "../Generator"
-import Searchbox from "../Searchbox"
-import Button from "../Button"
-import FileItem from "../FileItem"
-import Checkbox from "../Checkbox"
+import { useUploader } from "../Generator"
+
 import { resetButtonStyles, center } from "../../styleUtils"
 import { ReactComponent as CrossIcon } from "../../assets/cross.svg"
-import { ReactComponent as UploadIcon } from "../../assets/file-upload.svg"
+import FileUploader from "./FileUploader"
 // import { ReactComponent as LinkIcon } from "../../assets/link.svg"
 // import { ReactComponent as PasteIcon } from "../../assets/paste.svg"
-import { DropOverlay } from "./common"
-import { readFile, getNameFromFile } from "../../utils"
 
-// bookmark url works, but produces very low quality images
 const methods = {
 	fileUpload: { active: true, name: "fileUpload" },
 	imageUrl: { false: true, name: "imageUrl" },
@@ -24,10 +17,6 @@ const methods = {
 	bookmarkUrl: { active: true, name: "bookmarkUrl" }
 }
 
-/* TODO: make the uploader modal work a bit like the file drawer:
-	show previews of the images first (maybe using URL.createObjectURL) allow the user to remove the ones they don't want, change the trim whitespace settings and then confirm which will trigger the old adding flow (show the progress on the button text)
-	maybe as a detail make the content container border solid (and maybe darker) after adding items
-*/
 const UploaderModal = ({ onRequestClose }) => {
 	const { isLoading, add } = useUploader()
 	const [selectedMethod, setSelectedMethod] = useState(methods.fileUpload.name)
@@ -91,7 +80,7 @@ const UploaderModal = ({ onRequestClose }) => {
 				</Navbar>
 
 				{selectedMethod === "fileUpload" && (
-					<FileUploadComponent
+					<FileUploader
 						onRequestClose={onRequestClose}
 						add={add.fromFiles}
 						isLoading={isLoading}
@@ -101,130 +90,6 @@ const UploaderModal = ({ onRequestClose }) => {
 		</ModalContainer>
 	)
 }
-
-const FileUploadComponent = ({ onRequestClose, add, isLoading }) => {
-	const [icons, setIcons] = useState([])
-
-	const onAdd = async () => {
-		await add(icons)
-		onRequestClose()
-	}
-
-	const onDrop = async (acceptedFiles) => {
-		// if no new files are uploaded, exit silently
-		if (!acceptedFiles || acceptedFiles.length === 0) return
-
-		const newIcons = await Promise.all(
-			acceptedFiles.map(async (file) => {
-				try {
-					const url = await readFile(file)
-					const name = getNameFromFile(file)
-					const id = name + Date.now()
-					return { name, url, id }
-				} catch (error) {
-					// TODO: custom handling for an error on a single file
-					throw error // before the custom handling is done, rethrow the error
-				}
-			})
-		)
-
-		setIcons((oldIcons) => [...oldIcons, ...newIcons])
-	}
-
-	const dropzoneOptions = {
-		onDrop,
-		accept: "image/*",
-		noClick: true,
-		preventDropOnDocument: true
-	}
-
-	const {
-		getRootProps,
-		getInputProps,
-		open: openFileSelector,
-		isDragActive
-	} = useDropzone(dropzoneOptions)
-
-	const isEmpty = !icons || icons.length === 0
-
-	return (
-		<>
-			<SearchContainer>
-				<Searchbox />
-			</SearchContainer>
-
-			<ContentContainer {...getRootProps()}>
-				{isEmpty ? (
-					<EmptyStateContainer>
-						<EmptyStateIconContainer>
-							<UploadIcon width={24} height={31} />
-						</EmptyStateIconContainer>
-						<EmptyStateHeading>Drop icons here to upload</EmptyStateHeading>
-						<EmptyStateBody>or</EmptyStateBody>
-						<Button variant="primary" onClick={openFileSelector}>
-							Select Files
-						</Button>
-					</EmptyStateContainer>
-				) : (
-					<FileItemsContainer>
-						{icons.map((icon) => (
-							<FileItem key={icon.id} previewSrc={icon.url} />
-						))}
-					</FileItemsContainer>
-				)}
-
-				{/* drag overlay */}
-				{isDragActive && <DropOverlay>Drop here to add</DropOverlay>}
-
-				{/* input */}
-				<input {...getInputProps()} />
-			</ContentContainer>
-
-			<Footer>
-				<TrimWhitespace />
-				<Button
-					variant="primary"
-					onClick={onAdd}
-					style={{ marginLeft: "auto" }}
-					disabled={isEmpty || isLoading}
-				>
-					Add
-				</Button>
-			</Footer>
-		</>
-	)
-}
-
-const TrimWhitespace = () => {
-	const settings = useSettings()
-
-	const onTrimWhitespaceCheckboxChange = (e) => {
-		settings.set.trimWhitespace(e.target.checked)
-	}
-
-	return (
-		<CheckboxLabel>
-			<Checkbox
-				value={settings.values.trimWhitespace}
-				onChange={onTrimWhitespaceCheckboxChange}
-			/>
-			<span>Trim Whitespace</span>
-		</CheckboxLabel>
-	)
-}
-
-const CheckboxLabel = styled.label`
-	display: flex;
-	align-items: center;
-	cursor: pointer;
-	span {
-		user-select: none;
-		margin-left: 8px;
-		font-size: 12px;
-		line-height: 16px;
-		color: #777;
-	}
-`
 
 const Header = styled.div`
 	margin: 20px 0;
@@ -268,28 +133,6 @@ const NavItem = styled.div`
 	}
 `
 
-const SearchContainer = styled.div`
-	margin: 20px 0;
-`
-
-const Footer = styled.div`
-	margin: 20px 0;
-	display: flex;
-`
-
-const ContentContainer = styled.div`
-	height: 140px;
-	border: 2px dashed #e2e2e2;
-	border-radius: 6px;
-	background: white;
-	/* display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center; */
-	position: relative;
-	overflow: hidden;
-`
-
 const ModalContainer = styled.div`
 	${cover()}
 	${center}
@@ -305,48 +148,6 @@ const ModalBox = styled.div`
 	width: 540px;
 	overflow: hidden;
 	padding: 0 20px;
-`
-
-const EmptyStateContainer = styled.div`
-	width: 100%;
-	height: 100%;
-	${center}
-	flex-direction: column;
-	background: white;
-`
-
-const EmptyStateIconContainer = styled.div`
-	margin-bottom: 8px;
-	path {
-		fill: #e2e2e2;
-	}
-`
-
-const EmptyStateHeading = styled.div`
-	color: var(--light-gray);
-	font-weight: bold;
-	font-size: 12px;
-	line-height: 16px;
-`
-
-const EmptyStateBody = styled.div`
-	color: var(--light-gray);
-	font-size: 10px;
-	line-height: 16px;
-`
-
-const FileItemsContainer = styled.div`
-	height: 100%;
-	padding: 10px;
-	display: flex;
-	justify-content: flex-start;
-	overflow-x: scroll;
-	> * {
-		flex: 0 0 100px;
-		&:not(:last-child) {
-			margin-right: 10px;
-		}
-	}
 `
 
 export default UploaderModal
