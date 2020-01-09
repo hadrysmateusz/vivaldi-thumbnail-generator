@@ -21,7 +21,8 @@ const FileDrawer = () => {
 					{list.map((thumbnail) => (
 						<FileItem
 							key={thumbnail.id}
-							thumbnail={thumbnail}
+							previewSrc={thumbnail.image.src}
+							onRemove={thumbnail.remove}
 							/* autoFocus={i === 0 ? true : undefined} */
 						/>
 					))}

@@ -3,7 +3,7 @@ import { loadImage, getHostname } from "../../utils"
 import { trimImageWhitespace } from "../CanvasCommon"
 import { drawIcon, drawBackground, createVirtualCanvas } from "../CanvasCommon"
 import { useSettingsManager } from "./settings"
-import { getBase64FromDataUri, readFile } from "../../utils"
+import { getBase64FromDataUri /* , readFile */ } from "../../utils"
 import JSZip from "jszip"
 import FileSaver from "file-saver"
 
@@ -29,16 +29,38 @@ const Generator = ({ children }) => {
 	const isExporterReady = !exporter.isLoading && !uploader.isLoading && !isEmpty
 	const isDownloadReady = !exporter.isLoading && !exporter.isError && exporter.archive
 
-	const addFromFiles = async (files) => {
+	// const addFromFiles = async (files) => {
+	// 	try {
+	// 		// start upload process
+	// 		dispatch({ type: "UPLOAD_INIT", payload: files.length })
+	// 		// start a separate upload job for every file
+	// 		files.forEach(async (file) => {
+	// 			if (uploader.isCanceled) return // skip the processing after cancellation
+	// 			try {
+	// 				const url = await readFile(file)
+	// 				const name = file.name.substring(0, file.name.lastIndexOf("."))
+	// 				const thumbnail = await createThumbnail(url, name)
+	// 				// finish the job for this image
+	// 				dispatch({ type: "UPLOAD_PROGRESS", payload: thumbnail })
+	// 			} catch (error) {
+	// 				// TODO: custom handling for an error on a single file
+	// 				throw error // before the custom handling is done, rethrow the error
+	// 			}
+	// 		})
+	// 	} catch (error) {
+	// 		dispatch({ type: "UPLOAD_FAILURE", error })
+	// 	}
+	// }
+
+	const addFromFiles = async (icons) => {
 		try {
 			// start upload process
-			dispatch({ type: "UPLOAD_INIT", payload: files.length })
+			dispatch({ type: "UPLOAD_INIT", payload: icons.length })
 			// start a separate upload job for every file
-			files.forEach(async (file) => {
+			icons.forEach(async (icon) => {
 				if (uploader.isCanceled) return // skip the processing after cancellation
 				try {
-					const url = await readFile(file)
-					const name = file.name.substring(0, file.name.lastIndexOf("."))
+					const { url, name } = icon
 					const thumbnail = await createThumbnail(url, name)
 					// finish the job for this image
 					dispatch({ type: "UPLOAD_PROGRESS", payload: thumbnail })
@@ -165,15 +187,19 @@ const Generator = ({ children }) => {
 		if (!name) throw new Error(errorBase + "name is missing")
 		// generate unique id (TODO: test this or use shortid)
 		const id = name + Date.now()
-		// generate and process the image object
-		let image
-		image = await loadImage(url)
-		image = await trimImageWhitespace(image)
+		// create an image from the url
+		let image = await loadImage(url)
+		// if the proper setting is set, trim the image whitespace
+		if (settings.values.trimWhitespace) {
+			image = await trimImageWhitespace(image)
+		}
 
 		const thumbnail = {
 			id,
-			image,
 			name,
+			image,
+			imageUrl: image.src,
+			isWhitespaceTrimmed: settings.values.trimWhitespace,
 			renderedUrl: null,
 			lastRendered: null // TODO: lastRendered can later be used for performance optimization
 		}

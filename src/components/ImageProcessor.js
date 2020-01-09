@@ -2,7 +2,7 @@ import React from "react"
 import styled from "styled-components/macro"
 
 import NavigationButtons from "./NavigationButtons"
-import Uploader from "./Uploader"
+import Uploader from "./Uploader/Uploader"
 import FileDrawer from "./FileDrawer"
 import { useUploader, useThumbnails, useSettings } from "./Generator"
 import BackgroundCanvas from "./BackgroundCanvas"

@@ -3,7 +3,6 @@ import styled, { css } from "styled-components/macro"
 import { ReactComponent as CheckIcon } from "../assets/checkmark.svg"
 
 const Checkbox = ({ value, onChange }) => {
-	console.log(value)
 	return (
 		<div>
 			<Input
