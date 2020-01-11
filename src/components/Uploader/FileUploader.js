@@ -95,7 +95,7 @@ const FileUploadComponent = ({ onRequestClose, add, isLoading }) => {
 						</EmptyStateIconContainer>
 						<EmptyStateHeading>Drop icons here to upload</EmptyStateHeading>
 						<EmptyStateBody>or</EmptyStateBody>
-						<Button variant="primary" onClick={openFileSelector}>
+						<Button variant="primary" size="small" onClick={openFileSelector}>
 							Select Files
 						</Button>
 					</EmptyStateContainer>

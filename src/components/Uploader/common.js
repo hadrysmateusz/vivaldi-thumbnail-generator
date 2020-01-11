@@ -60,4 +60,5 @@ export const EmptyStateBody = styled.div`
 	color: var(--light-gray);
 	font-size: 10px;
 	line-height: 16px;
+	margin-bottom: 2px;
 `

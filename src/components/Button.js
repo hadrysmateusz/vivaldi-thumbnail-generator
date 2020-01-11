@@ -1,5 +1,26 @@
 import styled, { css } from "styled-components/macro"
 
+const buttonSizes = {
+	normal: css`
+		border-radius: 5px;
+		font-size: 14px;
+		line-height: 18px;
+		height: 32px;
+		padding: 0 16px;
+		@media (min-width: 732px) {
+			padding: 0 32px;
+			height: 40px;
+		}
+	`,
+	small: css`
+		border-radius: 3px;
+		font-size: 11px;
+		line-height: 16px;
+		height: 20px;
+		padding: 0 12px;
+	`
+}
+
 const buttonVariants = {
 	normal: css`
 		background: white;
@@ -61,7 +82,6 @@ const enabledOnlyStyles = css`
 
 const Button = styled.button`
 	display: block;
-	border-radius: 5px;
 	border: none;
 	transition-property: background, color, box-shadow;
 	transition-duration: 200ms;
@@ -71,15 +91,9 @@ const Button = styled.button`
 	justify-content: center;
 	align-items: center;
 	font-weight: bold;
-	font-size: 14px;
-	line-height: 18px;
-	height: 32px;
-	padding: 0 16px;
-	@media (min-width: 732px) {
-		padding: 0 32px;
-		height: 40px;
-	}
 
+	${(p) => (p.size ? buttonSizes[p.size] : buttonSizes.normal)}
+	
 	/* 
 		the split of disabled and enabled-only styles is intentional 
 		enabled-only styles should be overriden by variant styles 
