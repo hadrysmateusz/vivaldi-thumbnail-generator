@@ -6,7 +6,7 @@ import { hideVisually } from "polished"
 
 import SettingsEditor from "./SettingsEditor"
 import ImageProcessor from "./ImageProcessor"
-import Exporter, { GenerateButton } from "./Exporter"
+import Exporter from "./Exporter"
 import FluidContainer from "./FluidContainer"
 import { ReactComponent as TwitterIcon } from "../assets/twitter.svg"
 import GlobalStyle from "../globalStyle"
@@ -52,8 +52,6 @@ const EditorPage = () => {
 					<ImageProcessor />
 					<SettingsEditor />
 				</GeneratorContainer>
-
-				<GenerateButton />
 
 				<FluidContainer>
 					<H2>How to use</H2>

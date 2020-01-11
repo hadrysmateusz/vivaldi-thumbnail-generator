@@ -1,6 +1,6 @@
 import React from "react"
 import styled from "styled-components/macro"
-import { Link, Redirect, useHistory } from "react-router-dom"
+import { Link, Redirect } from "react-router-dom"
 import { cover } from "polished"
 
 import { useExporter } from "./Generator"
@@ -8,7 +8,6 @@ import Button from "./Button"
 import Spacer from "./Spacer"
 import FluidContainer from "./FluidContainer"
 import SharingButtons from "./SharingButtons"
-import Loader from "./Loader"
 import { center } from "../styleUtils"
 import { useThumbnails } from "./Generator"
 
@@ -27,7 +26,7 @@ const Exporter = () => {
 				</HeaderContainer>
 				<ContentContainer>
 					{isLoading ? (
-						<Loader>Generating...</Loader>
+						<LoaderContainer>Generating...</LoaderContainer>
 					) : isError ? (
 						<EmptyState>Oops!</EmptyState>
 					) : isEmpty ? (
@@ -91,23 +90,17 @@ const ExporterItem = ({ name, url }) => (
 	</ItemContainer>
 )
 
-export const GenerateButton = () => {
-	const { isReady, renderAll } = useExporter()
-	const history = useHistory()
-
-	const handleClick = () => {
-		renderAll() // don't wait for this promise to resolve
-		history.push("/downloads")
-	}
-
-	return (
-		<GenerateButtonContainer>
-			<Button onClick={handleClick} disabled={!isReady} variant="primary">
-				Generate
-			</Button>
-		</GenerateButtonContainer>
-	)
-}
+const LoaderContainer = styled.div`
+	${center}
+	width: 100%;
+	height: 100%;
+	background: white;
+	color: var(--light-gray);
+	font-size: 24px;
+	line-height: 48px;
+	font-weight: bold;
+	min-height: 100px;
+`
 
 const EmptyState = styled.div`
 	${center}
@@ -121,12 +114,6 @@ const EmptyState = styled.div`
 		color: black;
 		text-decoration: underline;
 	}
-`
-
-const GenerateButtonContainer = styled.div`
-	display: flex;
-	justify-content: center;
-	margin: 64px auto;
 `
 
 const FooterText = styled.div`

@@ -1,15 +1,17 @@
 import React from "react"
 import styled from "styled-components/macro"
+import { useHistory } from "react-router-dom"
 
 import NavigationButtons from "./NavigationButtons"
-import Uploader from "./Uploader/Uploader"
+import { UploaderModal } from "./Uploader"
 import FileDrawer from "./FileDrawer"
-import { useUploader, useThumbnails, useSettings } from "./Generator"
+import { useUploader, useThumbnails, useSettings, useExporter } from "./Generator"
 import BackgroundCanvas from "./BackgroundCanvas"
 import IconCanvas from "./IconCanvas"
 import IconButton from "./IconButton"
-import Loader from "./Loader"
 import { center } from "../styleUtils"
+import Spacer from "./Spacer"
+import Button from "./Button"
 
 import { VIVALDI_THUMBNAIL_RATIO } from "../constants"
 import { ReactComponent as SettingsIcon } from "../assets/cog.svg"
@@ -17,40 +19,66 @@ import { ReactComponent as UploadIcon } from "../assets/file-upload.svg"
 import transparency from "../assets/transparency.png"
 
 function ImageProcessor() {
-	const { isLoading, progress } = useUploader()
 	const { isEmpty, manager, count } = useThumbnails()
+	const uploader = useUploader()
 
 	return (
 		<RatioContainer>
 			<InnerContainer>
-				{isLoading ? (
-					<Loader>
-						Loading ({progress.loaded}/{progress.total})
-					</Loader>
+				{uploader.isLoading ? (
+					<Loader />
 				) : isEmpty ? (
-					<EmptyState>
-						<EmptyStateIcon />
-						<EmptyStateHeading>There are no icons here yet</EmptyStateHeading>
-						<EmptyStateBody>
-							Select or drop files here (PNG & SVG work best)
-						</EmptyStateBody>
-					</EmptyState>
+					<EmptyState />
 				) : manager.isOpen ? (
 					<FileDrawer />
 				) : (
 					<>
 						<BackgroundCanvas />
 						<IconCanvas />
+						{/* <Uploader /> */}
 						{count > 1 && <NavigationButtons />}
-						{!isEmpty && <SettingsButton />}
 					</>
 				)}
 
-				{!manager.isOpen && <Uploader />}
+				{!manager.isOpen && (
+					<>
+						<TopButtons>{!isEmpty && <SettingsButton />}</TopButtons>
+						<BottomButtons>
+							<UploaderButton />
+							{!isEmpty && (
+								<>
+									<ManagerButton />
+									<Spacer />
+									<GenerateButton />
+								</>
+							)}
+						</BottomButtons>
+					</>
+				)}
+
+				{uploader.isOpen && <UploaderModal onRequestClose={uploader.close} />}
 			</InnerContainer>
 		</RatioContainer>
 	)
 }
+
+const Loader = () => {
+	const uploader = useUploader()
+	const { loaded, total } = uploader.progress
+	return (
+		<LoaderContainer>
+			Loading {loaded}/{total}
+		</LoaderContainer>
+	)
+}
+
+const EmptyState = () => (
+	<EmptyStateContainer>
+		<EmptyStateIcon />
+		<EmptyStateHeading>There are no icons here yet</EmptyStateHeading>
+		<EmptyStateBody>Add some to get started</EmptyStateBody>
+	</EmptyStateContainer>
+)
 
 const SettingsButton = () => {
 	const { editor } = useSettings()
@@ -63,6 +91,85 @@ const SettingsButton = () => {
 		</SettingsButtonContainer>
 	)
 }
+
+const GenerateButton = () => {
+	const { isReady, renderAll } = useExporter()
+	const history = useHistory()
+
+	const handleClick = () => {
+		renderAll() // don't wait for this promise to resolve
+		history.push("/downloads")
+	}
+
+	return (
+		<Button onClick={handleClick} disabled={!isReady} variant="primary">
+			Generate
+		</Button>
+	)
+}
+
+const UploaderButton = () => {
+	const thumbnails = useThumbnails()
+	const uploader = useUploader()
+
+	return (
+		<Button
+			onClick={uploader.open}
+			variant={!thumbnails.isEmpty ? "normal" : "primary"}
+			disabled={uploader.isLoading}
+		>
+			{uploader.isLoading ? "Loading" : "Add Icons"}
+		</Button>
+	)
+}
+
+const ManagerButton = () => {
+	const thumbnails = useThumbnails()
+	const uploader = useUploader()
+
+	return (
+		<Button onClick={thumbnails.manager.open} disabled={uploader.isLoading}>
+			Manage Icons ({thumbnails.count})
+		</Button>
+	)
+}
+
+const LoaderContainer = styled.div`
+	${center}
+	width: 100%;
+	height: 100%;
+	background: white;
+	color: var(--light-gray);
+	font-size: 24px;
+	line-height: 48px;
+	font-weight: bold;
+	min-height: 100px;
+`
+
+const BottomButtons = styled.div`
+	width: 100%;
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	padding: 0 20px 20px 20px;
+	display: flex;
+	align-items: center;
+	> * + * {
+		margin-left: 20px;
+	}
+`
+const TopButtons = styled.div`
+	width: 100%;
+	position: absolute;
+	left: 0;
+	top: 0;
+	padding: 0 20px 20px 20px;
+	display: flex;
+	align-items: center;
+	> * + * {
+		margin-left: 20px;
+	}
+`
 
 const SettingsButtonContainer = styled.div`
 	position: absolute;
@@ -99,7 +206,7 @@ const RatioContainer = styled.div`
 	}
 `
 
-const EmptyState = styled.div`
+const EmptyStateContainer = styled.div`
 	width: 100%;
 	height: 100%;
 	${center}

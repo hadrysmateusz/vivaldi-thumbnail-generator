@@ -58,6 +58,8 @@ const Generator = ({ children }) => {
 	const nextIcon = () => dispatch({ type: "SELECT_NEXT_ICON" })
 	const openDrawer = () => setIsDrawerOpen(true)
 	const closeDrawer = () => setIsDrawerOpen(false)
+	const openUploader = () => dispatch({ type: "UPLOADER_OPEN_MODAL" })
+	const closeUploader = () => dispatch({ type: "UPLOADER_CLOSE_MODAL" })
 
 	const renderAll = async () => {
 		dispatch({ type: "EXPORT_INIT" })
@@ -209,10 +211,13 @@ const Generator = ({ children }) => {
 			bgCanvasRef: bgCanvasRef
 		},
 		uploader: {
+			isOpen: uploader.isOpen,
 			isLoading: uploader.isLoading,
 			isError: uploader.isError,
 			isCanceled: uploader.isCanceled,
 			add: add,
+			open: openUploader,
+			close: closeUploader,
 			progress: {
 				loaded: uploader.progressLoaded,
 				total: uploader.progressTotal
@@ -233,11 +238,12 @@ const Generator = ({ children }) => {
 
 const defaultState = {
 	uploader: {
-		progressTotal: 0,
-		progressLoaded: 0,
+		isOpen: false,
 		isLoading: false,
 		isError: false,
-		isCanceled: false
+		isCanceled: false,
+		progressTotal: 0,
+		progressLoaded: 0
 	},
 	exporter: {
 		isLoading: false,
@@ -259,6 +265,7 @@ const reducer = (state, action) => {
 				...state,
 				uploader: {
 					...uploader,
+					isOpen: false,
 					isLoading: true,
 					isError: false,
 					isCanceled: false,
@@ -311,6 +318,22 @@ const reducer = (state, action) => {
 				uploader: {
 					...uploader,
 					progressLoaded: uploader.progressLoaded + 1
+				}
+			}
+		case "UPLOADER_OPEN_MODAL":
+			return {
+				...state,
+				uploader: {
+					...uploader,
+					isOpen: true
+				}
+			}
+		case "UPLOADER_CLOSE_MODAL":
+			return {
+				...state,
+				uploader: {
+					...uploader,
+					isOpen: false
 				}
 			}
 		case "EXPORT_INIT":
