@@ -36,7 +36,7 @@ const Uploader = () => {
 		)
 
 		// transform the files and add to file manager state
-		await add.fromFiles(icons)
+		await add(icons)
 		closeModal()
 	}
 

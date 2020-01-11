@@ -83,16 +83,12 @@ const UploaderModal = ({ onRequestClose }) => {
 				</Navbar>
 
 				{selectedMethod === "fileUpload" && (
-					<FileUploader
-						onRequestClose={onRequestClose}
-						add={add.fromFiles}
-						isLoading={isLoading}
-					/>
+					<FileUploader onRequestClose={onRequestClose} add={add} isLoading={isLoading} />
 				)}
 				{selectedMethod === "bookmarkUrl" && (
 					<AddFromBookmark
 						onRequestClose={onRequestClose}
-						add={add.fromBookmarkUrl}
+						add={add}
 						isLoading={isLoading}
 					/>
 				)}

@@ -33,34 +33,9 @@ const Generator = ({ children }) => {
 	const isExporterReady = !exporter.isLoading && !uploader.isLoading && !isEmpty
 	const isDownloadReady = !exporter.isLoading && !exporter.isError && exporter.archive
 
-	// const addFromFiles = async (files) => {
-	// 	try {
-	// 		// start upload process
-	// 		dispatch({ type: "UPLOAD_INIT", payload: files.length })
-	// 		// start a separate upload job for every file
-	// 		files.forEach(async (file) => {
-	// 			if (uploader.isCanceled) return // skip the processing after cancellation
-	// 			try {
-	// 				const url = await readFile(file)
-	// 				const name = file.name.substring(0, file.name.lastIndexOf("."))
-	// 				const thumbnail = await createThumbnail(url, name)
-	// 				// finish the job for this image
-	// 				dispatch({ type: "UPLOAD_PROGRESS", payload: thumbnail })
-	// 			} catch (error) {
-	// 				// TODO: custom handling for an error on a single file
-	// 				throw error // before the custom handling is done, rethrow the error
-	// 			}
-	// 		})
-	// 	} catch (error) {
-	// 		dispatch({ type: "UPLOAD_FAILURE", error })
-	// 	}
-	// }
-
-	const addFromFiles = async (icons) => {
+	const add = async (icons) => {
 		try {
-			// start upload process
 			dispatch({ type: "UPLOAD_INIT", payload: icons.length })
-			// start a separate upload job for every file
 			icons.forEach(async (icon) => {
 				if (uploader.isCanceled) return // skip the processing after cancellation
 				try {
@@ -76,33 +51,6 @@ const Generator = ({ children }) => {
 		} catch (error) {
 			dispatch({ type: "UPLOAD_FAILURE", error })
 		}
-	}
-
-	const addFromBookmarkUrl = async (icon) => {
-		dispatch({ type: "UPLOAD_INIT", payload: 1 })
-		try {
-			const { url, name } = icon
-			const thumbnail = await createThumbnail(url, name)
-			dispatch({ type: "UPLOAD_PROGRESS", payload: thumbnail })
-		} catch (error) {
-			dispatch({ type: "UPLOAD_FAILURE", error })
-		}
-	}
-
-	const addFromImageUrl = async (url) => {
-		dispatch({ type: "UPLOAD_INIT", payload: 1 })
-		try {
-			// const response = await fetch("/.netlify/functions/fetchImage")
-			var name = url.substring(url.lastIndexOf("/") + 1)
-			const thumbnail = await createThumbnail(url, name)
-			dispatch({ type: "UPLOAD_PROGRESS", payload: thumbnail })
-		} catch (error) {
-			dispatch({ type: "UPLOAD_FAILURE", error })
-		}
-	}
-
-	const addFromClipboard = async () => {
-		alert("not implemented")
 	}
 
 	const clear = () => dispatch({ type: "FILES_REMOVE_ALL" })
@@ -264,12 +212,7 @@ const Generator = ({ children }) => {
 			isLoading: uploader.isLoading,
 			isError: uploader.isError,
 			isCanceled: uploader.isCanceled,
-			add: {
-				fromFiles: addFromFiles,
-				fromBookmarkUrl: addFromBookmarkUrl,
-				fromImageUrl: addFromImageUrl,
-				fromClipboard: addFromClipboard
-			},
+			add: add,
 			progress: {
 				loaded: uploader.progressLoaded,
 				total: uploader.progressTotal
