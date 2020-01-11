@@ -22,6 +22,10 @@ import TrimWhitespaceCheckbox from "./TrimWhitespaceCheckbox"
 const FileUploadComponent = ({ onRequestClose, add, isLoading }) => {
 	const [icons, setIcons] = useState([])
 
+	const removeIcon = (id) => {
+		setIcons((icons) => icons.filter((icon) => icon.id !== id))
+	}
+
 	const onAdd = async () => {
 		await add(icons)
 		onRequestClose()
@@ -48,6 +52,15 @@ const FileUploadComponent = ({ onRequestClose, add, isLoading }) => {
 		setIcons((oldIcons) => [...oldIcons, ...newIcons])
 	}
 
+	const onSearch = (value) => {
+		const url = "http://instantlogosearch.com/?q=" + value
+		const a = document.createElement("a")
+		a.href = url
+		a.target = "_blank"
+		a.rel = "noopener noreferrer"
+		a.click()
+	}
+
 	const dropzoneOptions = {
 		onDrop,
 		accept: "image/*",
@@ -67,7 +80,11 @@ const FileUploadComponent = ({ onRequestClose, add, isLoading }) => {
 	return (
 		<>
 			<SearchContainer>
-				<Searchbox />
+				<Searchbox
+					placeholder="Name of website or brand"
+					submitText="Search"
+					onSubmit={onSearch}
+				/>
 			</SearchContainer>
 
 			<ContentContainer {...getRootProps()} isEmpty={isEmpty}>
@@ -85,7 +102,11 @@ const FileUploadComponent = ({ onRequestClose, add, isLoading }) => {
 				) : (
 					<FileItemsContainer>
 						{icons.map((icon) => (
-							<FileItem key={icon.id} previewSrc={icon.url} />
+							<FileItem
+								key={icon.id}
+								previewSrc={icon.url}
+								onRemove={() => removeIcon(icon.id)}
+							/>
 						))}
 					</FileItemsContainer>
 				)}

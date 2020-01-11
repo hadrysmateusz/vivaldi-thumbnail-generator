@@ -1,11 +1,15 @@
 import React, { useEffect, useReducer, createContext, useState, useRef } from "react"
-import { loadImage, getHostname } from "../../utils"
-import { trimImageWhitespace } from "../CanvasCommon"
-import { drawIcon, drawBackground, createVirtualCanvas } from "../CanvasCommon"
-import { useSettingsManager } from "./settings"
-import { getBase64FromDataUri /* , readFile */ } from "../../utils"
 import JSZip from "jszip"
 import FileSaver from "file-saver"
+
+import {
+	drawIcon,
+	drawBackground,
+	createVirtualCanvas,
+	trimImageWhitespace
+} from "../CanvasCommon"
+import { useSettingsManager } from "./settings"
+import { getBase64FromDataUri, loadImage } from "../../utils"
 
 export const MAX_THUMBNAILS_IN_ARCHIVE = 15
 export const GeneratorContext = createContext()
@@ -74,22 +78,12 @@ const Generator = ({ children }) => {
 		}
 	}
 
-	const addFromBookmarkUrl = async (url) => {
+	const addFromBookmarkUrl = async (icon) => {
 		dispatch({ type: "UPLOAD_INIT", payload: 1 })
 		try {
-			/* from my trial-and-error testing it seems that 800 is the max size for the clearbit api,
-			it returns an image with the size closest to the one requested */
-			const size = 800
-			// clearbit api expects the domain name so we extract it
-			let hostname = getHostname(url)
-			// TODO: using clearbit api requires ATTRIBUTION!!!
-			// construct a clearbit api url
-			const clearbitApiUrl = `https://logo.clearbit.com/${hostname}?size=${size}`
-			// TODO: if hostname uses the "www" subdomain, remove it as it causes problems with uplead
-			// const uploadApiUrl = `https://logo.uplead.com/${hostname}`
-			// TODO: add more fallbacks and better error handling
-			const icon = await createThumbnail(clearbitApiUrl, hostname)
-			dispatch({ type: "UPLOAD_PROGRESS", payload: icon })
+			const { url, name } = icon
+			const thumbnail = await createThumbnail(url, name)
+			dispatch({ type: "UPLOAD_PROGRESS", payload: thumbnail })
 		} catch (error) {
 			dispatch({ type: "UPLOAD_FAILURE", error })
 		}
@@ -100,8 +94,8 @@ const Generator = ({ children }) => {
 		try {
 			// const response = await fetch("/.netlify/functions/fetchImage")
 			var name = url.substring(url.lastIndexOf("/") + 1)
-			const icon = await createThumbnail(url, name)
-			dispatch({ type: "UPLOAD_PROGRESS", payload: icon })
+			const thumbnail = await createThumbnail(url, name)
+			dispatch({ type: "UPLOAD_PROGRESS", payload: thumbnail })
 		} catch (error) {
 			dispatch({ type: "UPLOAD_FAILURE", error })
 		}

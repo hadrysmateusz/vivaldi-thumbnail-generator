@@ -7,14 +7,15 @@ import { useUploader } from "../Generator"
 import { resetButtonStyles, center } from "../../styleUtils"
 import { ReactComponent as CrossIcon } from "../../assets/cross.svg"
 import FileUploader from "./FileUploader"
+import AddFromBookmark from "./AddFromBookmark"
 // import { ReactComponent as LinkIcon } from "../../assets/link.svg"
 // import { ReactComponent as PasteIcon } from "../../assets/paste.svg"
 
 const methods = {
 	fileUpload: { active: true, name: "fileUpload" },
-	imageUrl: { false: true, name: "imageUrl" },
-	pasteImage: { false: true, name: "pasteImage" },
-	bookmarkUrl: { active: true, name: "bookmarkUrl" }
+	bookmarkUrl: { active: true, name: "bookmarkUrl" },
+	imageUrl: { active: false, name: "imageUrl" },
+	pasteImage: { active: false, name: "pasteImage" }
 }
 
 const UploaderModal = ({ onRequestClose }) => {
@@ -34,14 +35,6 @@ const UploaderModal = ({ onRequestClose }) => {
 		// call the onRequestClose handler
 		onRequestClose()
 	}
-
-	// const onBookmarkUrl = async () => {
-	// 	let url = prompt("Paste bookmark URL here")
-	// 	if (url) {
-	// 		await add.fromBookmarkUrl(url)
-	// 		onRequestClose()
-	// 	}
-	// }
 
 	// const onImageUrl = async () => {
 	// 	const url = prompt("Paste image URL here")
@@ -75,14 +68,31 @@ const UploaderModal = ({ onRequestClose }) => {
 				</Header>
 
 				<Navbar>
-					<NavItem onClick={() => setSelectedMethod("fileUpload")}>Upload</NavItem>
-					<NavItem onClick={() => setSelectedMethod("bookmarkUrl")}>Bookmark Url</NavItem>
+					<NavItem
+						onClick={() => setSelectedMethod("fileUpload")}
+						active={selectedMethod === "fileUpload"}
+					>
+						Upload
+					</NavItem>
+					<NavItem
+						onClick={() => setSelectedMethod("bookmarkUrl")}
+						active={selectedMethod === "bookmarkUrl"}
+					>
+						Bookmark Url
+					</NavItem>
 				</Navbar>
 
 				{selectedMethod === "fileUpload" && (
 					<FileUploader
 						onRequestClose={onRequestClose}
 						add={add.fromFiles}
+						isLoading={isLoading}
+					/>
+				)}
+				{selectedMethod === "bookmarkUrl" && (
+					<AddFromBookmark
+						onRequestClose={onRequestClose}
+						add={add.fromBookmarkUrl}
 						isLoading={isLoading}
 					/>
 				)}

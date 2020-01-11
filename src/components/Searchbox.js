@@ -3,43 +3,34 @@ import styled from "styled-components/macro"
 import { ReactComponent as SearchIcon } from "../assets/search.svg"
 import { resetButtonStyles } from "../styleUtils"
 
-const Searchbox = () => {
+const Searchbox = ({ placeholder, submitText, onSubmit }) => {
 	const [value, setValue] = useState("")
 
 	const onChange = (e) => {
 		setValue(e.target.value)
 	}
 
-	const onSubmit = (e) => {
+	const submit = (e) => {
 		e.preventDefault()
 		if (!value) return
-		const url = "http://instantlogosearch.com/?q=" + value
-		const a = document.createElement("a")
-		a.href = url
-		a.target = "_blank"
-		a.rel = "noopener noreferrer"
-		a.click()
+		onSubmit(value)
 	}
 
 	const iconSize = 24
 
 	return (
-		<form onSubmit={onSubmit}>
+		<form onSubmit={submit}>
 			<Container>
 				<InputContainer>
-					<SearchIcon
-						width={iconSize}
-						height={iconSize}
-						title="Get Image From Bookmark URL"
-					/>
+					<SearchIcon width={iconSize} height={iconSize} />
 					<Input
 						type="text"
 						value={value}
 						onChange={onChange}
-						placeholder="Name of website or brand"
+						placeholder={placeholder}
 					/>
 				</InputContainer>
-				<SubmitButton type="submit">Search</SubmitButton>
+				<SubmitButton type="submit">{submitText}</SubmitButton>
 			</Container>
 		</form>
 	)
