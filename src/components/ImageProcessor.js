@@ -1,6 +1,7 @@
 import React from "react"
 import styled from "styled-components/macro"
 import { useHistory } from "react-router-dom"
+import { cover } from "polished"
 
 import NavigationButtons from "./NavigationButtons"
 import { UploaderModal } from "./Uploader"
@@ -25,34 +26,35 @@ function ImageProcessor() {
 	return (
 		<RatioContainer>
 			<InnerContainer>
-				{uploader.isLoading ? (
-					<Loader />
-				) : isEmpty ? (
-					<EmptyState />
-				) : manager.isOpen ? (
+				{manager.isOpen ? (
 					<FileDrawer />
 				) : (
 					<>
-						<BackgroundCanvas />
-						<IconCanvas />
-						{/* <Uploader /> */}
-						{count > 1 && <NavigationButtons />}
-					</>
-				)}
-
-				{!manager.isOpen && (
-					<>
-						<TopButtons>{!isEmpty && <SettingsButton />}</TopButtons>
-						<BottomButtons>
-							<UploaderButton />
-							{!isEmpty && (
-								<>
-									<ManagerButton />
-									<Spacer />
-									<GenerateButton />
-								</>
-							)}
-						</BottomButtons>
+						{uploader.isLoading ? (
+							<Loader />
+						) : isEmpty ? (
+							<EmptyState />
+						) : (
+							<>
+								<BackgroundCanvas />
+								<IconCanvas />
+							</>
+						)}
+						<EditorContainer>
+							{/* <Uploader /> */}
+							{count > 1 && <NavigationButtons />}
+							<TopButtons>{!isEmpty && <SettingsButton />}</TopButtons>
+							<BottomButtons>
+								<UploaderButton />
+								{!isEmpty && (
+									<>
+										<ManagerButton />
+										<Spacer />
+										<GenerateButton />
+									</>
+								)}
+							</BottomButtons>
+						</EditorContainer>
 					</>
 				)}
 
@@ -133,6 +135,14 @@ const ManagerButton = () => {
 		</Button>
 	)
 }
+
+const EditorContainer = styled.div`
+	${cover()};
+	width: 100%;
+	height: 100%;
+	display: block;
+	z-index: 350;
+`
 
 const LoaderContainer = styled.div`
 	${center}
