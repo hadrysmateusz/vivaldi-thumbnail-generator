@@ -8,7 +8,7 @@ const buttonSizes = {
 		height: 32px;
 		padding: 0 16px;
 		@media (min-width: 732px) {
-			padding: 0 32px;
+			padding: 0 28px;
 			height: 40px;
 		}
 	`,
@@ -80,7 +80,26 @@ const enabledOnlyStyles = css`
 	}
 `
 
+const badge = css`
+	::after {
+		content: "${(p) => p.badgeText}";
+		display: block;
+		position: absolute;
+		top: 0;
+		right: 0;
+		transform: translate(50%, -50%);
+		font-size: 11px;
+		line-height: 16px;
+		font-weight: 700;
+		border-radius: 4px;
+		padding: 0 5px 1px;
+		background: var(--accent-color);
+		color: white;
+	}
+`
+
 const Button = styled.button`
+	position:relative;
 	display: block;
 	border: none;
 	transition-property: background, color, box-shadow;
@@ -91,9 +110,6 @@ const Button = styled.button`
 	justify-content: center;
 	align-items: center;
 	font-weight: bold;
-
-	${(p) => (p.size ? buttonSizes[p.size] : buttonSizes.normal)}
-	
 	/* 
 		the split of disabled and enabled-only styles is intentional 
 		enabled-only styles should be overriden by variant styles 
@@ -102,10 +118,13 @@ const Button = styled.button`
 	${(p) => !p.disabled && enabledOnlyStyles}
 	${(p) => buttonVariants[p.variant]}
 	${(p) => p.disabled && disabledStyles}
+	${(p) => (p.size ? buttonSizes[p.size] : buttonSizes.normal)}
+	${(p) => p.badgeText && badge}
 `
 
 Button.defaultProps = {
-	variant: "normal"
+	variant: "normal",
+	size: "normal"
 }
 
 export default Button

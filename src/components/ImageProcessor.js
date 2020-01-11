@@ -130,8 +130,12 @@ const ManagerButton = () => {
 	const uploader = useUploader()
 
 	return (
-		<Button onClick={thumbnails.manager.open} disabled={uploader.isLoading}>
-			Manage Icons ({thumbnails.count})
+		<Button
+			onClick={thumbnails.manager.open}
+			disabled={uploader.isLoading}
+			badgeText={thumbnails.count}
+		>
+			Manage Icons
 		</Button>
 	)
 }
