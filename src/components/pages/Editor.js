@@ -5,6 +5,7 @@ import styled from "styled-components/macro"
 import FluidContainer from "../FluidContainer"
 import SettingsEditor from "../SettingsEditor"
 import ImageProcessor from "../ImageProcessor"
+import EditorTopbar from "../EditorTopbar"
 import { H1, H2, H4, TextBlock, List } from "../CopywritingElements"
 import StyledLink from "../StyledLink"
 import ProductHuntWidget from "../ProductHuntWidget"
@@ -26,13 +27,14 @@ const EditorPage = () => {
 			<Background />
 			<OuterContainer>
 				<H1>Vivaldi Thumbnail Generator</H1>
+				<EditorTopbar />
 				<GeneratorContainer>
 					<ImageProcessor />
 					<SettingsEditor />
 				</GeneratorContainer>
 
 				<FluidContainer>
-					<H2>How to use</H2>
+					{/* <H2>How to use</H2>
 					<TextBlock>
 						<p>
 							Upload one or more images to represent the site you need a thumbnail for.
@@ -47,7 +49,7 @@ const EditorPage = () => {
 							download individual thumbnails or click <b>Download All</b> to create and
 							download a zip archive of all your thumbnails.
 						</p>
-					</TextBlock>
+					</TextBlock> */}
 
 					<H2>Upcoming features</H2>
 					<TextBlock>

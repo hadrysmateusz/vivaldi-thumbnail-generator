@@ -82,7 +82,11 @@ const EmptyState = () => (
 	</EmptyStateContainer>
 )
 
-const SettingsButton = () => {
+export const HelpButton = () => {
+	return <Button>Help</Button>
+}
+
+export const SettingsButton = () => {
 	const { editor } = useSettings()
 
 	return (
@@ -94,7 +98,7 @@ const SettingsButton = () => {
 	)
 }
 
-const GenerateButton = () => {
+export const GenerateButton = () => {
 	const { isReady, renderAll } = useExporter()
 	const history = useHistory()
 
@@ -110,7 +114,7 @@ const GenerateButton = () => {
 	)
 }
 
-const UploaderButton = () => {
+export const UploaderButton = () => {
 	const thumbnails = useThumbnails()
 	const uploader = useUploader()
 
@@ -125,7 +129,7 @@ const UploaderButton = () => {
 	)
 }
 
-const ManagerButton = () => {
+export const ManagerButton = () => {
 	const thumbnails = useThumbnails()
 	const uploader = useUploader()
 
@@ -186,10 +190,10 @@ const TopButtons = styled.div`
 `
 
 const SettingsButtonContainer = styled.div`
-	position: absolute;
+	/* position: absolute;
 	top: 20px;
 	right: 20px;
-	z-index: 500;
+	z-index: 500; */
 `
 
 const InnerContainer = styled.div`
