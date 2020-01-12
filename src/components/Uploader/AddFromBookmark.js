@@ -32,6 +32,7 @@ const AddFromBookmark = ({ onRequestClose, add, isLoading }) => {
 	const onSearch = async (url) => {
 		if (url) {
 			const hostname = getHostname(url)
+			const name = getHostname(url)
 
 			const createClearbitApiUrl = () => {
 				/* from my trial-and-error testing it seems that 800 is the max size for the clearbit api,
@@ -53,7 +54,6 @@ const AddFromBookmark = ({ onRequestClose, add, isLoading }) => {
 				urls.map(async (url) => {
 					try {
 						// TODO: consider actually fetching the image and getting its dimensions to show on the preview
-						const name = getHostname(url)
 						const id = name + Date.now()
 						return { name, url, id }
 					} catch (error) {
