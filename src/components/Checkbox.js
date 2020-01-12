@@ -4,19 +4,21 @@ import { ReactComponent as CheckIcon } from "../assets/checkmark.svg"
 
 const Checkbox = ({ value, onChange }) => {
 	return (
-		<div>
+		<Container>
 			<Input
 				type="checkbox"
 				id="trim-whitespace-checkbox"
 				checked={value}
 				onChange={onChange}
 			/>
-			<BoxContainer active={value}>
-				{value && <CheckIcon width={40} height={40} />}
-			</BoxContainer>
-		</div>
+			<BoxContainer active={value}>{value && <CheckIcon />}</BoxContainer>
+		</Container>
 	)
 }
+
+const Container = styled.div`
+	display: inline-block;
+`
 
 const Input = styled.input`
 	display: none;
@@ -38,7 +40,7 @@ const inactiveStyles = css`
 const BoxContainer = styled.div`
 	width: 14px;
 	height: 14px;
-	display: flex;
+	display: inline-flex;
 	justify-content: center;
 	align-items: center;
 	border-radius: 3px;

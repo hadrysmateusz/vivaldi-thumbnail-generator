@@ -11,6 +11,7 @@ import StyledLink from "../StyledLink"
 import ProductHuntWidget from "../ProductHuntWidget"
 import { Background, OuterContainer } from "./common"
 import * as links from "../../links"
+import Checkbox from "../Checkbox"
 
 const EditorPage = () => {
 	useTitle(
@@ -53,18 +54,30 @@ const EditorPage = () => {
 
 					<H2>Upcoming features</H2>
 					<TextBlock>
-						This is a very new project, and I have a ton of features planned to release
-						very soon. Follow me to be notified about future updates. Here are just a few
-						of the planned features:
+						This is a new project, and I have a ton of features planned to release very
+						soon. Here are just a few of the planned features:
 					</TextBlock>
 					<TextBlock>
 						{/* TODO: add some checkboxes to show what is already done */}
 						<List>
-							<li>Per image settings overrides</li>
-							<li>Manually position the icon</li>
-							{/* <li>Icon-based color palettes</li> */}
-							<li>Importing icons from URL</li>
-							<li>Saving your preferences</li>
+							<ListItem>
+								<Checkbox value="true" /> <div>Importing icons from bookmark URL</div>
+							</ListItem>
+							<ListItem>
+								<Checkbox value="true" /> <div>Icon-based color palettes</div>
+							</ListItem>
+							<ListItem>
+								<Checkbox /> <div>Per image settings overrides</div>
+							</ListItem>
+							<ListItem>
+								<Checkbox /> <div>Manually position the icon</div>
+							</ListItem>
+							<ListItem>
+								<Checkbox /> <div>Importing icons from URL</div>
+							</ListItem>
+							<ListItem>
+								<Checkbox /> <div>Saving your preferences</div>
+							</ListItem>
 						</List>
 					</TextBlock>
 
@@ -84,6 +97,16 @@ const EditorPage = () => {
 		</>
 	)
 }
+
+const ListItem = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 6px;
+	> * + * {
+		margin-left: 8px;
+	}
+`
 
 const GeneratorContainer = styled.div`
 	padding: 0 20px;
