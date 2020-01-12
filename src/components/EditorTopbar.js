@@ -2,11 +2,12 @@ import React from "react"
 import styled from "styled-components/macro"
 import { ellipsis } from "polished"
 
-import { CURRENT_NEWS_ITEM } from "../copywriting"
-
 import FluidContainer from "./FluidContainer"
 import { SettingsButton } from "./ImageProcessor"
 import Button from "./Button"
+
+import { CURRENT_NEWS_ITEM } from "../copywriting"
+import { ReactComponent as HelpIcon } from "../assets/help-solid.svg"
 
 const EditorTopbar = ({ toggleHelpModal }) => (
 	<FluidContainer>
@@ -15,7 +16,10 @@ const EditorTopbar = ({ toggleHelpModal }) => (
 				<NewsBadge>NEW</NewsBadge>
 				<NewsText>{CURRENT_NEWS_ITEM}</NewsText>
 			</NewsContainer>
-			<Button onClick={toggleHelpModal}>Help</Button>
+			<Button onClick={toggleHelpModal}>
+				<HelpIcon width={24} height={24} />
+				<span>Help</span>
+			</Button>
 			<SettingsButton />
 		</Container>
 	</FluidContainer>

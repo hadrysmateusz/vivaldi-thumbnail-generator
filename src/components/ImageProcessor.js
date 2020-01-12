@@ -19,6 +19,7 @@ import SettingsEditor from "./SettingsEditor"
 import { VIVALDI_THUMBNAIL_RATIO } from "../constants"
 import { ReactComponent as SettingsIcon } from "../assets/cog.svg"
 import { ReactComponent as UploadIcon } from "../assets/file-upload.svg"
+import { ReactComponent as StashIcon } from "../assets/stash.svg"
 import transparency from "../assets/transparency.png"
 import Modal, { CloseButton } from "./Modal"
 
@@ -172,7 +173,8 @@ export const ManagerButton = () => {
 			disabled={uploader.isLoading}
 			badgeText={thumbnails.count}
 		>
-			Manage Icons
+			<StashIcon width={20} height={20} />
+			<span>Manage Icons</span>
 		</Button>
 	)
 }
