@@ -11,7 +11,7 @@ export const OuterContainer = styled.div`
 export const Background = styled.div`
 	height: 508px;
 	position: relative;
-	border-top: 6px solid var(--accent-color);
+	border-top: 4px solid var(--accent-color);
 	background: linear-gradient(
 		180deg,
 		rgba(253, 253, 253, 0.6) 94%,
