@@ -109,7 +109,7 @@ const Button = styled.button`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	font-weight: bold;
+	font-weight: 600;
 	/* 
 		the split of disabled and enabled-only styles is intentional 
 		enabled-only styles should be overriden by variant styles 
