@@ -62,6 +62,9 @@ const CloseButtonContainer = styled.button`
 	${resetButtonStyles};
 	padding: 10px;
 	margin: -10px;
+	height: 16px;
+	width: 16px;
+	box-sizing: content-box;
 `
 
 export default Modal

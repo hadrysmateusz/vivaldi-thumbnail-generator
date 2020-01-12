@@ -5,22 +5,21 @@ import { ellipsis } from "polished"
 import { CURRENT_NEWS_ITEM } from "../copywriting"
 
 import FluidContainer from "./FluidContainer"
-import { SettingsButton, HelpButton } from "./ImageProcessor"
+import { SettingsButton } from "./ImageProcessor"
+import Button from "./Button"
 
-const EditorTopbar = () => {
-	return (
-		<FluidContainer>
-			<Container>
-				<NewsContainer>
-					<NewsBadge>NEW</NewsBadge>
-					<NewsText>{CURRENT_NEWS_ITEM}</NewsText>
-				</NewsContainer>
-				<HelpButton />
-				<SettingsButton />
-			</Container>
-		</FluidContainer>
-	)
-}
+const EditorTopbar = ({ toggleHelpModal }) => (
+	<FluidContainer>
+		<Container>
+			<NewsContainer>
+				<NewsBadge>NEW</NewsBadge>
+				<NewsText>{CURRENT_NEWS_ITEM}</NewsText>
+			</NewsContainer>
+			<Button onClick={toggleHelpModal}>Help</Button>
+			<SettingsButton />
+		</Container>
+	</FluidContainer>
+)
 
 const Container = styled.div`
 	display: grid;

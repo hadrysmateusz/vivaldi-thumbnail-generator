@@ -12,56 +12,93 @@ import IconCanvas from "./IconCanvas"
 import { center } from "../styleUtils"
 import Spacer from "./Spacer"
 import Button from "./Button"
+import { H2, TextBlock } from "./CopywritingElements"
+import EditorTopbar from "./EditorTopbar"
+import SettingsEditor from "./SettingsEditor"
 
 import { VIVALDI_THUMBNAIL_RATIO } from "../constants"
 import { ReactComponent as SettingsIcon } from "../assets/cog.svg"
 import { ReactComponent as UploadIcon } from "../assets/file-upload.svg"
 import transparency from "../assets/transparency.png"
+import Modal, { CloseButton } from "./Modal"
 
 function ImageProcessor() {
 	const { isEmpty, manager, count } = useThumbnails()
 	const uploader = useUploader()
 	const [isHelpModalOpen, setIsHelpModalOpen] = useState(false)
 
+	const toggleHelpModal = () => setIsHelpModalOpen((a) => !a)
+
 	return (
-		<RatioContainer>
-			<InnerContainer>
-				{manager.isOpen ? (
-					<FileDrawer />
-				) : (
-					<>
-						{uploader.isLoading ? (
-							<Loader />
-						) : isEmpty ? (
-							<EmptyState />
+		<OuterContainer>
+			<EditorTopbar toggleHelpModal={toggleHelpModal} />
+			<GeneratorContainer>
+				<RatioContainer>
+					<InnerContainer>
+						{manager.isOpen ? (
+							<FileDrawer />
 						) : (
 							<>
-								<BackgroundCanvas />
-								<IconCanvas />
-							</>
-						)}
-						<EditorContainer>
-							{/* <Uploader /> */}
-							{count > 1 && <NavigationButtons />}
-							<BottomButtons>
-								<UploaderButton />
-								{!isEmpty && (
+								{uploader.isLoading ? (
+									<Loader />
+								) : isEmpty ? (
+									<EmptyState />
+								) : (
 									<>
-										<ManagerButton />
-										<Spacer />
-										<GenerateButton />
+										<BackgroundCanvas />
+										<IconCanvas />
 									</>
 								)}
-							</BottomButtons>
-						</EditorContainer>
-					</>
-				)}
+								<EditorContainer>
+									{count > 1 && <NavigationButtons />}
+									<BottomButtons>
+										<UploaderButton />
+										{!isEmpty && (
+											<>
+												<ManagerButton />
+												<Spacer />
+												<GenerateButton />
+											</>
+										)}
+									</BottomButtons>
+								</EditorContainer>
+							</>
+						)}
 
-				{uploader.isOpen && <UploaderModal onRequestClose={uploader.close} />}
-			</InnerContainer>
-		</RatioContainer>
+						{isHelpModalOpen && (
+							<HelpModal onRequestClose={() => setIsHelpModalOpen(false)} />
+						)}
+						{uploader.isOpen && <UploaderModal onRequestClose={uploader.close} />}
+					</InnerContainer>
+				</RatioContainer>
+				<SettingsEditor />
+			</GeneratorContainer>
+		</OuterContainer>
 	)
 }
+
+const HelpModal = ({ onRequestClose }) => (
+	<Modal onRequestClose={onRequestClose}>
+		<CloseButtonContainer>
+			<CloseButton />
+		</CloseButtonContainer>
+		<H2>How to use</H2>
+		<TextBlock>
+			<p>
+				Upload one or more images to represent the site you need a thumbnail for. Then
+				adjust settings like background color and icon size. When you're ready, click{" "}
+				<b>Generate</b>.
+			</p>
+			<p>
+				<b>Tip:</b> Use images with transparent backgrounds
+			</p>
+			<p>
+				On the downloads page, you can download individual thumbnails or click{" "}
+				<b>Download All</b> to create and download a zip archive of all your thumbnails.
+			</p>
+		</TextBlock>
+	</Modal>
+)
 
 const Loader = () => {
 	const uploader = useUploader()
@@ -82,10 +119,6 @@ const EmptyState = () => (
 		<EmptyStateBody>Add some icons to get started</EmptyStateBody>
 	</EmptyStateContainer>
 )
-
-export const HelpButton = () => {
-	return <Button>Help</Button>
-}
 
 export const SettingsButton = () => {
 	const { editor } = useSettings()
@@ -144,6 +177,15 @@ export const ManagerButton = () => {
 	)
 }
 
+const OuterContainer = styled.div``
+
+const GeneratorContainer = styled.div`
+	padding: 0 20px;
+	display: flex;
+	justify-content: center;
+	margin: 0 auto;
+`
+
 const EditorContainer = styled.div`
 	${cover()};
 	width: 100%;
@@ -162,6 +204,12 @@ const LoaderContainer = styled.div`
 	line-height: 48px;
 	font-weight: bold;
 	min-height: 100px;
+`
+
+const CloseButtonContainer = styled.div`
+	position: absolute;
+	top: 20px;
+	right: 20px;
 `
 
 const BottomButtons = styled.div`
