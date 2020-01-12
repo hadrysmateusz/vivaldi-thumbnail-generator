@@ -12,6 +12,7 @@ import { H1, H2, H4, TextBlock, List } from "../CopywritingElements"
 import StyledLink from "../StyledLink"
 import Checkbox from "../Checkbox"
 import ProductHuntWidget from "../ProductHuntWidget"
+import MadeByWidget from "../MadeByWidget"
 
 const EditorPage = () => {
 	useTitle(
@@ -30,6 +31,8 @@ const EditorPage = () => {
 				<H1>Vivaldi Thumbnail Generator</H1>
 
 				<ImageProcessor />
+
+				<MadeByWidget />
 
 				<FluidContainer>
 					<H2>Upcoming features</H2>
