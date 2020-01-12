@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import styled from "styled-components/macro"
 import { useHistory } from "react-router-dom"
 import { cover } from "polished"
@@ -21,6 +21,7 @@ import transparency from "../assets/transparency.png"
 function ImageProcessor() {
 	const { isEmpty, manager, count } = useThumbnails()
 	const uploader = useUploader()
+	const [isHelpModalOpen, setIsHelpModalOpen] = useState(false)
 
 	return (
 		<RatioContainer>

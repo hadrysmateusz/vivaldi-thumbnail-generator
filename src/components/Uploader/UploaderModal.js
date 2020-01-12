@@ -1,15 +1,11 @@
 import React, { useState } from "react"
 import styled from "styled-components/macro"
-import { cover } from "polished"
 
 import { useUploader } from "../Generator"
+import Modal, { CloseButton } from "../Modal"
 
-import { resetButtonStyles, center } from "../../styleUtils"
-import { ReactComponent as CrossIcon } from "../../assets/cross.svg"
 import FileUploader from "./FileUploader"
 import AddFromBookmark from "./AddFromBookmark"
-// import { ReactComponent as LinkIcon } from "../../assets/link.svg"
-// import { ReactComponent as PasteIcon } from "../../assets/paste.svg"
 
 const methods = {
 	fileUpload: { active: true, name: "fileUpload" },
@@ -22,78 +18,39 @@ const UploaderModal = ({ onRequestClose }) => {
 	const { isLoading, add } = useUploader()
 	const [selectedMethod, setSelectedMethod] = useState(methods.fileUpload.name)
 
-	// TODO: this doesn't seem to work
-	const closeOnEsc = (e) => {
-		if (e.key === "Escape") {
-			onRequestClose()
-		}
-	}
-
-	const onOverlayClick = (e) => {
-		// prevent clicks from inside the modal from closing it
-		if (e.target !== e.currentTarget) return
-		// call the onRequestClose handler
-		onRequestClose()
-	}
-
-	// const onImageUrl = async () => {
-	// 	const url = prompt("Paste image URL here")
-
-	// 	if (url) {
-	// 		try {
-	// 			const response = await fetch(`/.netlify/functions/fetchImage?url=${url}`)
-	// 			console.log(await response.text())
-	// 		} catch (error) {
-	// 			console.error("fetching error:", error)
-	// 		}
-
-	// 		await add.fromImageUrl(url)
-	// 		onRequestClose()
-	// 	}
-	// }
-
-	// const onPasteImage = () => {
-	// 	// PLACEHOLDER
-	// 	onRequestClose()
-	// }
-
 	return (
-		<ModalContainer onKeyDown={closeOnEsc} onClick={onOverlayClick}>
-			<ModalBox>
-				<Header>
-					<Title>Add Icons</Title>
-					<CloseButton onClick={onRequestClose}>
-						<CrossIcon width={10} height={10} title="Close" />
-					</CloseButton>
-				</Header>
+		<Modal onRequestClose={onRequestClose}>
+			<Header>
+				<Title>Add Icons</Title>
+				<CloseButton />
+			</Header>
 
-				<Navbar>
-					<NavItem
-						onClick={() => setSelectedMethod("fileUpload")}
-						active={selectedMethod === "fileUpload"}
-					>
-						Upload
-					</NavItem>
-					<NavItem
-						onClick={() => setSelectedMethod("bookmarkUrl")}
-						active={selectedMethod === "bookmarkUrl"}
-					>
-						Bookmark Url
-					</NavItem>
-				</Navbar>
+			<Navbar>
+				<NavItem
+					onClick={() => setSelectedMethod("fileUpload")}
+					active={selectedMethod === "fileUpload"}
+				>
+					Upload
+				</NavItem>
+				<NavItem
+					onClick={() => setSelectedMethod("bookmarkUrl")}
+					active={selectedMethod === "bookmarkUrl"}
+				>
+					Bookmark Url
+				</NavItem>
+			</Navbar>
 
-				{selectedMethod === "fileUpload" && (
-					<FileUploader onRequestClose={onRequestClose} add={add} isLoading={isLoading} />
-				)}
-				{selectedMethod === "bookmarkUrl" && (
-					<AddFromBookmark
-						onRequestClose={onRequestClose}
-						add={add}
-						isLoading={isLoading}
-					/>
-				)}
-			</ModalBox>
-		</ModalContainer>
+			{selectedMethod === "fileUpload" && (
+				<FileUploader onRequestClose={onRequestClose} add={add} isLoading={isLoading} />
+			)}
+			{selectedMethod === "bookmarkUrl" && (
+				<AddFromBookmark
+					onRequestClose={onRequestClose}
+					add={add}
+					isLoading={isLoading}
+				/>
+			)}
+		</Modal>
 	)
 }
 
@@ -108,11 +65,7 @@ const Title = styled.div`
 	font-size: 14px;
 	line-height: 20px;
 `
-const CloseButton = styled.button`
-	${resetButtonStyles};
-	padding: 10px;
-	margin: -10px;
-`
+
 const Navbar = styled.div`
 	--side-padding: 10px;
 	--side-margin: calc(-1 * var(--side-padding));
@@ -139,22 +92,4 @@ const NavItem = styled.div`
 	}
 `
 
-const ModalContainer = styled.div`
-	${cover()}
-	${center}
-	background: rgba(0, 0, 0, 0.36);
-	z-index: 1000;
-`
-
-const ModalBox = styled.div`
-	background: white;
-	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-	position: relative;
-	border-radius: 5px;
-	width: 540px;
-	overflow: hidden;
-	padding: 0 20px;
-`
-
 export default UploaderModal
-

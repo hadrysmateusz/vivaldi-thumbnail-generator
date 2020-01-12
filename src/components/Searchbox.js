@@ -28,6 +28,7 @@ const Searchbox = ({ placeholder, submitText, onSubmit }) => {
 						value={value}
 						onChange={onChange}
 						placeholder={placeholder}
+						autoFocus
 					/>
 				</InputContainer>
 				<SubmitButton type="submit">{submitText}</SubmitButton>
