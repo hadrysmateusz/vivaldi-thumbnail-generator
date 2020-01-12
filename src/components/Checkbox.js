@@ -11,7 +11,9 @@ const Checkbox = ({ value, onChange }) => {
 				checked={value}
 				onChange={onChange}
 			/>
-			<BoxContainer active={value}>{value && <CheckIcon />}</BoxContainer>
+			<BoxContainer active={value}>
+				{value && <CheckIcon width="100%" height="100%" />}
+			</BoxContainer>
 		</Container>
 	)
 }
