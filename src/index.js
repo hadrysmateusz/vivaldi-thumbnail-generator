@@ -2,6 +2,8 @@ import React from "react"
 import ReactDOM from "react-dom"
 import App from "./components/App"
 import * as serviceWorker from "./serviceWorker"
+import "typeface-saira-semi-condensed"
+import "typeface-poppins"
 
 ReactDOM.render(<App />, document.getElementById("root"))
 
