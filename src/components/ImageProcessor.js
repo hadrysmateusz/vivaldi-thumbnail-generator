@@ -12,7 +12,7 @@ import IconCanvas from "./IconCanvas"
 import { center } from "../styleUtils"
 import Spacer from "./Spacer"
 import Button from "./Button"
-import { H2, TextBlock } from "./CopywritingElements"
+import { H4 } from "./CopywritingElements"
 import EditorTopbar from "./EditorTopbar"
 import SettingsEditor from "./SettingsEditor"
 
@@ -66,10 +66,10 @@ function ImageProcessor() {
 							</>
 						)}
 
+						{uploader.isOpen && <UploaderModal onRequestClose={uploader.close} />}
 						{isHelpModalOpen && (
 							<HelpModal onRequestClose={() => setIsHelpModalOpen(false)} />
 						)}
-						{uploader.isOpen && <UploaderModal onRequestClose={uploader.close} />}
 					</InnerContainer>
 				</RatioContainer>
 				<SettingsEditor />
@@ -79,12 +79,12 @@ function ImageProcessor() {
 }
 
 const HelpModal = ({ onRequestClose }) => (
-	<Modal onRequestClose={onRequestClose}>
+	<Modal onRequestClose={onRequestClose} width="400px">
 		<CloseButtonContainer>
 			<CloseButton />
 		</CloseButtonContainer>
-		<H2>How to use</H2>
-		<TextBlock>
+		<H4>How to use</H4>
+		<HelpTextBlock>
 			<p>
 				Upload one or more images to represent the site you need a thumbnail for. Then
 				adjust settings like background color and icon size. When you're ready, click{" "}
@@ -97,7 +97,7 @@ const HelpModal = ({ onRequestClose }) => (
 				On the downloads page, you can download individual thumbnails or click{" "}
 				<b>Download All</b> to create and download a zip archive of all your thumbnails.
 			</p>
-		</TextBlock>
+		</HelpTextBlock>
 	</Modal>
 )
 
@@ -179,6 +179,15 @@ export const ManagerButton = () => {
 	)
 }
 
+const HelpTextBlock = styled.div`
+	max-width: 600px;
+	margin: 16px auto;
+	font-size: 14px;
+	line-height: 20px;
+	text-align: center;
+	color: #4a4a4a;
+`
+
 const OuterContainer = styled.div``
 
 const GeneratorContainer = styled.div`
@@ -210,8 +219,8 @@ const LoaderContainer = styled.div`
 
 const CloseButtonContainer = styled.div`
 	position: absolute;
-	top: 20px;
-	right: 20px;
+	top: 18px;
+	right: 18px;
 `
 
 const BottomButtons = styled.div`

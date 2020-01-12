@@ -8,7 +8,7 @@ import { center, resetButtonStyles } from "../styleUtils"
 
 const ModalContext = React.createContext()
 
-function Modal({ onRequestClose, children }) {
+function Modal({ onRequestClose, children, width = "540px", height = "auto" }) {
 	// a wrapper function that calls the onRequestCloseCallback and can provide any other pre-close functionality
 	const close = () => {
 		onRequestClose()
@@ -28,7 +28,9 @@ function Modal({ onRequestClose, children }) {
 	return (
 		<ModalContext.Provider value={{ close }}>
 			<ModalContainer onKeyDown={closeOnEsc} onClick={onOverlayClick}>
-				<ModalBox>{children}</ModalBox>
+				<ModalBox width={width} height={height}>
+					{children}
+				</ModalBox>
 			</ModalContainer>
 		</ModalContext.Provider>
 	)
@@ -54,9 +56,11 @@ const ModalBox = styled.div`
 	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 	position: relative;
 	border-radius: 5px;
-	width: 540px;
+	width: ${(p) => p.width};
+	height: ${(p) => p.height};
 	overflow: hidden;
 	padding: 0 20px;
+	overflow-y: auto;
 `
 const CloseButtonContainer = styled.button`
 	${resetButtonStyles};

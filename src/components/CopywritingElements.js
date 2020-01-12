@@ -32,6 +32,11 @@ export const heading = css`
 	color: #383838;
 `
 
+// overrides for smaller headings
+export const smallerHeading = css`
+	margin: 1em auto 0.5em;
+`
+
 export const H1 = styled.h1`
 	${heading}
 	text-transform: uppercase;
@@ -54,16 +59,19 @@ export const H2 = styled.h2`
 `
 export const H3 = styled.h3`
 	${heading}
+	${smallerHeading}
 	font-size: 24px;
 	line-height: 32px;
 `
 export const H4 = styled.h4`
 	${heading}
+	${smallerHeading}
 	font-size: 18px;
 	line-height: 24px;
 `
 export const H5 = styled.h5`
 	${heading}
+	${smallerHeading}
 	font-size: 16px;
 	line-height: 24px;
 `
