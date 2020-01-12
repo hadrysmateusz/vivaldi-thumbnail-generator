@@ -3,7 +3,7 @@ import { useMeta, useTitle } from "react-meta-elements"
 
 import { Background, OuterContainer } from "./common"
 import Exporter from "../Exporter"
-import TopCopy from "../TopCopy"
+import { H1 } from "../CopywritingElements"
 
 const ExporterPage = () => {
 	useTitle("Download Your New Thumbnails | Vivaldi Thumbnail Generator")
@@ -13,7 +13,7 @@ const ExporterPage = () => {
 		<>
 			<Background />
 			<OuterContainer>
-				<TopCopy />
+				<H1>Vivaldi Thumbnail Generator</H1>
 				<Exporter />
 			</OuterContainer>
 		</>
