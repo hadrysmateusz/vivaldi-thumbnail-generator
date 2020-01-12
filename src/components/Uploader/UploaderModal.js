@@ -158,31 +158,3 @@ const ModalBox = styled.div`
 
 export default UploaderModal
 
-/* {availableMethods.fileUpload && (
-	<ModalButton onClick={onFileUpload} autoFocus>
-		<UploadIcon width={iconSize} height={iconSize} title="Upload File" />
-		<ButtonLabel>From file</ButtonLabel>
-	</ModalButton>
-)}
-{availableMethods.bookmarkUrl && (
-	<ModalButton onClick={onBookmarkUrl}>
-		<LinkIcon
-			width={iconSize}
-			height={iconSize}
-			title="Get Image From Bookmark URL"
-		/>
-		<ButtonLabel>Bookmark URL (beta)</ButtonLabel>
-	</ModalButton>
-)}
-{availableMethods.pasteImage && (
-	<ModalButton onClick={onPasteImage}>
-		<PasteIcon width={iconSize} height={iconSize} title="Paste Image" />
-		<ButtonLabel>Paste Image (beta)</ButtonLabel>
-	</ModalButton>
-)}
-{availableMethods.imageUrl && (
-	<ModalButton onClick={onImageUrl}>
-		<PasteIcon width={iconSize} height={iconSize} title="Get Image From URL" />
-		<ButtonLabel>Image URL (beta)</ButtonLabel>
-	</ModalButton>
-)} */
