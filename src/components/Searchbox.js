@@ -69,9 +69,9 @@ const SubmitButton = styled.button`
 	padding: 0 16px;
 	display: flex;
 	align-items: center;
-	font-weight: bold;
+	font-weight: 600;
+	letter-spacing: 0.018em;
 	font-size: 14px;
-	line-height: 14px;
 	color: white;
 	background: var(--accent-color);
 	transition: background 200ms ease;

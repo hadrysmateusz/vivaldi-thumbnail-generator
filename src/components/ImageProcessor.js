@@ -90,11 +90,10 @@ export const SettingsButton = () => {
 	const { editor } = useSettings()
 
 	return (
-		<SettingsButtonContainer>
-			<IconButton onClick={editor.toggle}>
-				<SettingsIcon title="Settings" width="24px" height="24px" />
-			</IconButton>
-		</SettingsButtonContainer>
+		<Button onClick={editor.toggle}>
+			<SettingsIcon title="Settings" width="24px" height="24px" />
+			<span>Settings</span>
+		</Button>
 	)
 }
 

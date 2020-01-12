@@ -5,10 +5,11 @@ const buttonSizes = {
 		border-radius: 5px;
 		font-size: 14px;
 		line-height: 18px;
+		letter-spacing: 0.018em;
 		height: 32px;
 		padding: 0 16px;
 		@media (min-width: 732px) {
-			padding: 0 28px;
+			padding: 0 20px;
 			height: 40px;
 		}
 	`,
@@ -90,7 +91,6 @@ const badge = css`
 		transform: translate(50%, -50%);
 		font-size: 11px;
 		line-height: 16px;
-		font-weight: 700;
 		border-radius: 4px;
 		padding: 0 5px 1px;
 		background: var(--accent-color);
@@ -110,6 +110,10 @@ const Button = styled.button`
 	justify-content: center;
 	align-items: center;
 	font-weight: 600;
+	svg {
+		margin-right: 8px;
+		margin-left: -4px;
+	}
 	/* 
 		the split of disabled and enabled-only styles is intentional 
 		enabled-only styles should be overriden by variant styles 
