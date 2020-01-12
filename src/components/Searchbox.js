@@ -58,6 +58,7 @@ const InputContainer = styled.label`
 `
 
 const Input = styled.input`
+	outline: none; /* because the cursor appears in the input when focused it's not necessary to show an outline */
 	background: 0;
 	border-radius: 0;
 	border: none;
