@@ -2,6 +2,8 @@ import React from "react"
 import styled from "styled-components/macro"
 import { ellipsis } from "polished"
 
+import { CURRENT_NEWS_ITEM } from "../copywriting"
+
 import FluidContainer from "./FluidContainer"
 import { SettingsButton, HelpButton } from "./ImageProcessor"
 
@@ -11,7 +13,7 @@ const EditorTopbar = () => {
 			<Container>
 				<NewsContainer>
 					<NewsBadge>NEW</NewsBadge>
-					<NewsText>Complete Visual & Workflow Redesign</NewsText>
+					<NewsText>{CURRENT_NEWS_ITEM}</NewsText>
 				</NewsContainer>
 				<HelpButton />
 				<SettingsButton />
