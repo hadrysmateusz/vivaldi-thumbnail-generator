@@ -2,16 +2,18 @@ import React from "react"
 import { useMeta, useTitle } from "react-meta-elements"
 import styled from "styled-components/macro"
 
+import { Background, OuterContainer } from "./common"
+import * as links from "../../links"
+import roadmap from "../../roadmap"
+
 import FluidContainer from "../FluidContainer"
 import SettingsEditor from "../SettingsEditor"
 import ImageProcessor from "../ImageProcessor"
 import EditorTopbar from "../EditorTopbar"
 import { H1, H2, H4, TextBlock, List } from "../CopywritingElements"
 import StyledLink from "../StyledLink"
-import ProductHuntWidget from "../ProductHuntWidget"
-import { Background, OuterContainer } from "./common"
-import * as links from "../../links"
 import Checkbox from "../Checkbox"
+import ProductHuntWidget from "../ProductHuntWidget"
 
 const EditorPage = () => {
 	useTitle(
@@ -28,7 +30,9 @@ const EditorPage = () => {
 			<Background />
 			<OuterContainer>
 				<H1>Vivaldi Thumbnail Generator</H1>
+
 				<EditorTopbar />
+
 				<GeneratorContainer>
 					<ImageProcessor />
 					<SettingsEditor />
@@ -58,26 +62,12 @@ const EditorPage = () => {
 						soon. Here are just a few of the planned features:
 					</TextBlock>
 					<TextBlock>
-						{/* TODO: add some checkboxes to show what is already done */}
 						<List>
-							<ListItem>
-								<Checkbox value="true" /> <div>Importing icons from bookmark URL</div>
-							</ListItem>
-							<ListItem>
-								<Checkbox value="true" /> <div>Icon-based color palettes</div>
-							</ListItem>
-							<ListItem>
-								<Checkbox /> <div>Per image settings overrides</div>
-							</ListItem>
-							<ListItem>
-								<Checkbox /> <div>Manually position the icon</div>
-							</ListItem>
-							<ListItem>
-								<Checkbox /> <div>Importing icons from URL</div>
-							</ListItem>
-							<ListItem>
-								<Checkbox /> <div>Saving your preferences</div>
-							</ListItem>
+							{roadmap.map(({ title, complete }) => (
+								<ListItem>
+									<Checkbox value={complete} /> <div>{title}</div>
+								</ListItem>
+							))}
 						</List>
 					</TextBlock>
 
