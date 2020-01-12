@@ -5,10 +5,9 @@ import styled from "styled-components/macro"
 import FluidContainer from "../FluidContainer"
 import SettingsEditor from "../SettingsEditor"
 import ImageProcessor from "../ImageProcessor"
-import { H2, H4, TextBlock, List } from "../CopywritingElements"
+import { H1, H2, H4, TextBlock, List } from "../CopywritingElements"
 import StyledLink from "../StyledLink"
 import ProductHuntWidget from "../ProductHuntWidget"
-import TopCopy from "../TopCopy"
 import { Background, OuterContainer } from "./common"
 import * as links from "../../links"
 
@@ -26,7 +25,7 @@ const EditorPage = () => {
 		<>
 			<Background />
 			<OuterContainer>
-				<TopCopy />
+				<H1>Vivaldi Thumbnail Generator</H1>
 				<GeneratorContainer>
 					<ImageProcessor />
 					<SettingsEditor />

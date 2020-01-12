@@ -24,33 +24,32 @@ export const List = styled.ul`
 `
 
 export const heading = css`
-	margin: 48px auto 24px;
-	font-weight: 900;
+	margin: 32px auto 16px;
+	font-weight: 800;
 	text-align: center;
 	justify-content: center;
-	letter-spacing: 0.05em;
+	letter-spacing: 0.03em;
 	color: #383838;
 `
 
 export const H1 = styled.h1`
+	${heading}
+	text-transform: uppercase;
 	font-size: 32px;
-	line-height: 40px;
-	text-decoration: underline #ddd;
+	line-height: 48px;
 	@media (min-width: 732px) {
-		${heading}
-		font-size: 43px;
-		line-height: 48px;
+		font-size: 48px;
+		line-height: 76px;
 	}
 `
 export const H2 = styled.h2`
 	${heading}
+	text-transform:uppercase;
 	font-size: 30px;
 	line-height: 36px;
-	text-decoration: underline #ddd;
 	@media (min-width: 732px) {
-		${heading}
-		font-size: 32px;
-		line-height: 40px;
+		font-size: 40px;
+		line-height: 64px;
 	}
 `
 export const H3 = styled.h3`
