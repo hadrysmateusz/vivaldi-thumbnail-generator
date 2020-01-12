@@ -9,7 +9,6 @@ import FileDrawer from "./FileDrawer"
 import { useUploader, useThumbnails, useSettings, useExporter } from "./Generator"
 import BackgroundCanvas from "./BackgroundCanvas"
 import IconCanvas from "./IconCanvas"
-import IconButton from "./IconButton"
 import { center } from "../styleUtils"
 import Spacer from "./Spacer"
 import Button from "./Button"
@@ -43,7 +42,6 @@ function ImageProcessor() {
 						<EditorContainer>
 							{/* <Uploader /> */}
 							{count > 1 && <NavigationButtons />}
-							<TopButtons>{!isEmpty && <SettingsButton />}</TopButtons>
 							<BottomButtons>
 								<UploaderButton />
 								{!isEmpty && (
@@ -77,8 +75,10 @@ const Loader = () => {
 const EmptyState = () => (
 	<EmptyStateContainer>
 		<EmptyStateIcon />
-		<EmptyStateHeading>There are no icons here yet</EmptyStateHeading>
-		<EmptyStateBody>Add some to get started</EmptyStateBody>
+		<EmptyStateHeading>
+			Generate thumbnails for Vivaldi Browser’s Speed Dials
+		</EmptyStateHeading>
+		<EmptyStateBody>Add some icons to get started</EmptyStateBody>
 	</EmptyStateContainer>
 )
 
@@ -175,25 +175,6 @@ const BottomButtons = styled.div`
 		margin-left: 20px;
 	}
 `
-const TopButtons = styled.div`
-	width: 100%;
-	position: absolute;
-	left: 0;
-	top: 0;
-	padding: 0 20px 20px 20px;
-	display: flex;
-	align-items: center;
-	> * + * {
-		margin-left: 20px;
-	}
-`
-
-const SettingsButtonContainer = styled.div`
-	/* position: absolute;
-	top: 20px;
-	right: 20px;
-	z-index: 500; */
-`
 
 const InnerContainer = styled.div`
 	position: absolute;
@@ -249,19 +230,24 @@ const EmptyStateIcon = styled(UploadIcon)`
 const EmptyStateHeading = styled.div`
 	color: var(--light-gray);
 	font-weight: bold;
-	font-size: 20px;
-	line-height: 28px;
-
+	font-size: 24px;
+	line-height: 32px;
+	display: flex;
+	align-items: center;
+	text-align: center;
+	max-width: 400px;
+	margin: 12px 0;
 	@media (min-width: 732px) {
 		font-size: 24px;
-		line-height: 48px;
+		line-height: 32px;
 	}
 `
 
 const EmptyStateBody = styled.div`
 	color: #5b5b5b;
 	font-size: 14px;
-	line-height: 24px;
+	line-height: 20px;
+	max-width: 400px;
 `
 
 export default ImageProcessor
