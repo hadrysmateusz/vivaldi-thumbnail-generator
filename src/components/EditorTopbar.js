@@ -29,7 +29,7 @@ const Container = styled.div`
 	grid-auto-columns: auto;
 	grid-auto-flow: column;
 	margin-bottom: 16px;
-	width: 732px;
+	max-width: 732px;
 	> * {
 		min-width: 0;
 		height: 40px;
