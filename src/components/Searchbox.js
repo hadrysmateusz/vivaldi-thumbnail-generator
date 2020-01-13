@@ -14,6 +14,7 @@ const Searchbox = ({ placeholder, submitText, onSubmit }) => {
 		e.preventDefault()
 		if (!value) return
 		onSubmit(value)
+		setValue("")
 	}
 
 	const iconSize = 24
