@@ -13,7 +13,8 @@ import {
 	EmptyStateHeading,
 	Footer,
 	SearchContainer,
-	ContentContainer
+	ContentContainer,
+	InnerContainer
 } from "./common"
 import { ReactComponent as LinkIcon } from "../../assets/link.svg"
 
@@ -71,35 +72,37 @@ const AddFromBookmark = ({ onRequestClose, add, isLoading }) => {
 
 	return (
 		<>
-			<SearchContainer>
-				<Searchbox
-					placeholder="URL address of the bookmark"
-					submitText="Search"
-					onSubmit={onSearch}
-				/>
-			</SearchContainer>
+			<InnerContainer>
+				<SearchContainer>
+					<Searchbox
+						placeholder="URL address of the bookmark"
+						submitText="Search"
+						onSubmit={onSearch}
+					/>
+				</SearchContainer>
 
-			<ContentContainer isEmpty={isEmpty}>
-				{isEmpty ? (
-					<EmptyStateContainer>
-						<EmptyStateIconContainer>
-							<LinkIcon width={31} height={31} />
-						</EmptyStateIconContainer>
-						<EmptyStateHeading>Enter the bookmark url above</EmptyStateHeading>
-						<EmptyStateBody>All icons we can find will show up here</EmptyStateBody>
-					</EmptyStateContainer>
-				) : (
-					<FileItemsContainer>
-						{icons.map((icon) => (
-							<FileItem
-								key={icon.id}
-								previewSrc={icon.url}
-								onRemove={() => removeIcon(icon.id)}
-							/>
-						))}
-					</FileItemsContainer>
-				)}
-			</ContentContainer>
+				<ContentContainer isEmpty={isEmpty}>
+					{isEmpty ? (
+						<EmptyStateContainer>
+							<EmptyStateIconContainer>
+								<LinkIcon width={31} height={31} />
+							</EmptyStateIconContainer>
+							<EmptyStateHeading>Enter the bookmark url above</EmptyStateHeading>
+							<EmptyStateBody>All icons we can find will show up here</EmptyStateBody>
+						</EmptyStateContainer>
+					) : (
+						<FileItemsContainer>
+							{icons.map((icon) => (
+								<FileItem
+									key={icon.id}
+									previewSrc={icon.url}
+									onRemove={() => removeIcon(icon.id)}
+								/>
+							))}
+						</FileItemsContainer>
+					)}
+				</ContentContainer>
+			</InnerContainer>
 
 			<Footer>
 				<TrimWhitespaceCheckbox />

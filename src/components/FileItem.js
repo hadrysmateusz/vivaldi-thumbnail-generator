@@ -9,7 +9,7 @@ const FileItem = ({ previewSrc, onRemove }) => {
 			<Image url={previewSrc} />
 			{onRemove && (
 				<RemoveContainer onClick={onRemove}>
-					<TrashIcon width="24px" height="24px" title="Remove" />
+					<TrashIcon width="50%" height="50%" title="Remove" />
 				</RemoveContainer>
 			)}
 		</Container>
@@ -39,8 +39,8 @@ const RemoveContainer = styled.div`
 	position: absolute;
 	bottom: 0;
 	right: 0;
-	width: 48px;
-	height: 48px;
+	width: 32px;
+	height: 32px;
 	border-top-left-radius: 5px;
 	background: white;
 	font-size: 30px;

@@ -4,7 +4,7 @@ import styled from "styled-components/macro"
 import { useUploader } from "../Generator"
 import Modal, { CloseButton } from "../Modal"
 
-import FileUploader from "./FileUploader"
+import AddFromFiles from "./AddFromFiles"
 import AddFromBookmark from "./AddFromBookmark"
 
 const methods = {
@@ -41,7 +41,7 @@ const UploaderModal = ({ onRequestClose }) => {
 			</Navbar>
 
 			{selectedMethod === "fileUpload" && (
-				<FileUploader onRequestClose={onRequestClose} add={add} isLoading={isLoading} />
+				<AddFromFiles onRequestClose={onRequestClose} add={add} isLoading={isLoading} />
 			)}
 			{selectedMethod === "bookmarkUrl" && (
 				<AddFromBookmark
@@ -70,9 +70,10 @@ const Navbar = styled.div`
 	--side-padding: 10px;
 	--side-margin: calc(-1 * var(--side-padding));
 
-	padding-bottom: 10px;
 	margin-left: var(--side-margin);
 	margin-right: var(--side-margin);
+	margin-bottom: 20px;
+	padding-bottom: 10px;
 
 	border-bottom: 2px solid #f5f5f5;
 
@@ -84,7 +85,8 @@ const NavItem = styled.div`
 	font-size: 11px;
 	line-height: 16px;
 	font-weight: bold;
-	padding: 0 var(--side-padding);
+	padding: var(--side-padding);
+	margin: var(--side-margin) 0;
 	cursor: pointer;
 	transition: color 200ms ease;
 	&:hover {

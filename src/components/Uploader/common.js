@@ -15,16 +15,17 @@ export const DropOverlay = styled.div`
 `
 
 export const SearchContainer = styled.div`
-	margin: 20px 0;
+	margin-bottom: 20px;
 `
 
 export const Footer = styled.div`
-	margin: 20px 0;
+	margin-bottom: 20px;
 	display: flex;
 `
 
 export const ContentContainer = styled.div`
-	height: 140px;
+	margin-bottom: 20px;
+	height: 100%;
 	border-width: 2px;
 	border-style: ${(p) => (p.isEmpty ? "dashed" : "solid")};
 	border-color: #e2e2e2;
@@ -32,6 +33,12 @@ export const ContentContainer = styled.div`
 	background: white;
 	position: relative;
 	overflow: hidden;
+`
+
+export const InnerContainer = styled.div`
+	height: 210px;
+	display: flex;
+	flex-direction: column;
 `
 
 export const EmptyStateContainer = styled.div`
