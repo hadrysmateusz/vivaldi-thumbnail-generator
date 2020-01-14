@@ -3,14 +3,16 @@ import styled, { css } from "styled-components/macro"
 const buttonSizes = {
 	normal: css`
 		border-radius: 5px;
-		font-size: 14px;
-		line-height: 18px;
 		letter-spacing: 0.018em;
+		font-size: 12px;
+		line-height: 16px;
 		height: 32px;
-		padding: 0 16px;
+		padding: 0 12px;
 		@media (min-width: 732px) {
-			padding: 0 20px;
+			font-size: 14px;
+			line-height: 18px;
 			height: 40px;
+			padding: 0 20px;
 		}
 	`,
 	small: css`

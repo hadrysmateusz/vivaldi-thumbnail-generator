@@ -58,6 +58,8 @@ const ModalBox = styled.div`
 	border-radius: 5px;
 	width: ${(p) => p.width};
 	height: ${(p) => p.height};
+	max-height: 100%;
+	max-width: 100%;
 	overflow: hidden;
 	padding: 0 20px;
 	overflow-y: auto;

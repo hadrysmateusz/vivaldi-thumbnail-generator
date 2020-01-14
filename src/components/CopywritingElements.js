@@ -1,12 +1,18 @@
 import styled, { css } from "styled-components/macro"
 
 export const TextBlock = styled.div`
-	max-width: 600px;
-	margin: 24px auto 32px;
-	font-size: 18px;
-	line-height: 24px;
 	text-align: center;
+	max-width: 600px;
 	color: #383838;
+	margin: 16px auto 24px;
+	font-size: 14px;
+	line-height: 20px;
+
+	@media (min-width: 732px) {
+		margin: 24px auto 32px;
+		font-size: 18px;
+		line-height: 24px;
+	}
 
 	a,
 	a:visited {
