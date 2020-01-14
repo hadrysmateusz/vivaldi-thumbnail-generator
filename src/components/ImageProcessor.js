@@ -79,23 +79,39 @@ function ImageProcessor() {
 }
 
 const HelpModal = ({ onRequestClose }) => (
-	<Modal onRequestClose={onRequestClose} width="400px">
+	<Modal onRequestClose={onRequestClose} width="440px" height="340px">
 		<CloseButtonContainer>
 			<CloseButton />
 		</CloseButtonContainer>
-		<H4>How to use</H4>
 		<HelpTextBlock>
+			<H4>Why would I need this?</H4>
 			<p>
-				Upload one or more images to represent the site you need a thumbnail for. Then
-				adjust settings like background color and icon size. When you're ready, click{" "}
-				<b>Generate</b>.
+				<a href="https://vivaldi.com/">Vivaldi</a> generates screenshots of your
+				bookmarked pages, but they aren't very helpful. To replace, right-click one the
+				bookmarks in your Speed Dial and click "Select Custom Thumbnail"
+			</p>
+			<H4>How to use this tool?</H4>
+			<p>
+				Click <b>Add Icons</b>, there you have two options for importing icons:
+			</p>
+			<ul>
+				<li>
+					File Upload - Upload an image from your hard drive <b>Tip:</b> Images with
+					transparent backgrounds (like PNG and SVG) work best
+				</li>
+				<li>
+					Bookmark URL - Enter the url address (link) of your bookmark and we will
+					automatically show you any icons we were able to find
+				</li>
+			</ul>
+			<p>
+				To change the look of your thumbnails, you can click <b>Settings</b> in the
+				top-right corner and adjust any values you want
 			</p>
 			<p>
-				<b>Tip:</b> Use images with transparent backgrounds
-			</p>
-			<p>
-				On the downloads page, you can download individual thumbnails or click{" "}
-				<b>Download All</b> to create and download a zip archive of all your thumbnails.
+				When you're ready, click <b>Generate</b>. On the downloads page, you can download
+				individual thumbnails or click <b>Download All</b> to download a zip archive of
+				all your thumbnails.
 			</p>
 		</HelpTextBlock>
 	</Modal>
@@ -186,6 +202,9 @@ const HelpTextBlock = styled.div`
 	line-height: 20px;
 	text-align: center;
 	color: #4a4a4a;
+	ul {
+		padding-left: 0;
+	}
 `
 
 const OuterContainer = styled.div``
@@ -281,6 +300,9 @@ const EmptyStateIcon = styled(UploadIcon)`
 		height: 112px;
 		margin-bottom: 0;
 	}
+	@media (max-width: 731px) {
+		margin-top: -16px;
+	}
 
 	path {
 		fill: #e2e2e2;
@@ -289,15 +311,16 @@ const EmptyStateIcon = styled(UploadIcon)`
 
 const EmptyStateHeading = styled.div`
 	color: var(--light-gray);
-	font-weight: bold;
-	font-size: 24px;
-	line-height: 32px;
 	display: flex;
 	align-items: center;
 	text-align: center;
 	max-width: 400px;
-	margin: 12px 0;
+	font-weight: bold;
+	margin: 4px 0;
+	font-size: 18px;
+	line-height: 24px;
 	@media (min-width: 732px) {
+		margin: 12px 0;
 		font-size: 24px;
 		line-height: 32px;
 	}
@@ -305,8 +328,12 @@ const EmptyStateHeading = styled.div`
 
 const EmptyStateBody = styled.div`
 	color: #5b5b5b;
-	font-size: 14px;
-	line-height: 20px;
+	font-size: 12px;
+	line-height: 16px;
+	@media (min-width: 732px) {
+		font-size: 14px;
+		line-height: 20px;
+	}
 	max-width: 400px;
 `
 
