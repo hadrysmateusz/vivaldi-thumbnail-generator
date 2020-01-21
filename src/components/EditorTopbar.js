@@ -9,8 +9,8 @@ import Button from "./Button"
 import { ReactComponent as HelpIcon } from "../assets/help-solid.svg"
 
 const news = {
-	title: "Automatically import icons from bookmark URL",
-	link: "https://twitter.com/HadrysMateusz/status/1216833874644361217?s=20"
+	title: "Search for icons directly from the editor",
+	link: "https://twitter.com/HadrysMateusz/status/1219572052123844609?s=20"
 }
 
 const EditorTopbar = ({ toggleHelpModal }) => (
