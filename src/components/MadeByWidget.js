@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components/macro"
 
-import { EMAIL_ADDRESS } from "../constants"
+import { EMAIL_ADDRESS, LINK_PORTFOLIO, LINK_TWITTER } from "../constants"
 import { ReactComponent as TwitterIcon } from "../assets/twitter.svg"
 import { ReactComponent as EnvelopeIcon } from "../assets/envelope.svg"
 
@@ -10,15 +10,11 @@ const MadeByWidget = () => (
 		<Container>
 			<div>
 				{/* TODO: replace this with link to portfolio */}
-				<a
-					href="https://twitter.com/HadrysMateusz"
-					target="_blank"
-					rel="noreferrer noopener"
-				>
+				<a href={LINK_PORTFOLIO} target="_blank" rel="noreferrer noopener">
 					By <em>Mateusz Hadryś</em>
 				</a>
 			</div>
-			<a href="https://twitter.com/HadrysMateusz">
+			<a href={LINK_TWITTER} target="_blank" rel="noreferrer noopener">
 				<TwitterIcon width={16} height={16} />
 			</a>
 			<a href={"mailto:" + EMAIL_ADDRESS}>

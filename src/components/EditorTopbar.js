@@ -6,15 +6,19 @@ import FluidContainer from "./FluidContainer"
 import { SettingsButton } from "./ImageProcessor"
 import Button from "./Button"
 
-import { CURRENT_NEWS_ITEM } from "../copywriting"
 import { ReactComponent as HelpIcon } from "../assets/help-solid.svg"
+
+const news = {
+	title: "Automatically import icons from bookmark URL",
+	link: "https://twitter.com/HadrysMateusz/status/1216833874644361217?s=20"
+}
 
 const EditorTopbar = ({ toggleHelpModal }) => (
 	<FluidContainer>
 		<Container>
-			<NewsContainer>
+			<NewsContainer href={news.link} target="_blank" rel="noreferrer noopener">
 				<NewsBadge>NEW</NewsBadge>
-				<NewsText>{CURRENT_NEWS_ITEM}</NewsText>
+				<NewsText>{news.title}</NewsText>
 			</NewsContainer>
 			<Button onClick={toggleHelpModal}>
 				<HelpIcon width={24} height={24} />
@@ -38,7 +42,7 @@ const Container = styled.div`
 		height: 40px;
 	}
 `
-const NewsContainer = styled.div`
+const NewsContainer = styled.a`
 	${ellipsis()}
 	display: flex;
 	justify-content: flex-start;

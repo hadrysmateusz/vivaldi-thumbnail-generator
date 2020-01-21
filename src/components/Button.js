@@ -124,7 +124,7 @@ const Button = styled.button`
 	${(p) => !p.disabled && enabledOnlyStyles}
 	${(p) => buttonVariants[p.variant]}
 	${(p) => p.disabled && disabledStyles}
-	${(p) => (p.size ? buttonSizes[p.size] : buttonSizes.normal)}
+	${(p) => buttonSizes[p.size]}
 	${(p) => p.badgeText && badge}
 `
 

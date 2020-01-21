@@ -4,6 +4,7 @@ import { useDropzone } from "react-dropzone"
 
 import Button from "../Button"
 import FileItem from "../FileItem"
+import Searchbox from "../Searchbox"
 import { readFile, getNameFromFile } from "../../utils"
 import { ReactComponent as UploadIcon } from "../../assets/file-upload.svg"
 import {
@@ -14,7 +15,8 @@ import {
 	Footer,
 	DropOverlay,
 	ContentContainer,
-	InnerContainer
+	InnerContainer,
+	SearchContainer
 } from "./common"
 import TrimWhitespaceCheckbox from "./TrimWhitespaceCheckbox"
 
@@ -51,14 +53,14 @@ const AddFromFiles = ({ onRequestClose, add, isLoading }) => {
 		setIcons((oldIcons) => [...oldIcons, ...newIcons])
 	}
 
-	// const onSearch = (value) => {
-	// 	const url = "http://instantlogosearch.com/?q=" + value
-	// 	const a = document.createElement("a")
-	// 	a.href = url
-	// 	a.target = "_blank"
-	// 	a.rel = "noopener noreferrer"
-	// 	a.click()
-	// }
+	const onSearch = (value) => {
+		const url = "http://instantlogosearch.com/?q=" + value
+		const a = document.createElement("a")
+		a.href = url
+		a.target = "_blank"
+		a.rel = "noopener noreferrer"
+		a.click()
+	}
 
 	const dropzoneOptions = {
 		onDrop,
@@ -79,13 +81,13 @@ const AddFromFiles = ({ onRequestClose, add, isLoading }) => {
 	return (
 		<>
 			<InnerContainer>
-				{/* <SearchContainer>
+				<SearchContainer>
 					<Searchbox
 						placeholder="Name of website or brand"
 						submitText="Search"
 						onSubmit={onSearch}
 					/>
-				</SearchContainer> */}
+				</SearchContainer>
 
 				<ContentContainer {...getRootProps()} isEmpty={isEmpty}>
 					{isEmpty ? (
