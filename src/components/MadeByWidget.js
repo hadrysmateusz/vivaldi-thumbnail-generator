@@ -9,7 +9,6 @@ const MadeByWidget = () => (
 	<OuterContainer>
 		<Container>
 			<div>
-				{/* TODO: replace this with link to portfolio */}
 				<a href={LINK_PORTFOLIO} target="_blank" rel="noreferrer noopener">
 					By <em>Mateusz Hadryś</em>
 				</a>
@@ -56,6 +55,11 @@ const Container = styled.div`
 	> a {
 		display: flex;
 		align-items: center;
+		&:hover {
+			path {
+				fill: #3e3e3e;
+			}
+		}
 	}
 `
 
