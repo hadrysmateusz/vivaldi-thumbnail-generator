@@ -7,7 +7,7 @@
     "file-saver": "^2.0.2",
     "jszip": "^3.5.0",
     "lodash.debounce": "^4.0.8",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "polished": "^3.6.5",
     "prop-types": "^15.7.2",
     "rc-slider": "^8.7.1",
